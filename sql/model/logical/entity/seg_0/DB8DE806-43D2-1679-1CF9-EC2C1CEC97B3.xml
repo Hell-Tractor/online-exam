@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="DB8DE806-43D2-1679-1CF9-EC2C1CEC97B3" name="User">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:52:42 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="username" id="2A3E2F1D-BDC1-D00A-457B-5F2A995C4EA1">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:53:08 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<domain>78BA873B-1EEC-5FC5-7E8A-813F83AAB38A</domain>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="password" id="484D5405-EAC7-3C59-206E-087BF4EC550C">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:53:34 UTC</createdTime>
+<comment>使用md5加密后的16字节字符串</comment>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>16 BYTE</dataTypeSize>
+<domain>0DD2B1B4-445F-6D1F-48E3-275BB8BA0A80</domain>
+<ownDataTypeParameters>16 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="user_type" id="3F953FCF-CB7B-9EF6-AE38-4127BD6D0F10">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:55:58 UTC</createdTime>
+<comment>用户类型，合法取值有：&lt;br/&gt;ADMIN&lt;br/&gt;TEACHER&lt;br/&gt;STUDENT</comment>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>8 CHAR</dataTypeSize>
+<ownDataTypeParameters>8 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="auth_id" id="D8CC82D1-BBDE-CE70-5DB4-CCDE7CBAB088">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:57:04 UTC</createdTime>
+<comment>用户每次登录时根据时间生成的16位字符串</comment>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>16 BYTE</dataTypeSize>
+<domain>0DD2B1B4-445F-6D1F-48E3-275BB8BA0A80</domain>
+<ownDataTypeParameters>16 BYTE,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="2C0DDC3C-CAC9-D672-7F02-103A07DF11C1" name="User PK">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 00:53:29 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>2A3E2F1D-BDC1-D00A-457B-5F2A995C4EA1</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

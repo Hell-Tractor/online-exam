@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5E1231DF-4747-F198-0F78-C84EC9A06C0C" name="qusetion_bank">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 01:11:16 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="7319D0EC-E2E9-C70A-FC7A-96E1D9B7B01F">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 01:11:27 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>0F982420-53D7-06C1-66D8-87437433CDC3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="6FD2F9A4-9AB0-2E79-EB0F-1A5CD5064086">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 02:13:45 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>78BA873B-1EEC-5FC5-7E8A-813F83AAB38A</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="2469DB4E-899F-2555-284E-2400B82D9266">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 01:36:13 UTC</createdTime>
+<generatorID>009E5D5E-B8D9-4ABF-07BB-9AA462E438B4</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>54353CC7-0F9F-4FE0-6120-455834326D1D</referedAttribute>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>0F982420-53D7-06C1-66D8-87437433CDC3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4FF1C827-22F0-CF05-F9E0-36B2386D3A47" name="qusetion_bank PK">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-06-23 01:11:35 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="7DC7B082-ADC0-1011-4AEE-186BEB290AAB" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7319D0EC-E2E9-C70A-FC7A-96E1D9B7B01F</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

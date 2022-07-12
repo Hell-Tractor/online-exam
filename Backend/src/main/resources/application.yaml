@@ -9,3 +9,6 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+jwt:
+  ttl: 120
+  secret: examSecret

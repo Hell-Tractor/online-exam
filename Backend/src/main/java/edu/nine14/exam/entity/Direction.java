@@ -1,9 +1,6 @@
 package edu.nine14.exam.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "direction")
@@ -15,8 +12,9 @@ public class Direction {
     @Column(name = "name", columnDefinition = "char")
     private Integer directionName;
 
-    @Column(name = "profession_id", columnDefinition = "int")
-    private Integer professionID;
+    @ManyToOne
+    @JoinColumn(name = "profession_id", referencedColumnName = "id")
+    private Profession professionID;
 
     public Integer getDirectionID() {
         return directionID;
@@ -34,11 +32,11 @@ public class Direction {
         this.directionName = directionName;
     }
 
-    public Integer getProfessionID() {
+    public Profession getProfessionID() {
         return professionID;
     }
 
-    public void setProfessionID(Integer professionID) {
+    public void setProfessionID(Profession professionID) {
         this.professionID = professionID;
     }
 }

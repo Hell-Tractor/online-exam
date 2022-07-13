@@ -1,9 +1,6 @@
 package edu.nine14.exam.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,8 +14,9 @@ public class Question {
     @Column(name = "id", columnDefinition = "int")
     private Integer questionID;
 
-    @Column(name = "direction_id", columnDefinition = "int")
-    private Integer directionID;
+    @ManyToOne
+    @JoinColumn(name = "direction_id", referencedColumnName = "id")
+    private Direction directionID;
 
     @Column(name = "body",columnDefinition = "text")
     private String body;
@@ -38,14 +36,6 @@ public class Question {
 
     public void setQuestionID(Integer questionID) {
         this.questionID = questionID;
-    }
-
-    public Integer getDirectionID() {
-        return directionID;
-    }
-
-    public void setDirectionID(Integer directionID) {
-        this.directionID = directionID;
     }
 
     public String getBody() {

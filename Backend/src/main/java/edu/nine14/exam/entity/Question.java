@@ -11,29 +11,24 @@ import java.sql.Date;
 import java.util.Map;
 
 @Entity
-@Table(name = "question_banks")
+@Table(name = "question_bank")
 public class Question {
     @Id
     @Column(name = "id", columnDefinition = "int")
     private Integer questionID;
 
-    @Id
     @Column(name = "direction_id", columnDefinition = "int")
     private Integer directionID;
 
-    @Id
-    @Column(name = "body",columnDefinition = "char")
+    @Column(name = "body",columnDefinition = "text")
     private String body;
 
-    @Id
     @Column(name = "answer",columnDefinition = "char")
     private String answer;
 
-    @Id
     @Column(name = "type",columnDefinition = "char")
     private String type;
 
-    @Id
     @Column(name = "selection",columnDefinition = "char")
     private String selection;
 

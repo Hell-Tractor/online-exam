@@ -85,8 +85,6 @@ public class Question {
         this.option=option;
     }*/
 
-
-
     /*@Override
     public boolean equals(Object obj){
         if(this==obj){

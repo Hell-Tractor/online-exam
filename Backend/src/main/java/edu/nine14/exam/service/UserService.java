@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.FailedLoginException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,10 +66,24 @@ public class UserService {
         userRepository.save(user.get());
     }
 
-    public void deleteUser(String username) {
+    public void removeUser(String username) {
         Optional<User> user = userRepository.findById(username);
         if (user.isEmpty())
             throw new IllegalArgumentException("User not found");
         userRepository.delete(user.get());
+    }
+
+    public List<String> getUserList() {
+        return userRepository.findAll().stream().map(User::getUsername).collect(java.util.stream.Collectors.toList());
+    }
+
+    public void updatePassword(String username, String oldPassword, String newPassword) {
+        Optional<User> user = userRepository.findById(username);
+        if (user.isEmpty())
+            throw new IllegalArgumentException("User not found");
+        if (!user.get().getPassword().equals(oldPassword))
+            throw new IllegalArgumentException("Password wrong");
+        user.get().setPassword(newPassword);
+        userRepository.save(user.get());
     }
 }

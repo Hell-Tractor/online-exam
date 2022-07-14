@@ -1,28 +1,23 @@
 package edu.nine14.exam.service;
 
-import edu.nine14.exam.entity.Question;
 import edu.nine14.exam.dao.QuestionDirectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.FailedLoginException;
-import java.util.Optional;
-
 @Service
 public class QuestionDirectionService {
     @Autowired
-    private QuestionDirectionRepository questionRepository;
+    private QuestionDirectionRepository questionDirectionRepository;
 
     public Object getAllQuestion(){
-        return questionRepository.findAll();
+        return questionDirectionRepository.findAll();
     }
 
-    /*public Object findByProfession(Integer professionID) throws FailedLoginException {
-        try{
-            Optional<Question> question = questionRepository.findById(professionID);
+    public Object questionForProfession(Integer professionID,String type){
+        return questionDirectionRepository.questionForProfession(professionID,type);
+    }
 
-            if(question.isEmpty())
-                throw new FailedLoginException("");
-        }
-    }*/
+    public Object questionForDirection(Integer directionID,String type,String direction1,String direction2){
+        return questionDirectionRepository.questionForDirection(directionID,type,direction1,direction2);
+    }
 }

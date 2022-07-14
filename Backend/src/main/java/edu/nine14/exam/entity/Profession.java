@@ -1,9 +1,7 @@
 package edu.nine14.exam.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "profession")
@@ -13,7 +11,10 @@ public class Profession {
     private Integer professionID;
 
     @Column(name = "name", columnDefinition = "char")
-    private Integer professionName;
+    private String professionName;
+
+    /*@OneToMany(mappedBy="profession_id")
+    private List<Direction> directions;*/
 
     public Integer getProfessionID() {
         return professionID;
@@ -23,11 +24,19 @@ public class Profession {
         this.professionID = professionID;
     }
 
-    public Integer getProfessionName() {
+    public String getProfessionName() {
         return professionName;
     }
 
-    public void setProfessionName(Integer professionName) {
+    public void setProfessionName(String professionName) {
         this.professionName = professionName;
     }
+
+   /* public List<Direction> getDirections() {
+        return directions;
+    }
+
+    public void setDirections(List<Direction> directions) {
+        this.directions = directions;
+    }*/
 }

@@ -14,9 +14,13 @@ public class Question {
     @Column(name = "id", columnDefinition = "int")
     private Integer questionID;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "direction_id", referencedColumnName = "id")
-    private Direction directionID;
+    private Direction direction;*/
+
+    @JoinColumn
+    @ManyToOne(cascade=CascadeType.ALL)
+    private Direction direction;
 
     @Column(name = "body",columnDefinition = "text")
     private String body;
@@ -68,6 +72,14 @@ public class Question {
 
     public void setSelection(String selection) {
         this.selection = selection;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     /*public Question(String body, String[] option){

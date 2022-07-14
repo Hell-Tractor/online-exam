@@ -14,7 +14,6 @@ public class QuestionDirection {
     @Column(name = "id", columnDefinition = "int")
     private Integer questionID;
 
-
     @JoinColumn
     @ManyToOne(cascade=CascadeType.ALL)
     private Direction direction;

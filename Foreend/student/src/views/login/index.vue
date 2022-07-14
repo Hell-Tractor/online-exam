@@ -14,8 +14,8 @@
             </div>
             <div class="lowin-group password-group">
               <label>密码 <a href="#" class="forgot-link">忘记密码?</a></label>
-              <el-input  class="lowin-input" :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-                placeholder="密码" name="password" tabindex="2" auto-complete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
+              <el-input  class="lowin-input" :key="passwordType" ref="passwordRaw" v-model="passwordRaw" :type="passwordType"
+                placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
             </div>
 
             <el-button :loading="loading" type="text" class="lowin-btn login-btn"  @click.native.prevent="handleLogin">登录</el-button>
@@ -37,6 +37,8 @@
 import { mapMutations } from 'vuex'
 import loginApi from '@/api/login'
 
+let md5 = require("md5")
+
 export default {
   name: 'Login',
   data () {
@@ -57,7 +59,7 @@ export default {
     return {
       loginForm: {
         userName: '',
-        password: '',
+        password: '', // 加密后的密码
         remember: false
       },
       loginRules: {
@@ -67,6 +69,7 @@ export default {
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
+      passwordRaw: '', // 没加密的密码
       showDialog: false
     }
   },
@@ -76,8 +79,8 @@ export default {
   mounted () {
     if (this.loginForm.userName === '') {
       this.$refs.userName.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
+    } else if (this.passwordRaw === '') {
+      this.$refs.passwordRaw.focus()
     }
   },
   destroyed () {
@@ -104,10 +107,11 @@ export default {
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.passwordRaw.focus()
       })
     },
     handleLogin () {
+      this.loginForm.password=md5(this.passwordRaw)
       let _this = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {

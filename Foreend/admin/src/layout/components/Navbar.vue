@@ -7,7 +7,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <span>{{userName}}</span>
+          <span>{{username}}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -39,7 +39,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'device',
-      'userName'
+      'username'
     ])
   },
   methods: {

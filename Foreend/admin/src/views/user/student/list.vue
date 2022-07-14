@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="用户名：">
-        <el-input v-model="queryParam.userName"></el-input>
+        <el-input v-model="queryParam.username"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
@@ -14,12 +14,11 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" />
-      <el-table-column prop="userName" label="用户名"/>
-      <el-table-column prop="realName" label="真实姓名" />
-      <el-table-column prop="userLevel" label="学级"  :formatter="levelFormatter"/>
+      <el-table-column prop="username" label="用户名"/>
+      <el-table-column prop="name" label="真实姓名" />
+      <el-table-column prop="grade" label="年级"  :formatter="gradeFormatter"/>
       <el-table-column prop="sex" label="性别" width="60px;" :formatter="sexFormatter"/>
-      <el-table-column prop="phone" label="手机号"/>
-      <el-table-column prop="createTime" label="创建时间" width="160px"/>
+      <el-table-column prop="mobile_number" label="手机号"/>
       <el-table-column label="状态" prop="status" width="70px">
         <template slot-scope="{row}">
           <el-tag :type="statusTagFormatter(row.status)">
@@ -57,8 +56,8 @@ export default {
   data () {
     return {
       queryParam: {
-        userName: '',
-        role: 1,
+        username: '',
+        user_type: 1,
         pageIndex: 1,
         pageSize: 10
       },
@@ -107,8 +106,8 @@ export default {
       this.queryParam.pageIndex = 1
       this.search()
     },
-    levelFormatter  (row, column, cellValue, index) {
-      return this.enumFormat(this.levelEnum, cellValue)
+    gradeFormatter(row, column, cellValue, index) {
+      return this.enumFormat(this.gradeEnum, cellValue)
     },
     sexFormatter  (row, column, cellValue, index) {
       return this.enumFormat(this.sexEnum, cellValue)
@@ -128,11 +127,11 @@ export default {
       'enumFormat'
     ]),
     ...mapState('enumItem', {
+      gradeEnum:state => state.user.gradeEnum,
       sexEnum: state => state.user.sexEnum,
       statusEnum: state => state.user.statusEnum,
       statusTag: state => state.user.statusTag,
       statusBtn: state => state.user.statusBtn,
-      levelEnum: state => state.user.levelEnum
     })
   }
 }

@@ -17,7 +17,7 @@
           <el-divider/>
           <el-row class="user-info-fullInfo">
             <label>姓名：{{form.realName}}</label><br/>
-            <label>年级：{{levelFormatter(form.grade)}}</label><br/>
+            <label>专业分类：{{levelFormatter(form.grade)}}</label><br/>
           </el-row>
         </el-card>
       </el-col>
@@ -44,8 +44,8 @@
                 <el-form-item label="手机：">
                   <el-input v-model="form.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="年级：" prop="grade" required>
-                  <el-select v-model="form.grade" placeholder="年级">
+                <el-form-item label="专业分类：" prop="grade" required>
+                  <el-select v-model="form.grade" placeholder="专业分类">
                     <el-option v-for="item in levelEnum" :key="item.key" :value="item.key"
                                :label="item.value"></el-option>
                   </el-select>
@@ -85,7 +85,7 @@ export default {
           { required: true, message: '请输入真实姓名', trigger: 'blur' }
         ],
         grade: [
-          { required: true, message: '请选择年级', trigger: 'change' }
+          { required: true, message: '请选择专业分类', trigger: 'change' }
         ]
       }
     }

@@ -2,11 +2,11 @@
   <div class="app-container">
 
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading">
-      <el-form-item label="学科：" required>
+      <el-form-item label="专业方向：" required>
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="年级：" required>
-        <el-select v-model="form.level" placeholder="年级">
+      <el-form-item label="专业分类：" required>
+        <el-select v-model="form.profession_id" placeholder="专业分类">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
@@ -26,10 +26,10 @@ export default {
   data () {
     return {
       form: {
-        id: null,
-        name: '',
-        level: 1,
-        levelName: ''
+        id: null, // 专业方向id
+        name: '', // 专业方向名称
+        profession_id: 1, // 分类id
+        profession_name: '' // 分类名称
       },
       formLoading: false
     }
@@ -49,7 +49,7 @@ export default {
     submitForm () {
       let _this = this
       this.formLoading = true
-      this.form.levelName = this.enumFormat(this.levelEnum, this.form.level)
+      this.form.profession_name = this.enumFormat(this.levelEnum, this.form.profession_id)
       subjectApi.edit(this.form).then(data => {
         if (data.code === 1) {
           _this.$message.success(data.message)
@@ -70,8 +70,8 @@ export default {
       this.form = {
         id: null,
         name: '',
-        level: 1,
-        levelName: ''
+        profession_id: 1,
+        profession_name: ''
       }
       this.form.id = lastId
     },
@@ -82,7 +82,7 @@ export default {
       'enumFormat'
     ]),
     ...mapState('enumItem', {
-      levelEnum: state => state.user.levelEnum
+      levelEnum: state => state.exam.question.levelEnum
     })
   }
 }

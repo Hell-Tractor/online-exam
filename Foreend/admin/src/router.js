@@ -58,19 +58,19 @@ const constantRoutes = [
         meta: { title: '学生编辑', noCache: true, activeMenu: '/user/student/list' },
         hidden: true
       },
-      {
-        path: 'admin/list',
-        component: () => import('@/views/user/admin/list'),
-        name: 'UserAdminPageList',
-        meta: { title: '管理员列表', noCache: true }
-      },
-      {
-        path: 'admin/edit',
-        component: () => import('@/views/user/admin/edit'),
-        name: 'UserAdminEdit',
-        meta: { title: '管理员编辑', noCache: true, activeMenu: '/user/admin/list' },
-        hidden: true
-      }
+      // {
+      //   path: 'admin/list',
+      //   component: () => import('@/views/user/admin/list'),
+      //   name: 'UserAdminPageList',
+      //   meta: { title: '管理员列表', noCache: true }
+      // },
+      // {
+      //   path: 'admin/edit',
+      //   component: () => import('@/views/user/admin/edit'),
+      //   name: 'UserAdminEdit',
+      //   meta: { title: '管理员编辑', noCache: true, activeMenu: '/user/admin/list' },
+      //   hidden: true
+      // }
     ]
   },
   {
@@ -82,12 +82,12 @@ const constantRoutes = [
       icon: 'exam'
     },
     children: [
-      {
-        path: 'paper/list',
-        component: () => import('@/views/exam/paper/list'),
-        name: 'ExamPaperPageList',
-        meta: { title: '试卷列表', noCache: true }
-      },
+      // {
+      //   path: 'paper/list',
+      //   component: () => import('@/views/exam/paper/list'),
+      //   name: 'ExamPaperPageList',
+      //   meta: { title: '试卷列表', noCache: true }
+      // },
       {
         path: 'paper/edit',
         component: () => import('@/views/exam/paper/edit'),
@@ -136,7 +136,7 @@ const constantRoutes = [
     component: Layout,
     name: 'EducationPage',
     meta: {
-      title: '学科管理',
+      title: '专业方向管理',
       icon: 'education'
     },
     alwaysShow: true,
@@ -145,13 +145,13 @@ const constantRoutes = [
         path: 'subject/list',
         component: () => import('@/views/education/subject/list'),
         name: 'EducationSubjectPage',
-        meta: { title: '学科列表', noCache: true }
+        meta: { title: '专业方向列表', noCache: true }
       },
       {
         path: 'subject/edit',
         component: () => import('@/views/education/subject/edit'),
         name: 'EducationSubjectEditPage',
-        meta: { title: '学科编辑', noCache: true, activeMenu: '/education/subject/list' },
+        meta: { title: '专业方向编辑', noCache: true, activeMenu: '/education/subject/list' },
         hidden: true
       }
     ]

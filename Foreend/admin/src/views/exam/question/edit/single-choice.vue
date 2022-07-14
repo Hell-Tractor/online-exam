@@ -1,18 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="年级：" prop="gradeLevel" required>
-        <el-select v-model="form.gradeLevel" placeholder="年级"  @change="levelChange" clearable>
+      <el-form-item label="专业分类：" prop="profession" required>
+        <el-select v-model="form.profession" placeholder="专业分类"  @change="levelChange" clearable>
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="subjectId" required>
-        <el-select v-model="form.subjectId" placeholder="学科" >
-          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name+' ( '+item.levelName+' )'"></el-option>
-        </el-select>
+      <el-form-item label="专业方向：" prop="direction" required>
+<!--        <el-select v-model="form.direction" placeholder="专业方向" >-->
+<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name"></el-option>-->
+<!--        </el-select>-->
+        <el-input v-model="form.direction" />
       </el-form-item>
       <el-form-item label="题干：" prop="title" required>
-        <el-input v-model="form.title"   @focus="inputClick(form,'title')" />
+        <el-input v-model="form.title" />
       </el-form-item>
       <el-form-item label="选项：" required>
         <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.items"  label-width="50px" class="question-item-label">
@@ -20,8 +21,8 @@
            <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
       </el-form-item>
-      <el-form-item label="正确答案：" prop="correct" required>
-        <el-radio-group v-model="form.correct">
+      <el-form-item label="正确答案：" prop="answer" required>
+        <el-radio-group v-model="form.answer">
           <el-radio  v-for="item in form.items"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
         </el-radio-group>
       </el-form-item>
@@ -58,35 +59,32 @@ export default {
   data () {
     return {
       form: {
-        id: null,
-        questionType: 1,
-        gradeLevel: null,
-        subjectId: null,
-        title: '',
+        id: null,  // id
+        type: 1,  // 题目类型
+        profession: null, // 学科分类
+        direction: null, // 专业方向
+        body: '', // 题目题干
         items: [
           { prefix: 'A', content: '' },
           { prefix: 'B', content: '' },
           { prefix: 'C', content: '' },
           { prefix: 'D', content: '' }
         ],
-        analyze: '',
-        correct: '',
-        score: '',
-        difficult: 0
+        answer: '', // 答案
       },
-      subjectFilter: null,
+      subjectFilter: null, // 专业方向
       formLoading: false,
       rules: {
-        gradeLevel: [
-          { required: true, message: '请选择年级', trigger: 'change' }
+        profession: [
+          { required: true, message: '请选择专业分类', trigger: 'change' }
         ],
-        subjectId: [
-          { required: true, message: '请选择学科', trigger: 'change' }
+        direction: [
+          { required: true, message: '请选择专业方向', trigger: 'change' }
         ],
         title: [
           { required: true, message: '请输入题干', trigger: 'blur' }
         ],
-        correct: [
+        answer: [
           { required: true, message: '请选择正确答案', trigger: 'change' }
         ]
       },
@@ -178,30 +176,27 @@ export default {
       this.$refs['form'].resetFields()
       this.form = {
         id: null,
-        questionType: 1,
-        gradeLevel: null,
-        subjectId: null,
-        title: '',
+        type: 1,
+        profession: null,
+        direction: null,
+        body: '',
         items: [
           { prefix: 'A', content: '' },
           { prefix: 'B', content: '' },
           { prefix: 'C', content: '' },
           { prefix: 'D', content: '' }
         ],
-        analyze: '',
-        correct: '',
-        score: '',
-        difficult: 0
+        answer: '',
       }
       this.form.id = lastId
     },
     levelChange () {
-      this.form.subjectId = null
-      this.subjectFilter = this.subjects.filter(data => data.level === this.form.gradeLevel)
+      this.form.direction = null
+      this.subjectFilter = this.subjects.filter(data => data.profession === this.form.profession)
     },
     showQuestion () {
       this.questionShow.dialog = true
-      this.questionShow.qType = this.form.questionType
+      this.questionShow.qType = this.form.type
       this.questionShow.question = this.form
     },
     ...mapActions('exam', { initSubject: 'initSubject' }),
@@ -210,8 +205,8 @@ export default {
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
     ...mapState('enumItem', {
-      questionTypeEnum: state => state.exam.question.typeEnum,
-      levelEnum: state => state.user.levelEnum
+      typeEnum: state => state.exam.question.typeEnum,
+      levelEnum: state => state.exam.question.levelEnum
     }),
     ...mapState('exam', { subjects: state => state.subjects })
   }

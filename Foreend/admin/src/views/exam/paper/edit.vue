@@ -1,20 +1,22 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="年级：" prop="level" required>
-        <el-select v-model="form.level" placeholder="年级"  @change="levelChange">
+      <el-form-item label="专业分类：" prop="profession" required>
+        <el-select v-model="form.profession" placeholder="专业分类"  @change="levelChange">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="subjectId" required>
-        <el-select v-model="form.subjectId" placeholder="学科">
-          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"
-                     :label="item.name+' ( '+item.levelName+' )'"></el-option>
-        </el-select>
+      <el-form-item label="专业方向：" prop="direction" required>
+<!--        专业方向测试-->
+<!--        <el-select v-model="form.direction" placeholder="专业方向">-->
+<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"-->
+<!--                     :label="item.name+' ( '+item.levelName+' )'"></el-option>-->
+<!--        </el-select>-->
+        <el-input v-model="form.direction" />
       </el-form-item>
       <el-form-item label="试卷类型：" prop="paperType" required>
         <el-select v-model="form.paperType" placeholder="试卷类型">
-          <el-option v-for="item in paperTypeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="时间限制：" required v-show="form.paperType===4">
@@ -36,7 +38,7 @@
                         v-for="(questionItem,questionIndex) in titleItem.questionItems" style="margin-bottom: 15px">
             <el-row>
               <el-col :span="23">
-                <QuestionShow :qType="questionItem.questionType" :question="questionItem"/>
+                <QuestionShow :qType="questionItem.type" :question="questionItem"/>
               </el-col>
               <el-col :span="1">
                 <el-button type="text" size="mini" @click="titleItem.questionItems.splice(questionIndex,1)">删除
@@ -61,8 +63,8 @@
           <el-input v-model="questionPage.queryParam.id"  clearable></el-input>
         </el-form-item>
         <el-form-item label="题型：">
-          <el-select v-model="questionPage.queryParam.questionType" clearable>
-            <el-option v-for="item in questionTypeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+          <el-select v-model="questionPage.queryParam.type" clearable>
+            <el-option v-for="item in typeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -73,7 +75,7 @@
                 @selection-change="handleSelectionChange" border fit highlight-current-row style="width: 100%">
         <el-table-column type="selection" width="35"></el-table-column>
         <el-table-column prop="id" label="Id" width="60px"/>
-        <el-table-column prop="questionType" label="题型" :formatter="questionTypeFormatter" width="70px"/>
+        <el-table-column prop="type" label="题型" :formatter="typeFormatter" width="70px"/>
         <el-table-column prop="shortTitle" label="题干" show-overflow-tooltip/>
       </el-table>
       <pagination v-show="questionPage.total>0" :total="questionPage.total"
@@ -101,8 +103,8 @@ export default {
     return {
       form: {
         id: null,
-        level: null,
-        subjectId: null,
+        profession: null,
+        direction: null,
         paperType: 1,
         limitDateTime: [],
         name: '',
@@ -112,11 +114,11 @@ export default {
       subjectFilter: null,
       formLoading: false,
       rules: {
-        level: [
-          { required: true, message: '请选择年级', trigger: 'change' }
+        profession: [
+          { required: true, message: '请选择专业分类', trigger: 'change' }
         ],
-        subjectId: [
-          { required: true, message: '请选择学科', trigger: 'change' }
+        direction: [
+          { required: true, message: '请选择专业方向', trigger: 'change' }
         ],
         paperType: [
           { required: true, message: '请选择试卷类型', trigger: 'change' }
@@ -133,8 +135,8 @@ export default {
         showDialog: false,
         queryParam: {
           id: null,
-          questionType: null,
-          subjectId: 1,
+          type: null,
+          direction: 1,
           pageIndex: 1,
           pageSize: 5
         },
@@ -214,11 +216,11 @@ export default {
       this.questionPage.showDialog = false
     },
     levelChange () {
-      this.form.subjectId = null
-      this.subjectFilter = this.subjects.filter(data => data.level === this.form.level)
+      this.form.direction = null
+      this.subjectFilter = this.subjects.filter(data => data.profession === this.form.profession)
     },
     search () {
-      this.questionPage.queryParam.subjectId = this.form.subjectId
+      this.questionPage.queryParam.direction = this.form.direction
       this.questionPage.listLoading = true
       questionApi.pageList(this.questionPage.queryParam).then(data => {
         const re = data.response
@@ -231,8 +233,8 @@ export default {
     handleSelectionChange (val) {
       this.questionPage.multipleSelection = val
     },
-    questionTypeFormatter (row, column, cellValue, index) {
-      return this.enumFormat(this.questionTypeEnum, cellValue)
+    typeFormatter (row, column, cellValue, index) {
+      return this.enumFormat(this.typeEnum, cellValue)
     },
     subjectFormatter (row, column, cellValue, index) {
       return this.subjectEnumFormat(cellValue)
@@ -242,8 +244,8 @@ export default {
       this.$refs['form'].resetFields()
       this.form = {
         id: null,
-        level: null,
-        subjectId: null,
+        profession: null,
+        direction: null,
         paperType: 1,
         limitDateTime: [],
         name: '',
@@ -258,9 +260,9 @@ export default {
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
     ...mapState('enumItem', {
-      questionTypeEnum: state => state.exam.question.typeEnum,
+      typeEnum: state => state.exam.question.typeEnum,
       paperTypeEnum: state => state.exam.examPaper.paperTypeEnum,
-      levelEnum: state => state.user.levelEnum
+      levelEnum: state => state.exam.question.levelEnum
     }),
     ...mapState('exam', { subjects: state => state.subjects })
   }

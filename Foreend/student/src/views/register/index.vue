@@ -20,8 +20,8 @@
                         @keyup.enter.native="handleLogin"/>
             </div>
             <div class="lowin-group">
-              <label>年级 </label>
-              <el-select class="lowin-input" v-model="loginForm.grade" placeholder="年级">
+              <label>专业分类 </label>
+              <el-select class="lowin-input" v-model="loginForm.grade" placeholder="专业分类">
                 <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
               </el-select>
             </div>

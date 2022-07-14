@@ -20,7 +20,7 @@ public class ProfessionService {
     @Autowired
     private ProfessionRepository professionRepository;
 
-    public Integer findProfessionID(String profession){
+    public Object findProfessionID(String profession){
         return professionRepository.findByProfessionName(profession);
     }
 }

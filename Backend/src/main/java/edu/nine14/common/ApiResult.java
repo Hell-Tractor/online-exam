@@ -38,15 +38,13 @@ public class ApiResult<T> {
      * @return Map对象用于序列化
      */
     protected Object pack() {
-        Map<String, Object> result = new HashMap<>(3);
+        Map<String, Object> result = new HashMap<>(2);
         if (code == HttpCode.OK) {
             result.put("code", code.getCode());
-            result.put("message", code.getMessage());
-            result.put("response", data);
+            result.put("data", data);
         } else {
             result.put("code", code.getCode());
-            result.put("message", code.getMessage());
-            result.put("response", message);
+            result.put("message", message);
         }
         return result;
     }

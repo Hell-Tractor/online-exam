@@ -1,0 +1,136 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1DB80DEE-6429-742B-1F4D-1AE06E5DF57A" name="user">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:00:35 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="username" id="946E6531-727B-83D5-5FD2-EDDEC096A646">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:00:41 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>78BA873B-1EEC-5FC5-7E8A-813F83AAB38A</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="password" id="1BC8B3EA-99CA-4423-6D5C-C668D017B0B8">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:01:25 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>0DD2B1B4-445F-6D1F-48E3-275BB8BA0A80</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="user_type" id="7CBCD7D7-17D4-D4DF-20FC-4FA7B274299A">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:20:00 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="E7B4963A-CFFB-98E5-ADCC-E7A15EEA2CFF">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:27:30 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>33707D8D-B978-DE7A-D66F-CC8B11046A2E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="mobile_number" id="4480B512-0A20-AD71-31A7-ACA02191232F">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:27:35 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>25AB5FBC-518E-9187-392C-53D0A2E738B2</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="sex" id="5680BD0E-3748-7116-E138-1892F8066782">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:29:26 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="birthday" id="B19709BA-3222-BF92-0489-68E96812DBC4">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:29:47 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="grade" id="B7491D15-6588-D911-9743-73474CAA473D">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:30:34 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1536C9BB-9C87-5250-1A64-CC48A3B26FC4" name="user PK">
+<createdBy>陈一鸣</createdBy>
+<createdTime>2022-07-11 11:01:01 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="0ABA1443-047E-8E3E-3738-078DE22A58CE" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>946E6531-727B-83D5-5FD2-EDDEC096A646</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

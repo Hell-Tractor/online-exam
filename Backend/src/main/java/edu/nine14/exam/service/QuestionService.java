@@ -18,4 +18,8 @@ import java.util.Optional;
 public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+
+    public Object getAllQuestion(){
+        return questionRepository.findAll();
+    }
 }

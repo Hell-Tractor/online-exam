@@ -59,7 +59,6 @@ public class QuestionController {
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectQuestonByCondition(@RequestBody QuestionChoice questionChoice){
         try {
-            //System.out.println(questionChoice);
             List<QuestionDirection> listQD = questionDirectionService.findByCondition(questionChoice.getPageIndex(), questionChoice.getPageSize(),
                     questionChoice.getDirection(), questionChoice.getProfession(),  questionChoice.getId(), questionChoice.getType()).getContent();
             List<QuestionReceive> listQR = new ArrayList<QuestionReceive>();

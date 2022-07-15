@@ -12,18 +12,18 @@
 <!--        </el-select>-->
         <el-input v-model="form.direction" />
       </el-form-item>
-      <el-form-item label="题干：" prop="title" required>
-        <el-input v-model="form.title" />
+      <el-form-item label="题干：" prop="body" required>
+        <el-input v-model="form.body" />
       </el-form-item>
       <el-form-item label="选项：" required>
-        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.items"  label-width="50px" class="question-item-label">
+        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.selection"  label-width="50px" class="question-item-label">
           <el-input v-model="item.content"   @focus="inputClick(item,'content')"  class="question-item-content-input"/>
            <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
         <el-radio-group v-model="form.answer">
-          <el-radio  v-for="item in form.items"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
+          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item>
@@ -64,7 +64,7 @@ export default {
         profession: null, // 学科分类
         direction: null, // 专业方向
         body: '', // 题目题干
-        items: [
+        selection: [
           { prefix: 'A', content: '' },
           { prefix: 'B', content: '' },
           { prefix: 'C', content: '' },
@@ -135,18 +135,18 @@ export default {
       this.richEditor.dialogVisible = false
     },
     questionItemRemove (index) {
-      this.form.items.splice(index, 1)
+      this.form.selection.splice(index, 1)
     },
     questionItemAdd () {
-      let items = this.form.items
+      let selection = this.form.selection
       let newLastPrefix
-      if (items.length > 0) {
-        let last = items[items.length - 1]
+      if (selection.length > 0) {
+        let last = selection[selection.length - 1]
         newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
       } else {
         newLastPrefix = 'A'
       }
-      items.push({ id: null, prefix: newLastPrefix, content: '' })
+      selection.push({ id: null, prefix: newLastPrefix, content: '' })
     },
     submitForm () {
       let _this = this
@@ -180,7 +180,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [
+        selection: [
           { prefix: 'A', content: '' },
           { prefix: 'B', content: '' },
           { prefix: 'C', content: '' },

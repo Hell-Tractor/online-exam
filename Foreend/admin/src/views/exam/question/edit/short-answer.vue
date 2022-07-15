@@ -13,8 +13,8 @@
 <!--        </el-select>-->
         <el-input v-model="form.direction" />
       </el-form-item>
-      <el-form-item label="题干：" prop="title" required>
-        <el-input v-model="form.title"   @focus="inputClick(form,'title')" />
+      <el-form-item label="题干：" prop="body" required>
+        <el-input v-model="form.body"   @focus="inputClick(form,'title')" />
       </el-form-item>
       <el-form-item label="答案：" prop="answer" required>
         <el-input v-model="form.answer"   @focus="inputClick(form,'answer')" />
@@ -56,7 +56,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [],
+        selection: [],
         answer: '',
       },
       subjectFilter: null,
@@ -153,7 +153,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [],
+        selection: [],
         answer: '',
       }
       this.form.id = lastId

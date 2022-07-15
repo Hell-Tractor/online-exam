@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="专业分类：">
-        <el-select v-model="queryParam.profession_id" placeholder="专业分类" clearable="">
+        <el-select v-model="queryParam.professionID" placeholder="专业分类" clearable="">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
@@ -17,7 +17,7 @@
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" />
       <el-table-column prop="name" label="专业方向"/>
-      <el-table-column prop="profession_name" label="专业分类" />
+      <el-table-column prop="professionName" label="专业分类" />
       <el-table-column width="220px" label="操作" align="center">
         <template slot-scope="{row}">
           <router-link :to="{path:'/education/subject/edit', query:{id:row.id}}" class="link-left">
@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       queryParam: {
-        profession_id: null,
+        professionID: null,
         pageIndex: 1,
         pageSize: 10
       },

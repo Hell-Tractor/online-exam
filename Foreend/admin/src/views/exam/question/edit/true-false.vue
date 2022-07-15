@@ -13,18 +13,18 @@
 <!--        </el-select>-->
         <el-input v-model="form.direction" />
       </el-form-item>
-      <el-form-item label="题干：" prop="title" required>
+      <el-form-item label="题干：" prop="body" required>
 <!--        当元素获得焦点时，发生 focus 事件-->
-        <el-input v-model="form.title"   @focus="inputClick(form,'title')" />
+        <el-input v-model="form.body"   @focus="inputClick(form,'body')" />
       </el-form-item>
       <el-form-item label="选项：" required>
-        <el-form-item :label="item.content" :key="item.prefix"  v-for="(item) in form.items"  label-width="50px" class="question-item-label">
+        <el-form-item :label="item.content" :key="item.prefix"  v-for="(item) in form.selection"  label-width="50px" class="question-item-label">
           <el-input v-model="item.prefix"  style="width:50px;" />
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
         <el-radio-group v-model="form.answer">
-          <el-radio  v-for="item in form.items"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
+          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item>
@@ -64,7 +64,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [
+        selection: [
           { prefix: 'T', content: '是' },
           { prefix: 'F', content: '否' }
         ],
@@ -165,7 +165,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [
+        selection: [
           { prefix: 'T', content: '是' },
           { prefix: 'F', content: '否' }
         ],

@@ -7,17 +7,15 @@
             <span>个人信息</span>
           </div>
           <el-row style="text-align: center">
-            <el-upload action="/api/student/upload/image"  accept=".jpg,.png" :show-file-list="false"  :on-success="uploadSuccess">
-              <el-avatar class="el-dropdown-avatar" :size="100" :src="form.imagePath === null ? require('@/assets/avatar.png') : form.imagePath"></el-avatar>
-            </el-upload>
+              <el-avatar class="el-dropdown-avatar" :size="100" :src="require('@/assets/avatar.png') "></el-avatar>
           </el-row>
-          <el-row class="user-info-userName">
-            <label>{{form.userName}}</label>
+          <el-row class="user-info-username">
+            <label>{{form.username}}</label>
           </el-row>
           <el-divider/>
           <el-row class="user-info-fullInfo">
             <label>姓名：{{form.realName}}</label><br/>
-            <label>专业分类：{{levelFormatter(form.grade)}}</label><br/>
+            <label>年级：{{levelFormatter(form.grade)}}</label><br/>
           </el-row>
         </el-card>
       </el-col>
@@ -29,9 +27,6 @@
                 <el-form-item label="姓名：" prop="realName" required>
                   <el-input v-model="form.realName"></el-input>
                 </el-form-item>
-                <el-form-item label="年龄：">
-                  <el-input v-model="form.age"></el-input>
-                </el-form-item>
                 <el-form-item label="性别：">
                   <el-select v-model="form.sex" placeholder="性别" clearable>
                     <el-option v-for="item in sexEnum" :key="item.key" :value="item.key"
@@ -39,13 +34,13 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item label="出生日期：">
-                  <el-date-picker v-model="form.birthDay" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"/>
+                  <el-date-picker v-model="form.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"/>
                 </el-form-item>
                 <el-form-item label="手机：">
-                  <el-input v-model="form.phone"></el-input>
+                  <el-input v-model="form.mobileNumber"></el-input>
                 </el-form-item>
-                <el-form-item label="专业分类：" prop="grade" required>
-                  <el-select v-model="form.grade" placeholder="专业分类">
+                <el-form-item label="年级：" prop="grade" required>
+                  <el-select v-model="form.grade" placeholder="年级">
                     <el-option v-for="item in levelEnum" :key="item.key" :value="item.key"
                                :label="item.value"></el-option>
                   </el-select>
@@ -71,13 +66,13 @@ export default {
     return {
       event: [],
       form: {
-        userName: '',
+        // username: '',
         realName: '',
         sex: '',
-        birthDay: null,
-        phone: null,
+        birthday: null,
+        mobileNumber: null,
         grade: null,
-        imagePath: null
+        userType: 'U'
       },
       formLoading: false,
       rules: {
@@ -85,7 +80,7 @@ export default {
           { required: true, message: '请输入真实姓名', trigger: 'blur' }
         ],
         grade: [
-          { required: true, message: '请选择专业分类', trigger: 'change' }
+          { required: true, message: '请选择年级', trigger: 'change' }
         ]
       }
     }

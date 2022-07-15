@@ -11,7 +11,7 @@
             <el-tag style=" margin: 0 8px 0 auto;" :type="readTagFormat(item.readed)">{{readTextFormat(item.readed)}}</el-tag>
           </template>
           <el-row>
-            <label>发送人：{{item.sendUserName}}</label>
+            <label>发送人：{{item.sendusername}}</label>
           </el-row>
           <el-row>
             <label>发送时间：{{item.createTime}}</label>

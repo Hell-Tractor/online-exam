@@ -12,18 +12,18 @@
 <!--        </el-select>-->
         <el-input v-model="form.direction" />
       </el-form-item>
-      <el-form-item label="题干：" prop="title" required>
-        <el-input v-model="form.title" />
+      <el-form-item label="题干：" prop="body" required>
+        <el-input v-model="form.body" />
       </el-form-item>
       <el-form-item label="选项：" required>
-        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.items"  label-width="50px" class="question-item-label">
+        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.selection"  label-width="50px" class="question-item-label">
           <el-input v-model="item.content"   @focus="inputClick(item,'content')"  class="question-item-content-input"/>
           <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="correctArray" required>
         <el-checkbox-group v-model="form.correctArray">
-          <el-checkbox v-for="item in form.items" :label="item.prefix" :key="item.prefix">{{item.prefix}}</el-checkbox>
+          <el-checkbox v-for="item in form.selection" :label="item.prefix" :key="item.prefix">{{item.prefix}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
@@ -64,7 +64,7 @@ export default {
         profession: null,  // 学科类型
         direction: null, // 专业方向
         body: '', // 题干或者题目
-        items: [
+        selection: [
           {prefix: 'A', content: '' },
           {prefix: 'B', content: '' },
           {prefix: 'C', content: '' },
@@ -82,7 +82,7 @@ export default {
         direction: [
           { required: true, message: '请选择专业方向', trigger: 'change' }
         ],
-        title: [
+        body: [
           { required: true, message: '请输入题干', trigger: 'blur' }
         ],
         correctArray: [
@@ -136,18 +136,18 @@ export default {
       this.richEditor.dialogVisible = false
     },
     questionItemRemove (index) {
-      this.form.items.splice(index, 1)
+      this.form.selection.splice(index, 1)
     },
     questionItemAdd () {
-      let items = this.form.items
+      let selection = this.form.selection
       let newLastPrefix
-      if (items.length > 0) {
-        let last = items[items.length - 1]
+      if (selection.length > 0) {
+        let last = selection[selection.length - 1]
         newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
       } else {
         newLastPrefix = 'A'
       }
-      items.push({ id: null, prefix: newLastPrefix, content: '' })
+      selection.push({ id: null, prefix: newLastPrefix, content: '' })
     },
     submitForm () {
       let _this = this
@@ -190,7 +190,7 @@ export default {
         profession: null,
         direction: null,
         body: '',
-        items: [
+        selection: [
           { id: null, prefix: 'A', content: '' },
           { id: null, prefix: 'B', content: '' },
           { id: null, prefix: 'C', content: '' },

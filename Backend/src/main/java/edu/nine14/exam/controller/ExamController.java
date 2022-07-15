@@ -28,6 +28,18 @@ public class ExamController {
         return questionDirectionService.questionForDirection((Integer)professionService.findProfessionID("毛概"),"1","经济","生态");
     }*/
 
+    /**
+     * 实现根据要求抽取随机题目组卷
+     * @param profession
+     * @param has_direction
+     * @param direction1
+     * @param direction2
+     * @param single_choice_num
+     * @param multiple_choice_num
+     * @param true_false_num
+     * @param short_answer_num
+     * @return 题目数组
+     */
     @RequestMapping(path = "/createPaper",method = { RequestMethod.GET })
     @ResponseBody
     public Object createPaper(@RequestParam("profession") String profession,

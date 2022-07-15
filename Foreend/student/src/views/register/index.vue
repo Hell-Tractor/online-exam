@@ -15,15 +15,9 @@
             </div>
             <div class="lowin-group password-group">
               <label>密码</label>
-              <el-input class="lowin-input" ref="password" v-model="loginForm.password"
-                        placeholder="密码" name="password" tabindex="2" auto-complete="on"
+              <el-input class="lowin-input" ref="passwordRaw" v-model="passwordRaw"
+                        placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on"
                         @keyup.enter.native="handleLogin"/>
-            </div>
-            <div class="lowin-group">
-              <label>专业分类 </label>
-              <el-select class="lowin-input" v-model="loginForm.grade" placeholder="专业分类">
-                <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
-              </el-select>
             </div>
             <el-button type="text" class="lowin-btn login-btn" @click.native.prevent="handleRegister">注册</el-button>
             <div class="text-foot">
@@ -42,6 +36,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import registerApi from '@/api/register'
+import md5 from "md5";
 
 export default {
   name: 'Login',
@@ -49,16 +44,18 @@ export default {
     return {
       loginForm: {
         userName: '',
-        password: '',
-        grade: 1
-      }
+        password: ''
+      },
+      passwordRaw: '', // 没加密的密码
     }
   },
   methods: {
     handleRegister () {
+      // md5加密
+      this.loginForm.password=md5(this.passwordRaw)
       let _this = this
       registerApi.register(this.loginForm).then(function (result) {
-        if (result && result.code === 1) {
+        if (result && result.code === 200) {
           _this.$router.push({ path: '/login' })
         } else {
           _this.$message.error(result.message)

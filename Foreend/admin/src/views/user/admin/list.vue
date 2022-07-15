@@ -19,13 +19,6 @@
 <!--      <el-table-column prop="sex" label="性别" width="60px;" :formatter="sexFormatter"/>-->
 <!--      <el-table-column prop="phone" label="手机号"/>-->
 <!--      <el-table-column prop="createTime" label="创建时间" width="160px"/>-->
-<!--      <el-table-column label="状态" prop="status" width="70px">-->
-<!--        <template slot-scope="{row}">-->
-<!--          <el-tag :type="statusTagFormatter(row.status)">-->
-<!--            {{ statusFormatter(row.status) }}-->
-<!--          </el-tag>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
 <!--      <el-table-column width="220px" label="操作" align="center">-->
 <!--        <template slot-scope="{row}">-->
 <!--          <el-button size="mini"   @click="changeStatus(row)" class="link-left">-->

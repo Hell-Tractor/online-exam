@@ -55,7 +55,7 @@ export default {
       this.loginForm.password=md5(this.passwordRaw)
       let _this = this
       registerApi.register(this.loginForm).then(function (result) {
-        if (result && result.code === 1) {
+        if (result && result.code === 200) {
           _this.$router.push({ path: '/login' })
         } else {
           _this.$message.error(result.message)

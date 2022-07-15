@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     uploadSuccess (re, file) {
-      if (re.code === 1) {
+      if (re.code === 200) {
         window.location.reload()
       } else {
         this.$message.error(re.message)
@@ -108,7 +108,7 @@ export default {
         if (valid) {
           this.formLoading = true
           userApi.update(this.form).then(data => {
-            if (data.code === 1) {
+            if (data.code === 200) {
               _this.$message.success(data.message)
             } else {
               _this.$message.error(data.message)
@@ -139,5 +139,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

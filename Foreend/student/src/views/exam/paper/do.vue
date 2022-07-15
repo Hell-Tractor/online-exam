@@ -131,7 +131,7 @@ export default {
       window.clearInterval(_this.timer)
       _this.formLoading = true
       examPaperAnswerApi.answerSubmit(this.answer).then(re => {
-        if (re.code === 1) {
+        if (re.code === 200) {
           _this.$alert('试卷得分：' + re.response + '分', '考试结果', {
             confirmButtonText: '返回考试记录',
             callback: action => {

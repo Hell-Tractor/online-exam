@@ -79,12 +79,8 @@ export default {
     },
     logout () {
       let _this = this
-      loginApi.logout().then(function (result) {
-        if (result && result.code === 1) {
-          _this.clearLogin()
-          _this.$router.push({ path: '/login' })
-        }
-      })
+      _this.clearLogin()
+      _this.$router.push({ path: '/login' })
     },
     ...mapActions('user', ['getUserMessageInfo']),
     ...mapMutations('user', ['clearLogin'])

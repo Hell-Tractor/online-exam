@@ -51,7 +51,7 @@ export default {
       this.formLoading = true
       this.form.professionName = this.enumFormat(this.levelEnum, this.form.professionID)
       subjectApi.edit(this.form).then(data => {
-        if (data.code === 1) {
+        if (data.code === 200) {
           _this.$message.success(data.message)
           _this.delCurrentView(_this).then(() => {
             _this.$router.push('/education/subject/list')

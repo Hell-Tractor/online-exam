@@ -82,7 +82,7 @@ export default {
     deletePaper (row) {
       let _this = this
       examPaperApi.deletePaper(row.id).then(re => {
-        if (re.code === 1) {
+        if (re.code === 200) {
           _this.search()
           _this.$message.success(re.message)
         } else {

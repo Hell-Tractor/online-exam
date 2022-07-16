@@ -9,7 +9,7 @@ public class QuestionReceive {
     private String body;
     private String answer;
     private String type;
-    private String[] selection;
+    private Option[] selection;
 
     public Integer getQuestionID() {
         return questionID;
@@ -51,11 +51,11 @@ public class QuestionReceive {
         this.type = type;
     }
 
-    public String[] getSelection() {
+    public Option[] getSelection() {
         return selection;
     }
 
-    public void setSelection(String[] selection) {
+    public void setSelection(Option[] selection) {
         this.selection = selection;
     }
 
@@ -66,26 +66,3 @@ public class QuestionReceive {
     }
 }
 
-/**
- * 选项
- */
-class Option{
-    private String prefix;
-    private String content;
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-}

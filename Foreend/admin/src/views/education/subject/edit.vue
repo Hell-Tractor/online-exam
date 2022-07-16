@@ -3,10 +3,10 @@
 
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading">
       <el-form-item label="专业方向：" required>
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.directionName"></el-input>
       </el-form-item>
       <el-form-item label="专业分类：" required>
-        <el-select v-model="form.professionID" placeholder="专业分类">
+        <el-select v-model="form.profession.professionID" placeholder="专业分类">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
@@ -22,14 +22,25 @@
 import { mapGetters, mapState, mapActions } from 'vuex'
 import subjectApi from '@/api/subject'
 
+const form={
+  directionID:1,
+  directionName:'',
+  profession:{
+    professionID: 1, // 分类id
+    professionName: '' // 分类名称
+  }
+}
+
 export default {
   data () {
     return {
       form: {
-        id: null, // 专业方向id
-        name: '', // 专业方向名称
-        professionID: 1, // 分类id
-        professionName: '' // 分类名称
+        directionID: null, // 专业方向id
+        directionName: '', // 专业方向名称
+        profession:{
+          professionID: 1, // 分类id
+          professionName: '' // 分类名称
+        }
       },
       formLoading: false
     }
@@ -49,7 +60,7 @@ export default {
     submitForm () {
       let _this = this
       this.formLoading = true
-      this.form.professionName = this.enumFormat(this.levelEnum, this.form.professionID)
+      this.form.profession.professionName = this.enumFormat(this.levelEnum, this.form.profession.professionID)
       subjectApi.edit(this.form).then(data => {
         if (data.code === 200) {
           _this.$message.success(data.message)
@@ -65,17 +76,18 @@ export default {
       })
     },
     resetForm () {
-      let lastId = this.form.id
+      let lastId = this.form.directionID
       this.$refs['form'].resetFields()
       this.form = {
-        id: null,
-        name: '',
-        professionID: 1,
-        professionName: ''
+        directionID: null,
+        directionName: '',
+        profession:{
+          professionID: 1, // 分类id
+          professionName: '' // 分类名称
+        }
       }
-      this.form.id = lastId
+      this.form.directionID = lastId
     },
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
   },
   computed: {
     ...mapGetters('enumItem', [

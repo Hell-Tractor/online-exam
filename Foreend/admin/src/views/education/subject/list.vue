@@ -44,8 +44,8 @@ export default {
     return {
       queryParam: {
         professionID: null,
-        pageIndex: 1,
-        pageSize: 10
+        // pageIndex: 1,
+        // pageSize: 10
       },
       listLoading: true,
       tableData: [],

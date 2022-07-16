@@ -254,8 +254,7 @@ export default {
       }
       this.form.id = lastId
     },
-    ...mapActions('exam', { initSubject: 'initSubject' }),
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
+    ...mapActions('exam', { initSubject: 'initSubject' })
   },
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),

@@ -32,8 +32,7 @@ public class ExamController {
      * 实现根据要求抽取随机题目组卷
      * @param profession
      * @param has_direction
-     * @param direction1
-     * @param direction2
+     * @param direction
      * @param single_choice_num
      * @param multiple_choice_num
      * @param true_false_num
@@ -43,21 +42,23 @@ public class ExamController {
     @RequestMapping(path = "/createPaper",method = { RequestMethod.GET })
     @ResponseBody
     public Object createPaper(@RequestParam("profession") String profession,
-                              @RequestParam("has_direction") String has_direction,
-                              @RequestParam("direction1") String direction1,
-                              @RequestParam("direction2") String direction2,
+                              @RequestParam("has_direction") boolean has_direction,
+                              @RequestParam("direction") ArrayList<String> direction,
                               @RequestParam("single_choice_num") Integer single_choice_num,
                               @RequestParam("multiple_choice_num") Integer multiple_choice_num,
                               @RequestParam("true_false_num") Integer true_false_num,
                               @RequestParam("short_answer_num") Integer short_answer_num){
         Object professionID= professionService.findProfessionID(profession);
 
+        String direction1=direction.get(0);
+        String direction2=direction.get(1);
+
         List<Object> single_question=new ArrayList<>();
         List<Object> multiple_question=new ArrayList<>();
         List<Object> true_false_question=new ArrayList<>();
         List<Object> short_answer_question=new ArrayList<>();
 
-        if(has_direction.equals("NO")){
+        if(!has_direction){
             if(single_choice_num>=0){
                 Object questionList=questionDirectionService.questionForProfession((Integer)professionID,"1");
                 Integer max_num= ((List<Object>) questionList).size();

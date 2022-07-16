@@ -80,6 +80,7 @@ public class QuestionDirection {
 
     public QuestionReceive toQuestionReceive(){
         QuestionReceive questionReceive = new QuestionReceive();
+        String[] letter = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N"};
         //将选项用Option对象来封装
         String[] selectionTemp = null;
         Option[] option = null;
@@ -90,7 +91,7 @@ public class QuestionDirection {
             for(int i=0;i<selectionTemp.length;i++){
                 option[i] = new Option();
                 option[i].setContent(selectionTemp[i]);
-                option[i].setPrefix(String.valueOf(i+1));
+                option[i].setPrefix(letter[i]);
             }
         }
 

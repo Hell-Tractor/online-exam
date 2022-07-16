@@ -14,17 +14,19 @@
 </template>
 
 <script>
-import { AppMain, Navbar, Sidebar, TagsView } from './components'
+import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 import BackToTop from '@/components/BackToTop'
+
+
+
 export default {
   name: 'Layout',
   components: {
     AppMain,
     Navbar,
     Sidebar,
-    TagsView,
     BackToTop
   },
   mixins: [ResizeMixin],

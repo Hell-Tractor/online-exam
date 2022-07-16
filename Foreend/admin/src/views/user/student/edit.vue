@@ -119,8 +119,7 @@ export default {
         grade: null // 年级
       }
       this.form.id = lastId
-    },
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
+    }
   },
   computed: {
     ...mapGetters('enumItem', [

@@ -1,13 +1,9 @@
 <template>
   <div class="lowin  lowin-blue">
-    <div class="lowin-brand">
-      <img src="@/assets/logo2.png" alt="logo" style="margin-top: 12px">
-    </div>
     <div class="lowin-wrapper">
       <div class="lowin-box lowin-login">
         <div class="lowin-box-inner">
-          <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
-            <p>考试系统</p>
+          <el-form ref="loginForm" :model="loginForm" :rules="loginRules" @keyup.enter.native="handleLogin">
             <div class="lowin-group">
               <label>用户名 </label>
               <el-input ref="userName" v-model="loginForm.userName" class="lowin-input" placeholder="用户名" name="userName" type="text" tabindex="1" auto-complete="on"/>
@@ -18,7 +14,9 @@
                 placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
             </div>
 
-            <el-button :loading="loading" type="text" class="lowin-btn login-btn"  @click.native.prevent="handleLogin">登录</el-button>
+            <el-button :loading="loading" type="text" class="lowin-btn login-btn"
+                       @click.native.prevent="handleLogin"
+            >登录</el-button>
 
             <div class="text-foot">
               还没有账号?
@@ -86,6 +84,10 @@ export default {
   destroyed () {
     // window.removeEventListener('storage', this.afterQRScan)
   },
+  // 计算属性
+  computed:{
+  },
+
   methods: {
     checkCapslock ({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
@@ -110,14 +112,21 @@ export default {
         this.$refs.passwordRaw.focus()
       })
     },
+
     handleLogin () {
+      // md5加密
       this.loginForm.password=md5(this.passwordRaw)
       let _this = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           loginApi.login(this.loginForm).then(function (result) {
-            if (result && result.code === 1) {
+            // 登陆成功
+            if (result && result.code === 200) {
+              // // token start
+              // let accessToken=result.data//从后台返回的token
+              // localStorage.setItem('accessToken',accessToken); // 用localStorage缓存token的值
+              // // token end
               _this.setUserName(_this.loginForm.userName)
               _this.$router.push({ path: '/' })
             } else {

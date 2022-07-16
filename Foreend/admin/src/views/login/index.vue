@@ -1,11 +1,11 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form"
+             auto-complete="on" label-position="left"
+             @keyup.enter.native="handleLogin">
       <div class="title-container">
         <h3 class="title">管理系统</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -45,9 +45,6 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
-      <el-checkbox v-model="loginForm.remember" style="margin-bottom: 20px;margin-left: 5px;">记住密码</el-checkbox>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
@@ -84,7 +81,6 @@ export default {
       loginForm: {
         username: '',
         password: '', // 加密后的password
-        remember: false
       },
       // 表单验证
       // elements 的Form组件提供的表单验证的功能，通过 rules 属性传入约定的验证规则
@@ -142,9 +138,10 @@ export default {
         this.$refs.passwordRaw.focus()
       })
     },
+    // 处理登陆
     handleLogin () {
       let _this = this
-      this.loginForm.password=md5(this.passwordRaw)
+      this.loginForm.password=md5(this.passwordRaw) //md5加密
       this.$refs.loginForm.validate(valid => {
         if (valid) { // 如果是有效的
           this.loading = true
@@ -152,9 +149,12 @@ export default {
           // 其中的login是调用后端/api/user/login的API，传入的是loginForm表单
           // then() 方法返回一个 Promise。参数：Promise 成功的回调函数
           loginApi.login(this.loginForm).then(function (result) {
-            if (result && result.code === 1) {
+            if (result && result.code === 200) {
+              //处理token
+              localStorage.setItem('token',result.data)
+              //结束token
               _this.setusername(_this.loginForm.username)
-              _this.$router.push({ path: '/' })
+              _this.$router.push({ path: '/' }) // 使用路由跳转到下一个页面
             } else { // 如果是无效的
               _this.loading = false
               _this.$message({

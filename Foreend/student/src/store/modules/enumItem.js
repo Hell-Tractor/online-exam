@@ -2,11 +2,10 @@
 const state = {
   user: {
     sexEnum: [{ key: 1, value: '男' }, { key: 2, value: '女' }],
-    levelEnum: [{ key: 1, value: '一专业分类' }, { key: 2, value: '二专业分类' }, { key: 3, value: '三专业分类' }, { key: 4, value: '四专业分类' }, { key: 5, value: '五专业分类' }, { key: 6, value: '六专业分类' }],
-    roleEnum: [{ key: 1, value: '学生' }, { key: 2, value: '教师' }, { key: 3, value: '管理员' }],
+    levelEnum: [{ key: 1, value: '一年级' }, { key: 2, value: '二年级' }, { key: 3, value: '三年级' }, { key: 4, value: '四年级' }],
+    roleEnum: [{ key: 1, value: '学生' }, { key: 3, value: '管理员' }],
     message: {
-      readTag: [{ key: true, value: 'success' }, { key: false, value: 'warning' }],
-      readText: [{ key: true, value: '已读' }, { key: false, value: '未读' }]
+      readTag: [{ key: true, value: 'success' }, { key: false, value: 'warning' }]
     }
   },
   exam: {

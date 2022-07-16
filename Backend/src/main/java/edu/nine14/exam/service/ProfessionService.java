@@ -2,6 +2,7 @@ package edu.nine14.exam.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import edu.nine14.exam.entity.DirectionSingle;
 import edu.nine14.exam.entity.Profession;
 import edu.nine14.exam.dao.ProfessionRepository;
 import edu.nine14.exam.entity.User;
@@ -20,7 +21,14 @@ public class ProfessionService {
     @Autowired
     private ProfessionRepository professionRepository;
 
-    public Object findProfessionID(String profession){
-        return professionRepository.findByProfessionName(profession);
+    public Integer findProfessionID(String profession){
+        return (int)professionRepository.findByProfessionName(profession);
+    }
+
+    public Object selectById(Integer professionID){
+        Optional<Profession> profession = professionRepository.findById(professionID);
+        if (profession.isEmpty())
+            throw new IllegalArgumentException("Question not found");
+        return profession.get();
     }
 }

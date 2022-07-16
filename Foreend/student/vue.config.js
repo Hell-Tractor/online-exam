@@ -32,6 +32,15 @@ module.exports = {
       filename: 'index.html'
     }
   },
+  pwa:{
+    iconPaths:{
+      favicon32:'@/icons/favicon.ico',
+      favicon16:'@/icons/favicon.ico',
+      appleTouchIcon:'@/icons/favicon.ico',
+      maskIcon:'@/icons/favicon.ico',
+      msTileImage:'@/icons/favicon.ico',
+    }
+  },
   chainWebpack (config) {
     // set svg-sprite-loader
     config.module

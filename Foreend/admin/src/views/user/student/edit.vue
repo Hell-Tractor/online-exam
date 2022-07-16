@@ -11,7 +11,6 @@
       <el-form-item label="真实姓名：" prop="name" required>
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      </el-form-item>
       <el-form-item label="性别：">
         <el-select v-model="form.sex" placeholder="性别" clearable>
           <el-option v-for="item in sexEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
@@ -48,7 +47,7 @@ export default {
         username: '',
         password: '',
         name: '',
-        user_type: 1,
+        user_type: 'U',
         sex: '',
         birthDay: null,
         mobile_number: null,
@@ -68,12 +67,14 @@ export default {
       }
     }
   },
+  // 初始化，显示原来的信息
   created () {
-    let id = this.$route.query.id
+    let username = this.$route.query.username
     let _this = this
-    if (id && parseInt(id) !== 0) {
+    if (username) {
       _this.formLoading = true
-      userApi.selectUser(id).then(re => {
+      // 更新表单
+      userApi.selectUser(username).then(re => {
         _this.form = re.response
         _this.formLoading = false
       })
@@ -86,7 +87,7 @@ export default {
         if (valid) {
           this.formLoading = true
           userApi.createUser(this.form).then(data => {
-            if (data.code === 1) {
+            if (data.code === 200) {
               _this.$message.success(data.message)
               _this.delCurrentView(_this).then(() => {
                 _this.$router.push('/user/student/list')
@@ -111,7 +112,7 @@ export default {
         username: '', // 用户名
         password: '', // 密码
         name: '', // 真实姓名
-        user_type: 1, // 角色类型
+        user_type: 'U', // 角色类型
         sex: '', // 性别
         birthDay: null, // 出生日期
         mobile_number: null, // 手机号码

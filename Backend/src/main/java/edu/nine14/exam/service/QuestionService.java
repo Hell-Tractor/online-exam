@@ -1,19 +1,13 @@
 package edu.nine14.exam.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+
 import edu.nine14.exam.entity.Question;
 import edu.nine14.exam.dao.QuestionRepository;
-import edu.nine14.exam.entity.User;
+import edu.nine14.exam.entity.QuestionReceive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.FailedLoginException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class QuestionService {
@@ -32,22 +26,29 @@ public class QuestionService {
     }
 
     public Object selectByType(String type){
-        Object question = questionRepository.selectQuestionByType(type);
-        if (question.equals(null))//感觉有点问题
+        Optional<Question> question = questionRepository.selectQuestionByType(type);
+        if (question.isEmpty())
             throw new IllegalArgumentException("Question not found");
         return question;
     }
 
-    public void saveQuestion(){
-
-    }
-
-    public void updateQuestion(Integer questionID, String selection){
-        Optional<Question> question = questionRepository.findById(questionID);
+    public void editQuestion(QuestionReceive questionReceive){
+        StringBuilder selection = new StringBuilder();
+        String[] tempSelection = questionReceive.getSelection();
+        for(String temp:tempSelection){
+            selection.append(temp);
+            //每个选项中间使用美元符号分隔
+            selection.append("$");
+        }
+        Optional<Question> question = questionRepository.findById(questionReceive.getQuestionID());
         if (question.isEmpty())
             throw new IllegalArgumentException("Question not found");
         else{
-            question.get().setSelection(selection);
+            question.get().setAnswer(questionReceive.getAnswer());
+            question.get().setBody(questionReceive.getBody());
+            question.get().setDirection(questionReceive.getDirection().getDirectionID());
+            question.get().setType(questionReceive.getType());
+            question.get().setSelection(selection.toString());
             questionRepository.save(question.get());
         }
     }
@@ -59,8 +60,23 @@ public class QuestionService {
         questionRepository.delete(question.get());
     }
 
-    public void addQuestion(Question question){
+    public void addQuestion(QuestionReceive questionReceive){
+        StringBuilder selection = new StringBuilder();
+        String[] tempSelection = questionReceive.getSelection();
+        for(String temp:tempSelection){
+            selection.append(temp);
+            //每个选项中间使用美元符号分隔
+            selection.append("$");
+        }
         try {
+            Question question = new Question();
+            //自动生成QuestionId
+            question.setQuestionID((int) questionRepository.count());
+            question.setSelection(selection.toString());
+            question.setType(questionReceive.getType());
+            question.setDirection(questionReceive.getDirection().getDirectionID());
+            question.setBody(questionReceive.getBody());
+            question.setAnswer(questionReceive.getAnswer());
             questionRepository.save(question);
         }catch (Exception e){
             throw e;

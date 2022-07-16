@@ -19,23 +19,12 @@
       <el-table-column prop="grade" label="年级"  :formatter="gradeFormatter"/>
       <el-table-column prop="sex" label="性别" width="60px;" :formatter="sexFormatter"/>
       <el-table-column prop="mobile_number" label="手机号"/>
-      <el-table-column label="状态" prop="status" width="70px">
-        <template slot-scope="{row}">
-          <el-tag :type="statusTagFormatter(row.status)">
-            {{ statusFormatter(row.status) }}
-          </el-tag>
-        </template>
-      </el-table-column>
       <el-table-column width="270px" label="操作" align="center">
+<!--        table绑定了:data,作用域插槽中定义一个对象 (这里对象被定义为 row)-->
+<!--        query传参-->
         <template slot-scope="{row}">
-          <el-button size="mini"  @click="changeStatus(row)" class="link-left">
-            {{ statusBtnFormatter(row.status) }}
-          </el-button>
-          <router-link :to="{path:'/user/student/edit', query:{id:row.id}}" class="link-left">
+          <router-link :to="{path:'/user/student/edit', query:{username:row.username}}" class="link-left">
             <el-button size="mini" >编辑</el-button>
-          </router-link>
-          <router-link :to="{path:'/log/user/list', query:{userId:row.id}}" class="link-left">
-            <el-button size="mini" >日志</el-button>
           </router-link>
           <el-button  size="mini" type="danger" @click="deleteUser(row)" class="link-left">删除</el-button>
         </template>
@@ -83,7 +72,7 @@ export default {
     changeStatus (row) {
       let _this = this
       userApi.changeStatus(row.id).then(re => {
-        if (re.code === 1) {
+        if (re.code === 200) {
           row.status = re.response
           _this.$message.success(re.message)
         } else {
@@ -91,10 +80,11 @@ export default {
         }
       })
     },
+    // 删除用户
     deleteUser (row) {
       let _this = this
-      userApi.deleteUser(row.id).then(re => {
-        if (re.code === 1) {
+      userApi.deleteUser(row.username).then(re => {
+        if (re.code === 200) {
           _this.search()
           _this.$message.success(re.message)
         } else {

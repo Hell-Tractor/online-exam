@@ -8,5 +8,5 @@ export default {
   getCurrentUser: () => post('/api/admin/user/current'), // 获得现有用户
   updateUser: query => post('/api/admin/user/update', query), // 更新用户
   deleteUser: id => post('/api/admin/user/delete/' + id), // 删除用户
-  // selectByusername: query => post('/api/admin/user/selectByusername', query)
+  //selectByusername: query => post('/api/admin/user/selectByusername', query)
 }

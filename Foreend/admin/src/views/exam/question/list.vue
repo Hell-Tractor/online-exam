@@ -2,15 +2,15 @@
   <div class="app-container">
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="题目ID：">
-        <el-input v-model="queryParam.id" clearable></el-input>
+        <el-input v-model="queryParam.questionID" clearable></el-input>
       </el-form-item>
       <el-form-item label="专业分类：">
-        <el-select v-model="queryParam.profession" placeholder="专业分类"  @change="levelChange" clearable>
+        <el-select v-model="queryParam.professionID" placeholder="专业分类"  @change="levelChange" clearable>
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="专业方向：">
-        <el-select v-model="queryParam.direction" clearable>
+        <el-select v-model="queryParam.directionID" clearable>
 <!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"-->
 <!--                     :label="item.name"></el-option>-->
         </el-select>
@@ -39,8 +39,8 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column prop="id" label="Id" width="90px"/>
-      <el-table-column prop="direction" label="专业方向" :formatter="subjectFormatter" width="120px"/>
+      <el-table-column prop="questionID" label="Id" width="90px"/>
+      <el-table-column prop="directionID" label="专业方向" :formatter="subjectFormatter" width="120px"/>
       <el-table-column prop="type" label="题型" :formatter="typeFormatter" width="70px"/>
       <el-table-column prop="shortTitle" label="题干" show-overflow-tooltip/>
       <el-table-column label="操作" align="center" width="220px">
@@ -70,17 +70,18 @@ export default {
   data () {
     return {
       queryParam: {
-        id: null,
+        questionID: null,
         type: null,
-        profession: null,
-        direction: null,
-        pageIndex: 1,
-        pageSize: 10
+        professionID: null,
+        directionID: null,
       },
       subjectFilter: null,
       listLoading: true,
       tableData: [],
       total: 0,
+      //分页
+      pageIndex: 1,
+      pageSize: 10,
       questionShow: {
         qType: 0,
         dialog: false,
@@ -109,8 +110,8 @@ export default {
       })
     },
     levelChange () { // 专业分类改变
-      this.queryParam.direction = null
-      this.subjectFilter = this.subjects.filter(data => data.profession === this.queryParam.profession)
+      this.queryParam.directionID = null
+      this.subjectFilter = this.subjects.filter(data => data.professionID === this.queryParam.professionID)
     },
     addQuestion () {
       this.$router.push('/exam/question/edit/singleChoice')
@@ -119,7 +120,7 @@ export default {
       let _this = this
       this.questionShow.dialog = true
       this.questionShow.loading = true
-      questionApi.select(row.id).then(re => {
+      questionApi.select(row.questionID).then(re => {
         _this.questionShow.qType = re.response.type
         _this.questionShow.question = re.response
         _this.questionShow.loading = false
@@ -127,11 +128,11 @@ export default {
     },
     editQuestion (row) {
       let url = this.enumFormat(this.editUrlEnum, row.type)
-      this.$router.push({ path: url, query: { id: row.id } })
+      this.$router.push({ path: url, query: { questionID: row.questionID } })
     },
     deleteQuestion (row) {
       let _this = this
-      questionApi.deleteQuestion(row.id).then(re => {
+      questionApi.deleteQuestion(row.questionID).then(re => {
         if (re.code === 200) {
           _this.search()
           _this.$message.success(re.message)

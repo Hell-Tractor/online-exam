@@ -78,6 +78,19 @@ public class QuestionDirection {
         this.direction = direction;
     }
 
+    public QuestionReceive toQuestionReceive(){
+        QuestionReceive questionReceive = new QuestionReceive();
+        String[] selectionTemp = null;
+        if(selection!=null)
+            selectionTemp = selection.split("[ $]+");
+        questionReceive.setQuestionID(questionID);
+        questionReceive.setDirection(direction);
+        questionReceive.setAnswer(answer);
+        questionReceive.setBody(body);
+        questionReceive.setSelection(selectionTemp);
+        questionReceive.setType(type);
+        return questionReceive;
+    }
     /*public Question(String body, String[] option){
         this.body=body;
         this.option=option;

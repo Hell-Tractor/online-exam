@@ -34,7 +34,12 @@ const router = new Router({
     },
 
     { path: '/do', name: 'ExamPaperDo', component: () => import('@/views/exam/paper/do'), meta: { title: '试卷答题' } },
-    { path: '*', component: () => import('@/views/error-page/404'), meta: { title: '404' }
+    { path: '*', component: () => import('@/views/error-page/404'), meta: { title: '404' } },
+    {
+      path: '/begin',
+      name: 'ExamPaperBegin',
+      component: () => import('@/views/exam/paper/begin'),
+      meta: { title: '开始答题' }
     }
   ]
 })

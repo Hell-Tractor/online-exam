@@ -16,5 +16,3 @@ spring:
 jwt:
   ttl: 120
   secret: examSecret
-
-

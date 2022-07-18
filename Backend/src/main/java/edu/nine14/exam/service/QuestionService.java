@@ -27,7 +27,7 @@ public class QuestionService {
     }
 
     public Object selectByType(String type){
-        Optional<Question> question = questionRepository.selectQuestionByType(type);
+        Optional<Question> question = (Optional<Question>)questionRepository.selectQuestionByType(type);
         if (question.isEmpty())
             throw new IllegalArgumentException("Question not found");
         return question;

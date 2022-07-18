@@ -1,10 +1,9 @@
 <template>
   <div style="margin-top: 10px">
-    <el-row>
-    </el-row>
-
     <el-row class="app-item-contain">
+      <el-col :span="6" :offset="4">
       <h3 class="index-title-h3" style="border-left: solid 10px cornflowerblue;">试卷列表</h3>
+      </el-col>
 <!--      xp:最开始的版本-->
 <!--      <div style="padding-left: 15px">-->
 <!--        <el-col :span="4" v-for="(item, index) in fixedPaper" :key="index" :offset="index > 0 ? 1 : 0">-->
@@ -22,6 +21,87 @@
 <!--        </el-col>-->
 <!--      </div>-->
     </el-row>
+    <el-row class="app-item-contain">
+      <el-col :span="15" :offset="4">
+        <el-card shadow="never">
+          <el-form ref="form" :model="form" label-position="top" :rules="rules">
+            <el-col :span="10" :offset="4">
+              <el-form-item prop="profession">
+              <span slot="label" style="font-size: 18px">
+                专业分类
+              </span>
+                <el-select v-model="form.profession" placeholder="请选择专业" @change="changeSelect" style="width: 500px">
+                  <el-option
+                    v-for="(item,index) in professions"
+                    :key="index"
+                    :label="item"
+                    :value="item"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+              <span slot="label" style="font-size: 18px">
+                出题方式
+              </span>
+                <el-switch
+                  v-model="form.has_direction"
+                  @change="changeDisable"
+                  active-text="自定义出题"
+                  inactive-text="系统随机出题">
+                </el-switch>
+              </el-form-item>
+              <div v-if="isDisabled">
+                <el-form-item prop="directions">
+                  <span slot="label" style="font-size: 18px">
+                    专业方向
+                  </span>
+                  <el-select v-model="form.directions" multiple placeholder="请选择两个专业方向" multiple-limit="2" style="width: 500px">
+                    <el-option
+                      v-for="(item,index) in options"
+                      :key="index"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="single_choice_num">
+                  <span slot="label" style="font-size: 18px">
+                    单选题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="multiple_choice_num">
+                  <span slot="label" style="font-size: 18px">
+                    多选题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="true_false_num">
+                  <span slot="label" style="font-size: 18px">
+                  判断题数量
+                   </span>
+                  <el-input type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="short_answer_num">
+                  <span slot="label" style="font-size: 18px">
+                  简答题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button @click="createPaper" type="primary" plain>生成试卷</el-button>
+                </el-form-item>
+              </div>
+              <div v-if="!isDisabled">
+                <el-form-item>
+                  <el-button @click="createPaper" type="primary" plain>生成试卷</el-button>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-form>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -31,12 +111,50 @@ import indexApi from '@/api/dashboard'
 export default {
   data () {
     return {
+      /*
       fixedPaper: [],
       timeLimitPaper: [],
       pushPaper: [],
       loading: false,
       taskLoading: false,
-      taskList: []
+      taskList: [],
+      name
+      */
+      form: {
+        profession: '',
+        has_direction: true,
+        directions: '',
+        single_choice_num: '',
+        multiple_choice_num: '',
+        true_false_num: '',
+        short_answer_num: ''
+      },
+      professions: ['毛概'],
+      directions: {
+        '毛概': ['经济', '民生', '党建', '生态']
+      },
+      options: [],
+      isDisabled: true,
+      rules: {
+        profession: [
+          { required: true, message: '请选择专业', trigger: 'blur' }
+        ],
+        directions: [
+          { type: 'array', required: true, message: '请选择两个专业方向', trigger: 'blur' }
+        ],
+        single_choice_num: [
+          { required: true, message: '请输入单选题数量', trigger: 'blur' }
+        ],
+        multiple_choice_num: [
+          { required: true, message: '请输入多选题数量', trigger: 'blur' }
+        ],
+        true_false_num: [
+          { required: true, message: '请输入判断题数量', trigger: 'blur' }
+        ],
+        short_answer_num: [
+          { required: true, message: '请输入简答题数量', trigger: 'blur' }
+        ]
+      }
     }
   },
   created () {
@@ -61,6 +179,48 @@ export default {
     },
     statusTextFormatter (status) {
       return this.enumFormat(this.statusEnum, status)
+    },
+    changeSelect () {
+      this.form.direction = ''
+
+      for (const k in this.professions) {
+        if (this.form.profession === this.professions[k]) {
+          this.options = this.directions[this.form.profession]
+        }
+      }
+    },
+    changeDisable () {
+      this.isDisabled = !this.isDisabled
+    },
+    createPaper () {
+      let _this = this
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$router.push({
+            name: 'ExamPaperBegin',
+            params: {
+              profession: this.form.profession,
+              has_direction: this.form.has_direction,
+              directions: this.form.directions,
+              single_choice_num: this.form.single_choice_num,
+              multiple_choice_num: this.form.multiple_choice_num,
+              true_false_num: this.form.true_false_num,
+              short_answer_num: this.form.short_answer_num
+            }
+          })
+          /*
+         indexApi.create(this.form).then(data => {
+            if (data.code === 200) {
+              _this.$message.success(data.message)
+            } else {
+              _this.$message.error(data.message)
+            }
+          })
+          */
+        } else {
+          return false
+        }
+      })
     }
   },
   computed: {
@@ -125,5 +285,13 @@ export default {
 
   .clearfix:after {
     clear: both
+  }
+
+  .formLabel {
+    font-size: 20px;
+    color: #333333;
+    font-family: sans-serif;
+    font-weight: 200;
+    line-height: 30px;
   }
 </style>

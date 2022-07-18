@@ -11,6 +11,12 @@ import './icons' // icon
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 
+// 设置反向代理，前端请求默认发送到 http://localhost:8080
+var axios = require('axios')
+axios.defaults.baseURL = 'http://localhost:8001'
+// 全局注册，之后可在其他组件中通过 this.$axios 发送数据
+Vue.prototype.$axios = axios
+
 Vue.use(Element, {
   size: 'medium' // set element-ui default size
 })

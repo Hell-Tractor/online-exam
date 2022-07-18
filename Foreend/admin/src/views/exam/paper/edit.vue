@@ -222,11 +222,11 @@ export default {
     search () {
       this.questionPage.queryParam.direction = this.form.direction
       this.questionPage.listLoading = true
-      questionApi.pageList(this.questionPage.queryParam).then(data => {
+      questionApi.selectDirectionByCondition(this.questionPage.queryParam.id).then(data => {
         const re = data.response
         this.questionPage.tableData = re.list
-        this.questionPage.total = re.total
-        this.questionPage.queryParam.pageIndex = re.pageNum
+        this.questionPage.total = 10
+        this.questionPage.queryParam.pageIndex = 1
         this.questionPage.listLoading = false
       })
     },

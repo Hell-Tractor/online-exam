@@ -52,6 +52,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapMutations } from 'vuex'
 import loginApi from '@/api/login'
 
@@ -148,7 +149,8 @@ export default {
           // loginApi是从@/api/login所import的
           // 其中的login是调用后端/api/user/login的API，传入的是loginForm表单
           // then() 方法返回一个 Promise。参数：Promise 成功的回调函数
-          loginApi.login(this.loginForm).then(function (result) {
+          // console.log(JSON.stringify(this.loginForm))
+          loginApi.login(JSON.stringify(this.loginForm)).then(function (result) {
             if (result && result.code === 200) {
               //处理token
               localStorage.setItem('token',result.data)

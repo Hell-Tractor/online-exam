@@ -10,8 +10,8 @@
             <p>考试系统</p>
             <div class="lowin-group">
               <label>用户名 </label>
-              <el-input ref="userName" v-model="loginForm.userName" class="lowin-input" placeholder="用户名"
-                        name="userName" type="text" tabindex="1" auto-complete="on"/>
+              <el-input ref="username" v-model="loginForm.username" class="lowin-input" placeholder="用户名"
+                        name="username" type="text" tabindex="1" auto-complete="on"/>
             </div>
             <div class="lowin-group password-group">
               <label>密码</label>
@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       loginForm: {
-        userName: '',
+        username: '',
         password: ''
       },
       passwordRaw: '', // 没加密的密码

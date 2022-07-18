@@ -33,7 +33,7 @@ public class ExamController {
     /*@RequestMapping(path = "/createPaper",method = { RequestMethod.GET })
     @ResponseBody
     //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    public Object chooseQuestions() {
+    public Object chooseQuestionsTest() {
         //return questionDirectionService.questionForDirection((Integer)professionService.findProfessionID("毛概"),"1","经济","生态");
         String profession = "毛概";
         Integer single_choice_num = 1;
@@ -43,13 +43,13 @@ public class ExamController {
 
         Object professionID = professionService.findProfessionID(profession);
 
-        List<QuestionDirection> single_question = new ArrayList<>();
-        List<QuestionDirection> multiple_question = new ArrayList<>();
-        List<QuestionDirection> true_false_question = new ArrayList<>();
-        List<QuestionDirection> short_answer_question = new ArrayList<>();
+        List<Object> single_question = new ArrayList<>();
+        List<Object> multiple_question = new ArrayList<>();
+        List<Object> true_false_question = new ArrayList<>();
+        List<Object> short_answer_question = new ArrayList<>();
 
             if (single_choice_num > 0) {
-                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "1");
+                List<Object> questionList = (List<Object>)questionDirectionService.questionForProfession((Integer) professionID, "1");
                 Integer max_num = questionList.size();
                 try {
                     if (single_choice_num > max_num)
@@ -80,7 +80,7 @@ public class ExamController {
                 }
             }
             if (multiple_choice_num > 0) {
-                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "2");
+                List<Object> questionList = (List<Object>)questionDirectionService.questionForProfession((Integer) professionID, "2");
                 Integer max_num = questionList.size();
                 try {
                     if (multiple_choice_num > max_num)
@@ -111,7 +111,7 @@ public class ExamController {
                 }
             }
             if (true_false_num > 0) {
-                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "3");
+                List<Object> questionList = (List<Object>)questionDirectionService.questionForProfession((Integer) professionID, "3");
                 Integer max_num = questionList.size();
                 try {
                     if (true_false_num > max_num)
@@ -142,7 +142,7 @@ public class ExamController {
                 }
             }
             if (short_answer_num > 0) {
-                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "4");
+                List<Object> questionList = (List<Object>)questionDirectionService.questionForProfession((Integer) professionID, "4");
                 Integer max_num = questionList.size();
                 try {
                     if (short_answer_num > max_num)
@@ -173,20 +173,15 @@ public class ExamController {
                 }
             }
 
-        List<QuestionDirection> final_question = new ArrayList<>();
+        List<Object> final_question = new ArrayList<>();
         final_question.addAll(single_question);
         final_question.addAll(multiple_question);
         final_question.addAll(true_false_question);
         final_question.addAll(short_answer_question);
 
-        List<QuestionReceive> listQR = new ArrayList<>();
-        for(QuestionDirection fq:final_question){
-            listQR.add(fq.toQuestionReceive());
-        }
-
         //String[] final_question_array = final_question.toArray(new String[final_question.size()]);
 
-        return ApiResult.ok(listQR);
+        return ApiResult.ok(final_question);
     }*/
 
     /**

@@ -50,7 +50,7 @@ public class QuestionDirectionService {
      */
     public Page<QuestionDirection> findByCondition(Integer page, Integer size, Integer direction,
                                                    Integer profession,Integer id, String type){
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         return questionDirectionRepository.findAll((root, criteriaQuery, criteriaBuilder)->{
             List<Predicate> predicates = new ArrayList<Predicate>();
             if(direction!=null){

@@ -47,7 +47,7 @@ public class DirectionService {
     }
 
     public Object selectByProfessionId(Integer professionId){
-        List<DirectionSingle> direction = directionSingleRepository.selectDirectionByProfessionId(professionId);
+        List<Direction> direction = directionRepository.selectDirectionByProfessionId(professionId);
         if (direction.isEmpty())
             throw new IllegalArgumentException("Question not found");
         return direction;

@@ -181,20 +181,20 @@ const router = new Router({
   routes: constantRoutes
 })
 
-// // token:设置路由拦截
-// // 运行next(false)就阻止跳转
-// router.beforeEach((to, from, next) => {
-//   const token=localStorage.getItem('token')
-//     if (to.name!=='Login' && !token) {
-//       next({
-//         path: '/login', // 返回登陆页面
-//         query: { redirect: to.fullPath }
-//       })
-//     } else {
-//       next()
-//     }
-// })
-// // end
+// token:设置路由拦截
+// 运行next(false)就阻止跳转
+router.beforeEach((to, from, next) => {
+  const token=localStorage.getItem('token')
+    if (to.name!=='Login' && !token) {
+      next({
+        path: '/login', // 返回登陆页面
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+})
+// end
 
 export {
   constantRoutes,

@@ -123,10 +123,10 @@ export default {
           loginApi.login(JSON.stringify(this.loginForm)).then(function (result) {
             // 登陆成功
             if (result && result.code === 200) {
-              // // token start
-              // let accessToken=result.data//从后台返回的token
-              // localStorage.setItem('accessToken',accessToken); // 用localStorage缓存token的值
-              // // token end
+              // token start
+              let token=result.data//从后台返回的token
+              localStorage.setItem('token',token); // 用localStorage缓存token的值
+              // token end
               _this.setUserName(_this.loginForm.username)
               _this.$router.push({ path: '/' })
             } else {

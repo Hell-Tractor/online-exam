@@ -12,6 +12,7 @@ const request = function (loadtip, query) {
       background: 'rgba(0, 0, 0, 0.5)'
     })
   }
+
   // 返回axios请求
   return axios.request(query)
     .then(res => {
@@ -54,37 +55,14 @@ const post = function (url, params) {
     withCredentials: true,
     timeout: 30000,
     data: params,
-    // headers: { 'Content-Type': 'application/json', 'request-ajax': true }
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
-  return request(false, query)
-}
-
-// 新的post，因为要用format格式
-const postFormat = function (url, params) {
-  const query = {
-    baseURL: process.env.VUE_APP_URL,
-    url: url,
-    method: 'post',
-    withCredentials: true,
-    timeout: 30000,
-    data: params,
-    // transformRequest: [
-    //   function (data) {
-    //     let ret = ''
-    //     for (let it in data) {
-    //       ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-    //     }
-    //     ret = ret.substring(0, ret.lastIndexOf('&'));
-    //     return ret
-    //   }
-    // ],
-    // headers: { 'Content-Type': 'application/json', 'request-ajax': true }
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'request-ajax': true }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
   }
   return request(false, query)
 }
-
 
 // 带负载提示的post
 // request函数在最前面
@@ -98,6 +76,10 @@ const postWithLoadTip = function (url, params) {
     data: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(true, query)
 }
 
@@ -110,6 +92,10 @@ const postWithOutLoadTip = function (url, params) {
     timeout: 30000,
     data: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
+  }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
   }
   return request(false, query)
 }
@@ -125,6 +111,10 @@ const get = function (url, params) {
     params: params,
     headers: { 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(false, query)
 }
 
@@ -139,6 +129,10 @@ const form = function (url, params) {
     data: params,
     headers: { 'Content-Type': 'application/form-data', 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(false, query)
 }
 
@@ -147,5 +141,5 @@ export {
   postWithLoadTip,
   postWithOutLoadTip,
   get,
-  form,postFormat
+  form
 }

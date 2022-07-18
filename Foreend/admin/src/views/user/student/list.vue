@@ -48,7 +48,7 @@ export default {
         username: '',
         user_type: 1,
         pageIndex: 1,
-        pageSize: 10
+        pageSize: 1
       },
       listLoading: true,
       tableData: [],

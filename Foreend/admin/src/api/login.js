@@ -4,5 +4,6 @@ import { post, postWithLoadTip } from '@/utils/request'
 // 传入的参数是query是请求的data
 
 export default {
-  login: query => postWithLoadTip(`/api/login`, query)
+  // login: query => postWithLoadTip(`/api/login`, query)
+  login: query => post(`/api/login`, query)
 }

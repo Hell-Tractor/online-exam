@@ -10,7 +10,7 @@
             <p>考试系统</p>
             <div class="lowin-group">
               <label>用户名 </label>
-              <el-input ref="userName" v-model="loginForm.userName" class="lowin-input" placeholder="用户名" name="userName" type="text" tabindex="1" auto-complete="on"/>
+              <el-input ref="username" v-model="loginForm.username" class="lowin-input" placeholder="用户名" name="username" type="text" tabindex="1" auto-complete="on"/>
             </div>
             <div class="lowin-group password-group">
               <label>密码 <a href="#" class="forgot-link">忘记密码?</a></label>
@@ -188,12 +188,11 @@ export default {
     }
     return {
       loginForm: {
-        userName: '',
-        password: '', // 加密后的密码
-        remember: false
+        username: '',
+        password: '' // 加密后的密码
       },
       loginRules: {
-        userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -207,8 +206,8 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted () {
-    if (this.loginForm.userName === '') {
-      this.$refs.userName.focus()
+    if (this.loginForm.username === '') {
+      this.$refs.username.focus()
     } else if (this.passwordRaw === '') {
       this.$refs.passwordRaw.focus()
     }
@@ -252,14 +251,15 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          loginApi.login(this.loginForm).then(function (result) {
+          // 将json对象转化为json字符串
+          loginApi.login(JSON.stringify(this.loginForm)).then(function (result) {
             // 登陆成功
             if (result && result.code === 200) {
               // // token start
               // let accessToken=result.data//从后台返回的token
               // localStorage.setItem('accessToken',accessToken); // 用localStorage缓存token的值
               // // token end
-              _this.setUserName(_this.loginForm.userName)
+              _this.setUserName(_this.loginForm.username)
               _this.$router.push({ path: '/' })
             } else {
               _this.loading = false

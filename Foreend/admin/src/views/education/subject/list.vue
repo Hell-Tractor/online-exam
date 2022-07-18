@@ -58,7 +58,7 @@ export default {
   methods: {
     search () {
       this.listLoading = true
-      subjectApi.pageList(this.queryParam).then(data => {
+      subjectApi.selectDirectionByCondition(this.queryParam.professionID).then(data => {
         const re = data.response
         this.tableData = re.list
         this.total = re.total

@@ -3,6 +3,8 @@ package edu.nine14.exam.controller;
 import edu.nine14.common.ApiResult;
 import edu.nine14.common.HttpCode;
 import edu.nine14.exam.choiceEntity.ExamChoice;
+import edu.nine14.exam.entity.QuestionDirection;
+import edu.nine14.exam.entity.QuestionReceive;
 import edu.nine14.exam.service.ProfessionService;
 import edu.nine14.exam.service.QuestionDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,15 +207,15 @@ public class ExamController {
         String direction1 = direction.get(0);
         String direction2 = direction.get(1);
 
-        List<Object> single_question = new ArrayList<>();
-        List<Object> multiple_question = new ArrayList<>();
-        List<Object> true_false_question = new ArrayList<>();
-        List<Object> short_answer_question = new ArrayList<>();
+        List<QuestionDirection> single_question = new ArrayList<>();
+        List<QuestionDirection> multiple_question = new ArrayList<>();
+        List<QuestionDirection> true_false_question = new ArrayList<>();
+        List<QuestionDirection> short_answer_question = new ArrayList<>();
 
         if (!has_direction) {
             if (single_choice_num >= 0) {
-                Object questionList = questionDirectionService.questionForProfession((Integer) professionID, "1");
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "1");
+                Integer max_num = questionList.size();
                 try {
                     if (single_choice_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -235,7 +237,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < single_choice_num; i++) {
-                            single_question.add(((List<Object>) questionList).get(question_num[i]));
+                            single_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -243,8 +245,8 @@ public class ExamController {
                 }
             }
             if (multiple_choice_num >= 0) {
-                Object questionList = questionDirectionService.questionForProfession((Integer) professionID, "2");
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "2");
+                Integer max_num = questionList.size();
                 try {
                     if (multiple_choice_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -266,7 +268,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < single_choice_num; i++) {
-                            multiple_question.add(((List<Object>) questionList).get(question_num[i]));
+                            multiple_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -274,8 +276,8 @@ public class ExamController {
                 }
             }
             if (true_false_num >= 0) {
-                Object questionList = questionDirectionService.questionForProfession((Integer) professionID, "3");
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "3");
+                Integer max_num = questionList.size();
                 try {
                     if (true_false_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -297,7 +299,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < true_false_num; i++) {
-                            true_false_question.add(((List<Object>) questionList).get(question_num[i]));
+                            true_false_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -305,8 +307,8 @@ public class ExamController {
                 }
             }
             if (short_answer_num >= 0) {
-                Object questionList = questionDirectionService.questionForProfession((Integer) professionID, "4");
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForProfession((Integer) professionID, "4");
+                Integer max_num = questionList.size();
                 try {
                     if (short_answer_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -328,7 +330,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < short_answer_num; i++) {
-                            short_answer_question.add(((List<Object>) questionList).get(question_num[i]));
+                            short_answer_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -336,19 +338,24 @@ public class ExamController {
                 }
             }
 
-            List<Object> final_question = new ArrayList<>();
+            List<QuestionDirection> final_question = new ArrayList<QuestionDirection>();
             final_question.addAll(single_question);
             final_question.addAll(multiple_question);
             final_question.addAll(true_false_question);
             final_question.addAll(short_answer_question);
 
+            List<QuestionReceive> listQR = new ArrayList<QuestionReceive>();
+            for(QuestionDirection fq:final_question){
+                listQR.add(fq.toQuestionReceive());
+            }
+
             //String[] final_question_array = final_question.toArray(new String[final_question.size()]);
 
-            return ApiResult.ok(final_question);
+            return ApiResult.ok(listQR);
         } else {
             if (single_choice_num >= 0) {
-                Object questionList = questionDirectionService.questionForDirection((Integer) professionID, "1", direction1, direction2);
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForDirection((Integer) professionID, "1", direction1, direction2);
+                Integer max_num = questionList.size();
                 try {
                     if (single_choice_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -369,7 +376,7 @@ public class ExamController {
                                 i--;
                         }
                         for (int i = 0; i < single_choice_num; i++) {
-                            single_question.add(((List<Object>) questionList).get(question_num[i]));
+                            single_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -377,8 +384,8 @@ public class ExamController {
                 }
             }
             if (multiple_choice_num >= 0) {
-                Object questionList = questionDirectionService.questionForDirection((Integer) professionID, "2", direction1, direction2);
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForDirection((Integer) professionID, "2", direction1, direction2);
+                Integer max_num = questionList.size();
                 try {
                     if (multiple_choice_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -400,7 +407,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < single_choice_num; i++) {
-                            multiple_question.add(((List<Object>) questionList).get(question_num[i]));
+                            multiple_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -408,8 +415,8 @@ public class ExamController {
                 }
             }
             if (true_false_num >= 0) {
-                Object questionList = questionDirectionService.questionForDirection((Integer) professionID, "3", direction1, direction2);
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForDirection((Integer) professionID, "3", direction1, direction2);
+                Integer max_num = questionList.size();
                 try {
                     if (true_false_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -431,7 +438,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < true_false_num; i++) {
-                            true_false_question.add(((List<Object>) questionList).get(question_num[i]));
+                            true_false_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -439,8 +446,8 @@ public class ExamController {
                 }
             }
             if (short_answer_num >= 0) {
-                Object questionList = questionDirectionService.questionForDirection((Integer) professionID, "4", direction1, direction2);
-                Integer max_num = ((List<Object>) questionList).size();
+                List<QuestionDirection> questionList = (List<QuestionDirection>)questionDirectionService.questionForDirection((Integer) professionID, "4", direction1, direction2);
+                Integer max_num = questionList.size();
                 try {
                     if (short_answer_num > max_num)
                         throw new Exception("输入题目数量过大");
@@ -462,7 +469,7 @@ public class ExamController {
                         }
 
                         for (int i = 0; i < short_answer_num; i++) {
-                            short_answer_question.add(((List<Object>) questionList).get(question_num[i]));
+                            short_answer_question.add(questionList.get(question_num[i]));
                         }
                     }
                 } catch (Exception e) {
@@ -470,15 +477,20 @@ public class ExamController {
                 }
             }
 
-            List<Object> final_question = new ArrayList<>();
+            List<QuestionDirection> final_question = new ArrayList<QuestionDirection>();
             final_question.addAll(single_question);
             final_question.addAll(multiple_question);
             final_question.addAll(true_false_question);
             final_question.addAll(short_answer_question);
 
+            List<QuestionReceive> listQR = new ArrayList<QuestionReceive>();
+            for(QuestionDirection fq:final_question){
+                listQR.add(fq.toQuestionReceive());
+            }
+
             //String[] final_question_array = final_question.toArray(new String[final_question.size()]);
 
-            return ApiResult.ok(final_question);
+            return ApiResult.ok(listQR);
         }
     }
 }

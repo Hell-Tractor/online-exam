@@ -184,18 +184,10 @@ public class ExamController {
             return ApiResult.ok(final_question);
     }*/
 
-
     /**
      * 实现根据要求抽取随机题目组卷
-     *
-     * @param profession
-     * @param has_direction
-     * @param direction
-     * @param single_choice_num
-     * @param multiple_choice_num
-     * @param true_false_num
-     * @param short_answer_num
-     * @return 题目数组
+     * @param examChoice
+     * @return
      */
     @RequestMapping(path = "/api/student/dashboard/createPaper", method = {RequestMethod.POST})
     @ResponseBody

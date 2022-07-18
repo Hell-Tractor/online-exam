@@ -3,7 +3,6 @@ package edu.nine14.exam.controller;
 import edu.nine14.common.ApiResult;
 import edu.nine14.common.HttpCode;
 import edu.nine14.exam.choiceEntity.ExamChoice;
-import edu.nine14.exam.entity.QuestionDirection;
 import edu.nine14.exam.service.ProfessionService;
 import edu.nine14.exam.service.QuestionDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,23 +185,16 @@ public class ExamController {
 
     /**
      * 实现根据要求抽取随机题目组卷
-     * @param examChoice
+     * @param examChoice 前端的json数据
      * @return
      */
     @RequestMapping(path = "/api/student/dashboard/createPaper", method = {RequestMethod.POST})
-    @ResponseBody
+    //@ResponseBody
     //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    /*public Object createPaper(@RequestParam("profession") String profession,
-                              @RequestParam("has_direction") boolean has_direction,
-                              @RequestParam("direction") ArrayList<String> direction,
-                              @RequestParam("single_choice_num") Integer single_choice_num,
-                              @RequestParam("multiple_choice_num") Integer multiple_choice_num,
-                              @RequestParam("true_false_num") Integer true_false_num,
-                              @RequestParam("short_answer_num") Integer short_answer_num) {*/
     public Object createPaper(@RequestBody ExamChoice examChoice) {
         String profession=examChoice.getProfession();
         boolean has_direction=examChoice.isHas_direction();
-        ArrayList<String> direction=examChoice.getDirection();
+        ArrayList<String> direction=examChoice.getDirections();
         Integer single_choice_num=examChoice.getSingle_choice_num();
         Integer multiple_choice_num=examChoice.getMultiple_choice_num();
         Integer true_false_num=examChoice.getTrue_false_num();

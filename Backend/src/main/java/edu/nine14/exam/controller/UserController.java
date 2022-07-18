@@ -111,13 +111,16 @@ public class UserController {
     /**
      * 获取当前所有用户列表
      * 需要ADMIN权限
+     * @param page 页码
+     * @param size 每页数量
      * @return 用户列表
      */
     @RequestMapping(path = "/getUserList")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    public Object getUserList() {
+    public Object getUserList(@RequestParam("page") int page,
+                              @RequestParam("size") int size) {
         try {
-            return ApiResult.ok(userService.getUserList());
+            return ApiResult.ok(userService.getUserList(page, size));
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }

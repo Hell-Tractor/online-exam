@@ -6,6 +6,9 @@ import edu.nine14.exam.entity.User;
 import edu.nine14.exam.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.FailedLoginException;
@@ -73,8 +76,9 @@ public class UserService {
         userRepository.delete(user.get());
     }
 
-    public List<String> getUserList() {
-        return userRepository.findAll().stream().map(User::getUsername).collect(java.util.stream.Collectors.toList());
+    public List<User> getUserList(int pageNum, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("user_type", "username"));
+        return userRepository.findAll(pageable).getContent();
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {

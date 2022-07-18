@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ExamChoice {
     private String profession;
     private boolean has_direction;
-    private ArrayList<String> direction;
+    private ArrayList<String> directions;
     private Integer single_choice_num;
     private Integer multiple_choice_num;
     private Integer true_false_num;
@@ -27,12 +27,12 @@ public class ExamChoice {
         this.has_direction = has_direction;
     }
 
-    public ArrayList<String> getDirection() {
-        return direction;
+    public ArrayList<String> getDirections() {
+        return directions;
     }
 
-    public void setDirection(ArrayList<String> direction) {
-        this.direction = direction;
+    public void setDirections(ArrayList<String> directions) {
+        this.directions = directions;
     }
 
     public Integer getSingle_choice_num() {

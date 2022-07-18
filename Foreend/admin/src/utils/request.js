@@ -54,10 +54,37 @@ const post = function (url, params) {
     withCredentials: true,
     timeout: 30000,
     data: params,
+    // headers: { 'Content-Type': 'application/json', 'request-ajax': true }
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
   return request(false, query)
 }
+
+// 新的post，因为要用format格式
+const postFormat = function (url, params) {
+  const query = {
+    baseURL: process.env.VUE_APP_URL,
+    url: url,
+    method: 'post',
+    withCredentials: true,
+    timeout: 30000,
+    data: params,
+    // transformRequest: [
+    //   function (data) {
+    //     let ret = ''
+    //     for (let it in data) {
+    //       ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    //     }
+    //     ret = ret.substring(0, ret.lastIndexOf('&'));
+    //     return ret
+    //   }
+    // ],
+    // headers: { 'Content-Type': 'application/json', 'request-ajax': true }
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'request-ajax': true }
+  }
+  return request(false, query)
+}
+
 
 // 带负载提示的post
 // request函数在最前面
@@ -101,7 +128,7 @@ const get = function (url, params) {
   return request(false, query)
 }
 
-// 表单请求
+
 const form = function (url, params) {
   const query = {
     baseURL: process.env.VUE_APP_URL,
@@ -110,7 +137,7 @@ const form = function (url, params) {
     withCredentials: true,
     timeout: 30000,
     data: params,
-    headers: { 'Content-Type': 'multipart/form-data', 'request-ajax': true }
+    headers: { 'Content-Type': 'application/form-data', 'request-ajax': true }
   }
   return request(false, query)
 }
@@ -120,5 +147,5 @@ export {
   postWithLoadTip,
   postWithOutLoadTip,
   get,
-  form
+  form,postFormat
 }

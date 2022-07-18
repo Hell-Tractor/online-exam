@@ -65,7 +65,7 @@ export default {
         const re = data.response
         this.tableData = re.list
         this.total = re.total
-        this.queryParam.pageIndex = re.pageNum
+        this.queryParam.pageIndex = 1
         this.listLoading = false
       })
     },

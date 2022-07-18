@@ -26,7 +26,6 @@
       </el-form-item>
       <el-form-item label="选项：" required>
         <el-form-item :label="item.content" :key="item.prefix"  v-for="(item) in form.selection"  label-width="50px" class="question-item-label">
-          <el-input v-model="item.prefix"  style="width:50px;" />
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>

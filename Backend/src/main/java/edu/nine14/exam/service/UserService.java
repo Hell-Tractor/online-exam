@@ -43,8 +43,12 @@ public class UserService {
     }
 
     public void register(String username, String password, String userType) {
+        Optional<User> user_check = userRepository.findById(username);
+        if (user_check.isPresent())
+            throw new IllegalArgumentException("User already exists");
         User user = new User();
         user.setUsername(username);
+        user.setName(username);
         user.setPassword(password);
         user.setUserType(userType);
         userRepository.save(user);
@@ -77,7 +81,7 @@ public class UserService {
     }
 
     public List<User> getUserList(int pageNum, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("user_type", "username"));
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("userType", "username"));
         return userRepository.findAll(pageable).getContent();
     }
 

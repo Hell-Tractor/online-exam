@@ -7,11 +7,9 @@ import edu.nine14.common.ApiResult;
 import edu.nine14.common.HttpCode;
 import edu.nine14.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.FailedLoginException;
 import java.util.Map;
 
 @RestController
@@ -22,16 +20,20 @@ public class UserController {
     /**
      * 登录，只能使用POST请求
      * 同样适用于token刷新
-     * @param username 用户名
-     * @param password 密码
+     * @param map
+     *  username:用户名
+     *  password:密码
      * @return 生成的token
      */
-    @RequestMapping(path = "/login", method = { RequestMethod.POST })
-    public Object login(@RequestParam("username") String username,
-                        @RequestParam("password") String password) {
+    @RequestMapping(path = "/api/login", method = { RequestMethod.POST })
+    public Object login(@RequestBody Map<String, String> map) {
         try {
+            String username = map.get("username");
+            String password = map.get("password");
             String token = userService.login(username, password);
             return ApiResult.ok(token);
+        } catch (FailedLoginException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -41,18 +43,22 @@ public class UserController {
     /**
      * 更新当前用户的密码
      * @param username 从token中解析出的用户名
-     * @param oldPassword 旧密码
-     * @param newPassword 新密码
+     * @param map
+     *  oldPassword:旧密码
+     *  newPassword:新密码
      * @return 是否更新成功
      */
     @RequestMapping(path = "/updatePassword", method = { RequestMethod.POST })
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updatePassword(@CurrentUser String username,
-                                 @RequestParam("oldPassword") String oldPassword,
-                                 @RequestParam("newPassword") String newPassword) {
+                                 @RequestBody Map<String, String> map) {
         try {
+            String oldPassword = map.get("oldPassword");
+            String newPassword = map.get("newPassword");
             userService.updatePassword(username, oldPassword, newPassword);
             return ApiResult.ok("update password success");
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -69,6 +75,8 @@ public class UserController {
         try {
             Map<String, String> userInfo = userService.getUserInformation(username);
             return ApiResult.ok(userInfo);
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -82,10 +90,12 @@ public class UserController {
      */
     @RequestMapping(path = "/updateUserInfo")
     @AuthenticationLevel(AuthenticationLevelType.USER)
-    public Object updateUserInfo(@RequestParam("userInfo") Map<String, String> userInfo, @CurrentUser String username) {
+    public Object updateUserInfo(@RequestBody Map<String, String> userInfo, @CurrentUser String username) {
         try {
             userService.updateUserInformation(username, userInfo);
             return ApiResult.ok("update success");
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -93,16 +103,20 @@ public class UserController {
 
     /**
      * 注册新用户（非管理员），只能使用POST请求
-     * @param username 用户名
-     * @param password 密码
+     * @param map
+     *  username:用户名
+     *  password:密码
      * @return 注册是否成功
      */
     @RequestMapping(path = "/register", method = { RequestMethod.POST })
-    public Object register(@RequestParam("username") String username,
-                           @RequestParam("password") String password) {
+    public Object register(@RequestBody Map<String, String> map) {
         try {
+            String username = map.get("username");
+            String password = map.get("password");
             userService.register(username, password, "U");
             return ApiResult.ok("register success");
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -138,6 +152,8 @@ public class UserController {
         try {
             Map<String, String> userInfo = userService.getUserInformation(username);
             return ApiResult.ok(userInfo);
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -155,8 +171,15 @@ public class UserController {
         try {
             userService.removeUser(username);
             return ApiResult.ok("remove success");
+        } catch (IllegalArgumentException e) {
+            return ApiResult.failed(HttpCode.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @RequestMapping(path = "/test")
+    public Object test() {
+        return ApiResult.ok("Hello world");
     }
 }

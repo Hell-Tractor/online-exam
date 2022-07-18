@@ -196,7 +196,7 @@ public class ExamController {
      * @param short_answer_num
      * @return 题目数组
      */
-    @RequestMapping(path = "/createPaper", method = {RequestMethod.GET})
+    @RequestMapping(path = "/api/student/dashboard/createPaper", method = {RequestMethod.GET})
     @ResponseBody
     //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object createPaper(@RequestParam("profession") String profession,

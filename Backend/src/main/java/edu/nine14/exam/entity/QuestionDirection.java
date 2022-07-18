@@ -80,14 +80,26 @@ public class QuestionDirection {
 
     public QuestionReceive toQuestionReceive(){
         QuestionReceive questionReceive = new QuestionReceive();
+        String[] letter = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N"};
+        //将选项用Option对象来封装
         String[] selectionTemp = null;
-        if(selection!=null)
+        Option[] option = null;
+        if(selection!=null){
             selectionTemp = selection.split("[ $]+");
+            option = new Option[selectionTemp.length];
+            System.out.println(selectionTemp.length);
+            for(int i=0;i<selectionTemp.length;i++){
+                option[i] = new Option();
+                option[i].setContent(selectionTemp[i]);
+                option[i].setPrefix(letter[i]);
+            }
+        }
+
         questionReceive.setQuestionID(questionID);
         questionReceive.setDirection(direction);
         questionReceive.setAnswer(answer);
         questionReceive.setBody(body);
-        questionReceive.setSelection(selectionTemp);
+        questionReceive.setSelection(option);
         questionReceive.setType(type);
         return questionReceive;
     }

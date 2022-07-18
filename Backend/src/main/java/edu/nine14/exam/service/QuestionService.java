@@ -1,6 +1,7 @@
 package edu.nine14.exam.service;
 
 
+import edu.nine14.exam.entity.Option;
 import edu.nine14.exam.entity.Question;
 import edu.nine14.exam.dao.QuestionRepository;
 import edu.nine14.exam.entity.QuestionReceive;
@@ -34,9 +35,9 @@ public class QuestionService {
 
     public void editQuestion(QuestionReceive questionReceive){
         StringBuilder selection = new StringBuilder();
-        String[] tempSelection = questionReceive.getSelection();
-        for(String temp:tempSelection){
-            selection.append(temp);
+        Option[] tempSelection = questionReceive.getSelection();
+        for(Option temp:tempSelection){
+            selection.append(temp.getContent());
             //每个选项中间使用美元符号分隔
             selection.append("$");
         }
@@ -62,9 +63,9 @@ public class QuestionService {
 
     public void addQuestion(QuestionReceive questionReceive){
         StringBuilder selection = new StringBuilder();
-        String[] tempSelection = questionReceive.getSelection();
-        for(String temp:tempSelection){
-            selection.append(temp);
+        Option[] tempSelection = questionReceive.getSelection();
+        for(Option temp:tempSelection){
+            selection.append(temp.getContent());
             //每个选项中间使用美元符号分隔
             selection.append("$");
         }

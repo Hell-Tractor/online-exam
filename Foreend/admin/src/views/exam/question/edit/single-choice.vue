@@ -1,36 +1,43 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="专业分类：" prop="profession" required>
-        <el-select v-model="form.profession" placeholder="专业分类"  @change="levelChange" clearable>
-          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
-        </el-select>
+      <el-form-item label="专业分类："  required>
+<!--        <el-select v-model="form.direction.profession.professionName" placeholder="专业分类"  @change="levelChange" clearable>-->
+<!--          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>-->
+<!--        </el-select>-->
+        <el-input v-model="form.direction.profession.professionName"  class="question-item-content-input"/>
+      </el-form-item>
+      <el-form-item label="分类id">
+        <el-input v-model="form.direction.profession.professionID"  class="question-item-content-input" />
       </el-form-item>
       <el-form-item label="专业方向：" prop="direction" required>
 <!--        <el-select v-model="form.direction" placeholder="专业方向" >-->
 <!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name"></el-option>-->
 <!--        </el-select>-->
-        <el-input v-model="form.direction" />
+        <el-input v-model="form.direction.directionName"  class="question-item-content-input" />
       </el-form-item>
-      <el-form-item label="题干：" prop="body" required>
-        <el-input v-model="form.body" />
+      <el-form-item label="方向id">
+        <el-input v-model="form.direction.directionID"  class="question-item-content-input"/>
+      </el-form-item>
+      <el-form-item label="题干：" prop="body" required >
+        <el-input v-model="form.body"  class="question-item-content-input"/>
       </el-form-item>
       <el-form-item label="选项：" required>
         <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.selection"  label-width="50px" class="question-item-label">
-          <el-input v-model="item.content"   @focus="inputClick(item,'content')"  class="question-item-content-input"/>
+          <el-input v-model="item.content"   class="question-item-content-input"/>
            <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
-        <el-radio-group v-model="form.answer">
-          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
-        </el-radio-group>
+<!--        <el-radio-group v-model="form.answer">-->
+<!--          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>-->
+<!--        </el-radio-group>-->
+        <el-input v-model="form.answer" class="question-item-content-input"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
         <el-button type="success" @click="questionItemAdd">添加选项</el-button>
-        <el-button type="success" @click="showQuestion">预览</el-button>
       </el-form-item>
     </el-form>
     <el-dialog  :visible.sync="richEditor.dialogVisible"  append-to-body :close-on-click-modal="false" style="width: 100%;height: 100%"   :show-close="false" center>
@@ -47,10 +54,33 @@
 </template>
 
 <script>
+/* eslint-disable*/
 import QuestionShow from '../components/Show'
 import Ueditor from '@/components/Ueditor'
 import { mapGetters, mapState, mapActions } from 'vuex'
 import questionApi from '@/api/question'
+
+const form =
+  {
+    direction:{
+      directionID: null,
+      directionName:'',
+      profession:{
+        professionID: '',
+        professionName:'',
+      }
+    },
+    questionID: 1,
+    type: 1,
+    body: '',
+    selection: [
+      { prefix: 'A', content: '' },
+      { prefix: 'B', content: '' },
+      { prefix: 'C', content: '' },
+      { prefix: 'D', content: '' }
+    ],
+    answer: '',
+  }
 
 export default {
   components: {
@@ -59,10 +89,16 @@ export default {
   data () {
     return {
       form: {
-        id: null,  // id
+        questionID: null,  // id
         type: 1,  // 题目类型
-        profession: null, // 学科分类
-        direction: null, // 专业方向
+        direction:{
+          directionID: null,
+          directionName:'',
+          profession:{
+            professionID: '',
+            professionName:'',
+          }
+        },
         body: '', // 题目题干
         selection: [
           { prefix: 'A', content: '' },
@@ -70,7 +106,7 @@ export default {
           { prefix: 'C', content: '' },
           { prefix: 'D', content: '' }
         ],
-        answer: '', // 答案
+        answer: '' // 答案
       },
       subjectFilter: null, // 专业方向
       formLoading: false,
@@ -111,7 +147,7 @@ export default {
     if (id && parseInt(id) !== 0) {
       _this.formLoading = true
       questionApi.select(id).then(re => {
-        _this.form = re.response
+        _this.form = re.data
         _this.formLoading = false
       })
     }
@@ -153,7 +189,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          questionApi.edit(this.form).then(re => {
+          questionApi.editQuestion(this.form).then(re => {
             if (re.code === 200) {
               _this.$message.success(re.message)
               _this.delCurrentView(_this).then(() => {
@@ -172,23 +208,29 @@ export default {
       })
     },
     resetForm () {
-      let lastId = this.form.id
+      let lastId = this.form.questionID
       this.$refs['form'].resetFields()
       this.form = {
-        id: null,
-        type: 1,
-        profession: null,
-        direction: null,
-        body: '',
+        questionID: null,  // id
+        type: 1,  // 题目类型
+        direction:{
+          directionID: null,
+          directionName:'',
+          profession:{
+            professionID: '',
+            professionName:'',
+          }
+        },
+        body: '', // 题目题干
         selection: [
           { prefix: 'A', content: '' },
           { prefix: 'B', content: '' },
           { prefix: 'C', content: '' },
           { prefix: 'D', content: '' }
         ],
-        answer: '',
+        answer: '' // 答案
       }
-      this.form.id = lastId
+      this.form.questionID = lastId
     },
     levelChange () {
       this.form.direction = null
@@ -199,8 +241,7 @@ export default {
       this.questionShow.qType = this.form.type
       this.questionShow.question = this.form
     },
-    ...mapActions('exam', { initSubject: 'initSubject' }),
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
+    ...mapActions('exam', { initSubject: 'initSubject' })
   },
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),

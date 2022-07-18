@@ -37,6 +37,7 @@ public class UserController {
         }
     }
 
+
     /**
      * 更新当前用户的密码
      * @param username 从token中解析出的用户名

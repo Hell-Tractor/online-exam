@@ -16,9 +16,6 @@ const actions = {
     })
   },
   getUserMessageInfo ({ commit }) {
-    userApi.getMessageCount().then(re => {
-      commit('setMessageCount', re.response)
-    })
   }
 }
 

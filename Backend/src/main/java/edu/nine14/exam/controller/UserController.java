@@ -48,7 +48,7 @@ public class UserController {
      *  newPassword:新密码
      * @return 是否更新成功
      */
-    @RequestMapping(path = "/updatePassword", method = { RequestMethod.POST })
+    @RequestMapping(path = "/api/student/user/update", method = { RequestMethod.POST })
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updatePassword(@CurrentUser String username,
                                  @RequestBody Map<String, String> map) {
@@ -69,7 +69,7 @@ public class UserController {
      * @param username 从token中解析的用户名
      * @return 用户信息
      */
-    @RequestMapping(path = "/getUserInfo")
+    @RequestMapping(path = "/api/student/user/current")
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object getUserInfo(@CurrentUser String username) {
         try {
@@ -88,7 +88,7 @@ public class UserController {
      * @param username 从token中解析的用户名
      * @return 更新是否成功
      */
-    @RequestMapping(path = "/updateUserInfo")
+    @RequestMapping(path = "/api/student/user/update")
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updateUserInfo(@RequestBody Map<String, String> userInfo, @CurrentUser String username) {
         try {
@@ -108,7 +108,7 @@ public class UserController {
      *  password:密码
      * @return 注册是否成功
      */
-    @RequestMapping(path = "/register", method = { RequestMethod.POST })
+    @RequestMapping(path = "/api/student/user/register", method = { RequestMethod.POST })
     public Object register(@RequestBody Map<String, String> map) {
         try {
             String username = map.get("username");

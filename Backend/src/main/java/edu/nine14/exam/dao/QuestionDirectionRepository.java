@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface QuestionDirectionRepository extends JpaRepository<QuestionDirection, Integer>,
         JpaSpecificationExecutor<QuestionDirection> {
-    @Query("select q.questionID,q.body,q.answer,q.selection from QuestionDirection q where q.direction.profession.professionID=?1 and q.type=?2")
+    @Query("select q.questionID,q.direction,q.body,q.answer,,q.type,q.selection from QuestionDirection q where q.direction.profession.professionID=?1 and q.type=?2")
     List<Object> questionForProfession(Integer directionID,String type);
 
-    @Query("select q.questionID,q.body,q.answer,q.selection from QuestionDirection q where q.direction.profession.professionID=?1 and q.type=?2 and q.direction.directionName IN (?3,?4)")
+    @Query("select q.questionID,q.direction,q.body,q.answer,,q.type,q.selection from QuestionDirection q where q.direction.profession.professionID=?1 and q.type=?2 and q.direction.directionName IN (?3,?4)")
     List<Object> questionForDirection(Integer directionID,String type,String direction1,String direction2);
 }

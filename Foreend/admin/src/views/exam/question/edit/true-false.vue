@@ -30,9 +30,10 @@
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
-        <el-radio-group v-model="form.answer">
-          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
-        </el-radio-group>
+<!--        <el-radio-group v-model="form.answer">-->
+<!--          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>-->
+<!--        </el-radio-group>-->
+        <el-input v-model="form.answer" class="question-item-content-input"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -142,7 +143,7 @@ export default {
     if (id && parseInt(id) !== 0) {
       _this.formLoading = true
       questionApi.select(id).then(re => {
-        _this.form = re.response
+        _this.form = re.data
         _this.formLoading = false
       })
     }
@@ -171,7 +172,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          questionApi.edit(this.form).then(re => {
+          questionApi.editQuestion(this.form).then(re => {
             if (re.code === 200) {
               _this.$message.success(re.message)
               _this.delCurrentView(_this).then(() => {

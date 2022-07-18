@@ -51,22 +51,20 @@
       </el-col>
     </el-row>
     <el-row class="echarts-line">
-      <div id="echarts-moth-user" style="width: 100%;height:400px;" v-loading="loading"/>
+      <div id="echarts-moth-user" style="width: 100%;height:400px;"/>
     </el-row>
     <el-row class="echarts-line">
-      <div id="echarts-moth-question" style="width: 100%;height:400px;" v-loading="loading"/>
+      <div id="echarts-moth-question" style="width: 100%;height:400px;"/>
     </el-row>
   </div>
 </template>
 
 <script>
 import resize from './components/mixins/resize'
-import CountTo from 'vue-count-to'
 import dashboardApi from '@/api/dashboard'
 export default {
   mixins: [resize],
   components: {
-    CountTo
   },
   data () {
     return {

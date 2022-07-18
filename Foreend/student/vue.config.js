@@ -20,7 +20,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000', // 后端接口地址，和后端保持一致
+        target: 'http://localhost:8080', // 后端接口地址，和后端保持一致
         changeOrigin: true
       }
     }

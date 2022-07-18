@@ -74,14 +74,14 @@ export default {
         type: null,
         professionID: null,
         directionID: null,
+        //分页
+        pageIndex: 1,
+        pageSize: 10,
       },
       subjectFilter: null,
       listLoading: true,
       tableData: [],
       total: 0,
-      //分页
-      pageIndex: 1,
-      pageSize: 10,
       questionShow: {
         qType: 0,
         dialog: false,
@@ -101,11 +101,11 @@ export default {
     },
     search () {
       this.listLoading = true
-      questionApi.pageList(this.queryParam).then(data => {
+      questionApi.selectQuestonByCondition(this.queryParam).then(data => {
         const re = data.response
         this.tableData = re.list
-        this.total = re.total
-        this.queryParam.pageIndex = re.pageNum
+        this.total = 10
+        this.queryParam.pageIndex = 1
         this.listLoading = false
       })
     },

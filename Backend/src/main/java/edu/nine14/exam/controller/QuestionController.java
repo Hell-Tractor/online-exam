@@ -57,7 +57,7 @@ public class QuestionController {
      */
     @RequestMapping(path = "/api/admin/question/page",method = { RequestMethod.GET })
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    public Object selectQuestonByCondition(@RequestBody QuestionChoice questionChoice){
+    public Object selectQuestionByCondition(@RequestBody QuestionChoice questionChoice){
         try {
             List<QuestionDirection> listQD = questionDirectionService.findByCondition(questionChoice.getPageIndex(), questionChoice.getPageSize(),
                     questionChoice.getDirection(), questionChoice.getProfession(),  questionChoice.getId(), questionChoice.getType()).getContent();

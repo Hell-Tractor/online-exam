@@ -29,7 +29,6 @@
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
-        <el-button type="success" @click="showQuestion">预览</el-button>
       </el-form-item>
     </el-form>
     <el-dialog  :visible.sync="richEditor.dialogVisible"  append-to-body :close-on-click-modal="false" style="width: 100%;height: 100%"   :show-close="false" center>
@@ -39,6 +38,7 @@
         <el-button @click="richEditor.dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
+<!--    预览问题-->
     <el-dialog :visible.sync="questionShow.dialog" style="width: 100%;height: 100%">
       <QuestionShow :qType="questionShow.qType" :question="questionShow.question" :qLoading="questionShow.loading"/>
     </el-dialog>
@@ -131,7 +131,7 @@ export default {
     if (id && parseInt(id) !== 0) {
       _this.formLoading = true
       questionApi.select(id).then(re => {
-        _this.form = re.response
+        _this.form = re.data
         _this.formLoading = false
       })
     }
@@ -159,7 +159,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          questionApi.edit(this.form).then(re => {
+          questionApi.editQuestion(this.form).then(re => {
             if (re.code === 200) {
               _this.$message.success(re.message)
               _this.delCurrentView(_this).then(() => {

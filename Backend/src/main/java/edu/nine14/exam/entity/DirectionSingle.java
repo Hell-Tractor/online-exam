@@ -15,6 +15,18 @@ public class DirectionSingle {
     @Column(name = "profession_id", columnDefinition = "int")
     private Integer professionId;
 
+    public DirectionSingle(Integer directionID,String directionName,Integer professionId){
+        this.directionID = directionID;
+        this.directionName = directionName;
+        this.professionId = professionId;
+    }
+
+    public DirectionSingle() {
+        this.directionID = null;
+        this.directionName = null;
+        this.professionId = null;
+    }
+
     public Integer getDirectionID() {
         return directionID;
     }

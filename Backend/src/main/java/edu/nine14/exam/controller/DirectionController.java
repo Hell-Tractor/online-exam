@@ -51,13 +51,13 @@ public class DirectionController {
     /**
      * 根据Id查找相应的专业
      * @param id professionId
-     * @return 返回的是profession
+     * @return 返回的是对应的direction list
      */
     @RequestMapping(path = "/api/admin/education/subject/page/{id}")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    public Object selectDirectionByCondition(@PathVariable("id") Integer id){
+    public Object selectDirectionByProfessionId(@PathVariable("id") Integer id){
         try {
-            return ApiResult.ok(professionService.selectById(id));
+            return ApiResult.ok(directionService.selectByProfessionId(id));
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }

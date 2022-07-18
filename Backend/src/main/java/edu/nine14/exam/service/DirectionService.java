@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.naming.event.ObjectChangeListener;
 import javax.security.auth.login.FailedLoginException;
 import java.util.Date;
 import java.util.List;
@@ -45,10 +46,17 @@ public class DirectionService {
         return direction.get();
     }
 
-    public void deleteQuestion(Integer directionID){
-        Optional<DirectionSingle> question = directionSingleRepository.findById(directionID);
-        if (question.isEmpty())
+    public Object selectByProfessionId(Integer professionId){
+        List<DirectionSingle> direction = directionSingleRepository.selectDirectionByProfessionId(professionId);
+        if (direction.isEmpty())
             throw new IllegalArgumentException("Question not found");
-        directionSingleRepository.delete(question.get());
+        return direction;
+    }
+
+    public void deleteQuestion(Integer directionID){
+        Optional<DirectionSingle> direction = directionSingleRepository.findById(directionID);
+        if (direction.isEmpty())
+            throw new IllegalArgumentException("Question not found");
+        directionSingleRepository.delete(direction.get());
     }
 }

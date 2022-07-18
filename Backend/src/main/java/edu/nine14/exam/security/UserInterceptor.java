@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 public class UserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+//        return true;
         if (!this.verifyToken(request, response, handler))
             return false;
 

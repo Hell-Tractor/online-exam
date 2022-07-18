@@ -54,7 +54,7 @@ public class DirectionController {
      * @return 返回的是对应的direction list
      */
     @RequestMapping(path = "/api/admin/education/subject/page/{id}")
-    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectDirectionByProfessionId(@PathVariable("id") Integer id){
         try {
             return ApiResult.ok(directionService.selectByProfessionId(id));
@@ -84,10 +84,10 @@ public class DirectionController {
      * @return 返回删除成功或失败
      */
     @RequestMapping(path = "/api/admin/education/subject/delete/{id}")
-    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object deleteDirectionById(@PathVariable("id") Integer id){
         try {
-            directionService.deleteQuestion(id);
+            directionService.deleteDirection(id);
             return ApiResult.ok("delete direction success");
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());

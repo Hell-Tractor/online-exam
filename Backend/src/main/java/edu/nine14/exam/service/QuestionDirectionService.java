@@ -89,13 +89,13 @@ public class QuestionDirectionService {
      * @param type 题目类型
      * @return 返回符合条件的所有题目
      */
-    public Page<QuestionDirection> findByCondition(Integer page, Integer size, Integer direction,
+    public Page<QuestionDirection> findByCondition(Integer page, Integer size, String direction,
                                                    Integer profession,Integer id, String type){
         Pageable pageable = PageRequest.of(page-1, size);
         return questionDirectionRepository.findAll((root, criteriaQuery, criteriaBuilder)->{
             List<Predicate> predicates = new ArrayList<Predicate>();
             if(direction!=null){
-                predicates.add(criteriaBuilder.equal(root.get("direction").get("directionID"),direction));
+                predicates.add(criteriaBuilder.equal(root.get("direction").get("directionName"),direction));
             }
             if(id!=null){
                 predicates.add(criteriaBuilder.equal(root.get("questionID"),id));

@@ -7,7 +7,7 @@ public class QuestionChoice {
     private Integer id;
     private String type;
     private Integer profession;
-    private Integer direction;
+    private String direction;
     private Integer pageIndex;
     private Integer pageSize;
 
@@ -36,11 +36,11 @@ public class QuestionChoice {
         this.profession = profession;
     }
 
-    public Integer getDirection() {
+    public String getDirection() {
         return direction;
     }
 
-    public void setDirection(Integer direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 

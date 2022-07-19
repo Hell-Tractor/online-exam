@@ -138,7 +138,7 @@ export default {
           type: null,
           direction: 1,
           pageIndex: 1,
-          pageSize: 5
+          pageSize: 10
         },
         listLoading: true,
         tableData: [],

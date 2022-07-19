@@ -12,7 +12,7 @@ const state = {
     },
     question: {
       // 学科
-      levelEnum: [{ key: 1, value: '化学' }, { key: 2, value: '物理' }, { key: 3, value: '生物' }, { key: 4, value: '数学' }, { key: 5, value: '语文' }, { key: 6, value: '英语' }],
+      levelEnum: [{ key: 1, value: '毛概' }, { key: 2, value: '马原' }, { key: 3, value: '军理' }, { key: 4, value: '思修' }],
       typeEnum: [{ key: 1, value: '单选题' }, { key: 2, value: '多选题' }, { key: 3, value: '判断题' },  { key: 4, value: '简答题' }],
       editUrlEnum: [{ key: 1, value: '/exam/question/edit/singleChoice', name: '单选题' },
         { key: 2, value: '/exam/question/edit/multipleChoice', name: '多选题' },

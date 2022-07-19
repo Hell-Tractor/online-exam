@@ -1,8 +1,8 @@
 // initial state
 const state = {
   user: {
-    sexEnum: [{ key: 1, value: '男' }, { key: 2, value: '女' }],
-    levelEnum: [{ key: 1, value: '一年级' }, { key: 2, value: '二年级' }, { key: 3, value: '三年级' }, { key: 4, value: '四年级' }],
+    sexEnum: [{ key: '1', value: '男' }, { key: '2', value: '女' }],
+    levelEnum: [{ key: '1', value: '大一' }, { key: '2', value: '大二' }, { key: '3', value: '大三' }, { key: '4', value: '大四' }],
     roleEnum: [{ key: 1, value: '学生' }, { key: 3, value: '管理员' }],
     message: {
       readTag: [{ key: true, value: 'success' }, { key: false, value: 'warning' }]

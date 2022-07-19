@@ -5,7 +5,6 @@
     <div  class="hasTagsView main-container">
       <div class="fixed-header">
         <navbar />
-        <tags-view/>
       </div>
       <app-main />
       <back-to-top :visibility-height="100" :back-position="0" transition-name="fade" ref="backTop"/>

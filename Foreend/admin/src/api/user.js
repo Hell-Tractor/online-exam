@@ -7,7 +7,5 @@ export default {
   updateUser: query => post('/api/admin/user/update', query), // 更新用户
   selectUser: query => post('/api/admin/user/select/' ,query), // 选择用户
   deleteUser: query => get('/api/admin/user/delete/?username='+ query), // 删除用户
-
   getUserByName: query => get('/api/getUserInfoAdmin/?username='+query), // 获得用户list
-  //selectByusername: query => post('/api/admin/user/selectByusername', query)
 }

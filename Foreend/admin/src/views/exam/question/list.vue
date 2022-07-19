@@ -2,19 +2,16 @@
   <div class="app-container">
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="题目ID：">
-        <el-input v-model="queryParam.id" clearable></el-input>
+        <el-input v-model="queryParam.id" clearable  placeholder="请输入数字"></el-input>
       </el-form-item>
       <el-form-item label="专业分类：">
-        <el-select v-model="queryParam.profession" placeholder="专业分类"  @change="levelChange" clearable>
+        <el-select v-model="queryParam.profession" placeholder="专业分类"
+                   @change="levelChange" clearable >
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="专业方向：">
-<!--        <el-select v-model="queryParam.direction" clearable>-->
-<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"-->
-<!--                     :label="item.name"></el-option>-->
-<!--        </el-select>-->
-        <el-input v-model="queryParam.direction" clearable></el-input>
+        <el-input v-model="queryParam.direction" clearable placeholder="请输入专业分类"></el-input>
       </el-form-item>
       <el-form-item label="题型：">
         <el-select v-model="queryParam.type" clearable>
@@ -106,10 +103,16 @@ export default {
       this.listLoading = true
       this.initSubject()
       questionApi.selectQuestionByCondition(this.queryParam).then(data => {
-        this.tableData = data.data
-        this.total = 10
-        this.queryParam.pageIndex = 1
-        this.listLoading = false
+        if(data.data &&　data.data!==[]){
+          this.tableData = data.data
+          this.total = 10
+          this.queryParam.pageIndex = 1
+          this.listLoading = false
+        }
+        else {
+          alert('题目不存在！')
+          location.reload();
+        }
       })
     },
     levelChange () { // 专业分类改变

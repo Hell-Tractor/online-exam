@@ -51,10 +51,8 @@
       </el-col>
     </el-row>
     <el-row class="echarts-line">
-      <div id="echarts-moth-user" style="width: 100%;height:400px;"/>
-    </el-row>
-    <el-row class="echarts-line">
-      <div id="echarts-moth-question" style="width: 100%;height:400px;"/>
+      <el-calendar v-model="timeValue">
+      </el-calendar>
     </el-row>
   </div>
 </template>
@@ -68,6 +66,7 @@ export default {
   },
   data () {
     return {
+      timeValue: new Date(),
       examPaperCount: 0,
       questionCount: 0,
       doExamPaperCount: 0,

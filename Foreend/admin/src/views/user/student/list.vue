@@ -57,12 +57,18 @@ export default {
     searchByName(){
       this.listLoading = true
       userApi.getUserByName(this.username).then(data => {
-        let temp=[]
-        temp.push(data.data)
-        this.tableData=temp
-        this.total = 1
-        this.queryParam.page = 1
-        this.listLoading = false
+        if(data.data){
+          let temp=[]
+          temp.push(data.data)
+          this.tableData=temp
+          this.total = 1
+          this.queryParam.page = 1
+          this.listLoading = false
+        }
+        else{
+          alert('用户不存在！')
+          this.search()
+        }
       })
     },
     search () {

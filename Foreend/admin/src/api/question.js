@@ -5,5 +5,9 @@ export default {
   editQuestion: query => post('/api/admin/question/edit', query),
   select: id => post('/api/admin/question/select/' + id),
   deleteQuestion: id => post('/api/admin/question/delete/' + id),
-  selectAll: query => post('/api/admin/question/page/selectAll' )
+  selectAll: query => post('/api/admin/question/page/selectAll' ),
+  addOne: query => post('/api/admin/question/add',query),
+  // 根据方向名称得到方向ID
+  getDirectionIDByNAME: (directionName,professionID) =>post(
+    '/api/admin/question/searchID/?directionName='+directionName+'&professionID='+professionID)
 }

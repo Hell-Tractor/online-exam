@@ -2,22 +2,12 @@
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
       <el-form-item label="专业分类："  required>
-<!--        <el-select v-model="form.direction.profession.professionName" placeholder="专业分类"  @change="levelChange" clearable>-->
-<!--          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>-->
-<!--        </el-select>-->
-        <el-input v-model="form.direction.profession.professionName"  class="question-item-content-input"/>
-      </el-form-item>
-      <el-form-item label="分类id">
-        <el-input v-model="form.direction.profession.professionID"  class="question-item-content-input" />
+        <el-select v-model="form.direction.profession.professionName" placeholder="专业分类"  @change="levelChange" clearable>
+          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="专业方向：" prop="direction" required>
-<!--        <el-select v-model="form.direction" placeholder="专业方向" >-->
-<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name"></el-option>-->
-<!--        </el-select>-->
         <el-input v-model="form.direction.directionName"  class="question-item-content-input" />
-      </el-form-item>
-      <el-form-item label="方向id">
-        <el-input v-model="form.direction.directionID"  class="question-item-content-input"/>
       </el-form-item>
       <el-form-item label="题干：" prop="body" required >
         <el-input v-model="form.body"  class="question-item-content-input"/>
@@ -29,9 +19,6 @@
         </el-form-item>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
-<!--        <el-radio-group v-model="form.answer">-->
-<!--          <el-radio  v-for="item in form.selection"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>-->
-<!--        </el-radio-group>-->
         <el-input v-model="form.answer" class="question-item-content-input"/>
       </el-form-item>
       <el-form-item>
@@ -189,19 +176,58 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          questionApi.editQuestion(this.form).then(re => {
-            if (re.code === 200) {
-              _this.$message.success(re.message)
-              _this.delCurrentView(_this).then(() => {
-                _this.$router.push('/exam/question/list')
-              })
-            } else {
+          // 根据方向名称查找方向id
+          questionApi.getDirectionIDByNAME(this.form.direction.directionName,
+            this.form.direction.profession.professionID).then(re=>{
+            if(re.code !==200) {
+              alert('专业方向不存在！')
               _this.$message.error(re.message)
-              this.formLoading = false
+            }
+            else{
+              this.form.direction.directionID=re.data
             }
           }).catch(e => {
             this.formLoading = false
           })
+          // 根据专业名称查找专业id
+          let levelEnum = [{ key: 1, value: '毛概' }, { key: 2, value: '马原' }, { key: 3, value: '军理' }, { key: 4, value: '思修' }]
+          for(let i in levelEnum){
+            if(levelEnum[i].key=== parseInt(this.form.direction.profession.professionID)){
+              this.form.direction.profession.professionName=levelEnum[i].value
+            }
+          }
+          // 如果没有id，则选择添加题目
+          if(!this.form.questionID || this.form.questionID===null){
+            questionApi.addOne(this.form).then(re => {
+              if (re.code === 200) {
+                _this.$message.success(re.message)
+                _this.delCurrentView(_this).then(() => {
+                  _this.$router.push('/exam/question/list')
+                })
+              } else {
+                _this.$message.error(re.message)
+                this.formLoading = false
+              }
+            }).catch(e => {
+              this.formLoading = false
+            })
+          }
+          // 如果有id，则编辑题目
+          else {
+            questionApi.editQuestion(this.form).then(re => {
+              if (re.code === 200) {
+                _this.$message.success(re.message)
+                _this.delCurrentView(_this).then(() => {
+                  _this.$router.push('/exam/question/list')
+                })
+              } else {
+                _this.$message.error(re.message)
+                this.formLoading = false
+              }
+            }).catch(e => {
+              this.formLoading = false
+            })
+          }
         } else {
           return false
         }

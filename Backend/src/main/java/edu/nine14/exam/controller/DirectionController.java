@@ -54,7 +54,7 @@ public class DirectionController {
      * @return 返回的是对应的direction list
      */
     @RequestMapping(path = "/api/admin/education/subject/page/{id}")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectDirectionByProfessionId(@PathVariable("id") Integer id){
         try {
             return ApiResult.ok(directionService.selectByProfessionId(id));
@@ -79,12 +79,29 @@ public class DirectionController {
     }
 
     /**
+     * 查找directionId
+     * @param name 为directionName
+     * @param id 为professionId
+     * @return 返回满足directionName和professionId的directionId
+     */
+    @RequestMapping(path = "/api/admin/question/searchID",method = { RequestMethod.POST })
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    public Object getDirectionNameByID(@RequestParam("directionName") String name,
+                                       @RequestParam("professionID") Integer id){
+        try {
+            return ApiResult.ok(directionService.getDirectionIdByName(name,id));
+        } catch (Exception e) {
+            return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    /**
      * 删除专业方向
      * @param id directionId
      * @return 返回删除成功或失败
      */
     @RequestMapping(path = "/api/admin/education/subject/delete/{id}")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object deleteDirectionById(@PathVariable("id") Integer id){
         try {
             directionService.deleteDirection(id);

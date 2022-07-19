@@ -53,6 +53,13 @@ public class DirectionService {
         return direction;
     }
 
+    public Object getDirectionIdByName(String directionName,Integer professionId){
+        Optional<Integer> id = directionRepository.getDirectionIdByName(directionName,professionId);
+        if (id.isEmpty())
+            throw new IllegalArgumentException("directionID not found");
+        return id.get();
+    }
+
     public void deleteDirection(Integer directionID){
         Optional<DirectionSingle> direction = directionSingleRepository.findById(directionID);
         if (direction.isEmpty())

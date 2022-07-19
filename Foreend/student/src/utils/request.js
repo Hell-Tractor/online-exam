@@ -31,15 +31,15 @@ const request = function (loadtip, query) {
       } else if (res.data.code === 502) {
         vue.prototype.$$router.push({ path: '/login' })
         return Promise.reject(res.data)}
-      // 登陆成功
+      //登陆成功
       else {
-        // // 设置token
-        // let accessToken = res.headers['authorization']
-        // if (accessToken && accessToken !== '') {
-        //   localStorage.setItem('token', accessToken)
-        // }
-        // 设置token end
-        return Promise.resolve(res.data)
+        // 设置token
+        let token = res.headers['authorization']
+        if (token && token !== '') {
+          localStorage.setItem('token', token)
+        }
+      //设置tokenend
+      return Promise.resolve(res.data)
       }
     })
     .catch(e => {
@@ -48,29 +48,6 @@ const request = function (loadtip, query) {
       return Promise.reject(e.message)
     })
 }
-
-// 请求拦截器
-// request.interceptors.request.use(
-//   (config)=>{
-//     const token = localStorage.getItem('token')
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`
-//     }
-//     return config
-//   },
-//   (error)=>Promise.reject(error),
-// )
-
-// 响应拦截器
-// request.interceptors.response.use(
-//   (response)=>response,
-//   ({response})=>{
-//     const{status,data}=response
-//     Message.error(message)
-//     if(status===401) router.push({name:'Login'})
-//     return Promise.reject(error)
-//   },
-// )
 
 // 请求方法封装
 /*
@@ -88,6 +65,10 @@ const post = function (url, params) {
     data: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(false, query)
 }
 
@@ -100,6 +81,10 @@ const postWithLoadTip = function (url, params) {
     data: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(true, query)
 }
 
@@ -111,6 +96,10 @@ const postWithOutLoadTip = function (url, params) {
     timeout: 30000,
     data: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
+  }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
   }
   return request(false, query)
 }
@@ -130,6 +119,10 @@ const get = function (url, params) {
     params: params,
     headers: { 'request-ajax': true }
   }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
+  }
   return request(false, query)
 }
 
@@ -141,6 +134,10 @@ const form = function (url, params) {
     timeout: 30000,
     data: params,
     headers: { 'Content-Type': 'multipart/form-data', 'request-ajax': true }
+  }
+  const token = localStorage.getItem('token')
+  if (token) {
+    query.headers.token = token
   }
   return request(false, query)
 }

@@ -53,10 +53,10 @@ public class DirectionService {
         return direction;
     }
 
-    public void deleteQuestion(Integer directionID){
+    public void deleteDirection(Integer directionID){
         Optional<DirectionSingle> direction = directionSingleRepository.findById(directionID);
         if (direction.isEmpty())
             throw new IllegalArgumentException("Question not found");
-        directionSingleRepository.delete(direction.get());
+        else directionSingleRepository.delete(direction.get());
     }
 }

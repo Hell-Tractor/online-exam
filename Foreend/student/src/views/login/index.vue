@@ -13,7 +13,6 @@
               <el-input ref="username" v-model="loginForm.username" class="lowin-input" placeholder="用户名" name="username" type="text" tabindex="1" auto-complete="on"/>
             </div>
             <div class="lowin-group password-group">
-              <label>密码 <a href="#" class="forgot-link">忘记密码?</a></label>
               <el-input  class="lowin-input" :key="passwordType" ref="passwordRaw" v-model="passwordRaw" :type="passwordType"
                 placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
             </div>
@@ -255,10 +254,10 @@ export default {
           loginApi.login(JSON.stringify(this.loginForm)).then(function (result) {
             // 登陆成功
             if (result && result.code === 200) {
-              // // token start
-              // let accessToken=result.data//从后台返回的token
-              // localStorage.setItem('accessToken',accessToken); // 用localStorage缓存token的值
-              // // token end
+              // token start
+              let token=result.data//从后台返回的token
+              localStorage.setItem('token',token); // 用localStorage缓存token的值
+              // token end
               _this.setUserName(_this.loginForm.username)
               _this.$router.push({ path: '/' })
             } else {

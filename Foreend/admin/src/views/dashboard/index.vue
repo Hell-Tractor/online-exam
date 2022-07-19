@@ -78,22 +78,6 @@ export default {
     }
   },
   mounted () {
-    // eslint-disable-next-line no-undef
-    this.echartsUserAction = echarts.init(document.getElementById('echarts-moth-user'), 'macarons')
-    // eslint-disable-next-line no-undef
-    this.echartsQuestion = echarts.init(document.getElementById('echarts-moth-question'), 'macarons')
-    let _this = this
-    this.loading = true
-    dashboardApi.index().then(re => {
-      let response = re.response
-      _this.examPaperCount = response.examPaperCount
-      _this.questionCount = response.questionCount
-      _this.doExamPaperCount = response.doExamPaperCount
-      _this.doQuestionCount = response.doQuestionCount
-      _this.echartsUserAction.setOption(this.option('用户活跃度', '{b}日{c}度', response.mothDayText, response.mothDayUserActionValue))
-      _this.echartsQuestion.setOption(this.option('题目月数量', '{b}日{c}题', response.mothDayText, response.mothDayDoExamQuestionValue))
-      this.loading = false
-    })
   },
   methods: {
     option (title, formatter, label, vaule) {

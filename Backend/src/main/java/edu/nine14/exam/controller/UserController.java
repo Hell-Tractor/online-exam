@@ -48,7 +48,7 @@ public class UserController {
      *  newPassword:新密码
      * @return 是否更新成功
      */
-    @RequestMapping(path = "/updatePassword", method = { RequestMethod.POST })
+    @RequestMapping(path = "/api/student/user/update", method = { RequestMethod.POST })
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updatePassword(@CurrentUser String username,
                                  @RequestBody Map<String, String> map) {
@@ -69,7 +69,7 @@ public class UserController {
      * @param username 从token中解析的用户名
      * @return 用户信息
      */
-    @RequestMapping(path = "/getUserInfo")
+    @RequestMapping(path = "/api/student/user/current")
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object getUserInfo(@CurrentUser String username) {
         try {
@@ -88,7 +88,7 @@ public class UserController {
      * @param username 从token中解析的用户名
      * @return 更新是否成功
      */
-    @RequestMapping(path = "/updateUserInfo")
+    @RequestMapping(path = "/api/student/user/update")
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updateUserInfo(@RequestBody Map<String, String> userInfo, @CurrentUser String username) {
         try {
@@ -108,7 +108,7 @@ public class UserController {
      *  password:密码
      * @return 注册是否成功
      */
-    @RequestMapping(path = "/register", method = { RequestMethod.POST })
+    @RequestMapping(path = "/api/student/user/register", method = { RequestMethod.POST })
     public Object register(@RequestBody Map<String, String> map) {
         try {
             String username = map.get("username");
@@ -129,12 +129,12 @@ public class UserController {
      * @param size 每页数量
      * @return 用户列表
      */
-    @RequestMapping(path = "/getUserList")
+    @RequestMapping(path = "/api/admin/user/page/list")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object getUserList(@RequestParam("page") int page,
                               @RequestParam("size") int size) {
         try {
-            return ApiResult.ok(userService.getUserList(page, size));
+            return ApiResult.ok(userService.getUserList(page-1, size));
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -146,7 +146,7 @@ public class UserController {
      * @param username 用户名
      * @return 用户信息
      */
-    @RequestMapping(path = "/getUserInfoAdmin")
+    @RequestMapping(path = "api/getUserInfoAdmin")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object getUserInfoAdmin(@RequestParam("username") String username) {
         try {
@@ -165,7 +165,7 @@ public class UserController {
      * @param username 用户名
      * @return 删除是否成功
      */
-    @RequestMapping(path = "/removeUser")
+    @RequestMapping(path = "/api/admin/user/delete")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object removeUser(@RequestParam("username") String username) {
         try {

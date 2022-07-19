@@ -107,7 +107,6 @@ export default {
         ],
         answer: '',
       },
-      correctArray: [],
       subjectFilter: null,
       formLoading: false,
       rules: {
@@ -119,9 +118,6 @@ export default {
         ],
         body: [
           { required: true, message: '请输入题干', trigger: 'blur' }
-        ],
-        correctArray: [
-          { required: true, message: '请选择正确答案', trigger: 'change' }
         ]
       },
       richEditor: {
@@ -185,14 +181,12 @@ export default {
       selection.push({ id: null, prefix: newLastPrefix, content: '' })
     },
     submitForm () {
-      // 将正确答案的数组转化为字符串
-      this.form.answer=this.correctArray.join(',')
       let _this = this
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
           questionApi.editQuestion(this.form).then(re => {
-            if (re.code === 1) {
+            if (re.code === 200) {
               _this.$message.success(re.message)
               _this.delCurrentView(_this).then(() => {
                 _this.$router.push('/exam/question/list')
@@ -242,7 +236,6 @@ export default {
         answer: '' // 答案
       }
       this.form.questionID = lastId
-      this.correctArray=[]
     },
     ...mapActions('exam', { initSubject: 'initSubject' }),
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })

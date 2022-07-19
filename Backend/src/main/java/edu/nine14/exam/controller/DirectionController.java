@@ -10,6 +10,8 @@ import edu.nine14.exam.service.ProfessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class DirectionController {
     @Autowired
@@ -80,15 +82,15 @@ public class DirectionController {
 
     /**
      * 查找directionId
-     * @param name 为directionName
-     * @param id 为professionId
+     * @param nameAndId 接收directionName和professionId为key组成的键值对
      * @return 返回满足directionName和professionId的directionId
      */
     @RequestMapping(path = "/api/admin/question/searchID",method = { RequestMethod.POST })
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
-    public Object getDirectionNameByID(@RequestParam("directionName") String name,
-                                       @RequestParam("professionID") Integer id){
+    public Object getDirectionNameByID(@RequestBody Map<String, String> nameAndId){
         try {
+            String name = nameAndId.get("directionName");
+            Integer id = Integer.parseInt(nameAndId.get("professionID"));
             return ApiResult.ok(directionService.getDirectionIdByName(name,id));
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());

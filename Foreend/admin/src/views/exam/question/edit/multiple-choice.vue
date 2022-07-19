@@ -48,6 +48,7 @@ import QuestionShow from '../components/Show'
 import Ueditor from '@/components/Ueditor'
 import { mapGetters, mapState, mapActions } from 'vuex'
 import questionApi from '@/api/question'
+import Qs from "qs";
 
 const form =
   {
@@ -169,28 +170,15 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          // 根据方向名称查找方向id
-          questionApi.getDirectionIDByNAME(this.form.direction.directionName,
-            this.form.direction.profession.professionID).then(re=>{
-            if(re.code !==200) {
-              alert('专业方向不存在！')
-              _this.$message.error(re.message)
-            }
-            else{
-              this.form.direction.directionID=re.data
-            }
-          }).catch(e => {
-            this.formLoading = false
-          })
           // 根据专业名称查找专业id
-          let levelEnum = [{ key: 1, value: '毛概' }, { key: 2, value: '马原' }, { key: 3, value: '军理' }, { key: 4, value: '思修' }]
-          for(let i in levelEnum){
-            if(levelEnum[i].key=== parseInt(this.form.direction.profession.professionID)){
-              this.form.direction.profession.professionName=levelEnum[i].value
+          let levelEnum = [{key: 1, value: '毛概'}, {key: 2, value: '马原'}, {key: 3, value: '军理'}, {key: 4, value: '思修'}]
+          for (let i in levelEnum) {
+            if (levelEnum[i].key === parseInt(this.form.direction.profession.professionID)) {
+              this.form.direction.profession.professionName = levelEnum[i].value
             }
           }
           // 如果没有id，则选择添加题目
-          if(!this.form.questionID || this.form.questionID===null){
+          if (!this.form.questionID || this.form.questionID === null) {
             questionApi.addOne(this.form).then(re => {
               if (re.code === 200) {
                 _this.$message.success(re.message)
@@ -204,6 +192,22 @@ export default {
             }).catch(e => {
               this.formLoading = false
             })
+            // 根据方向名称查找方向id
+            // 中文字符串问题
+
+            questionApi.getDirectionIDByNAME(
+              encodeURI(encodeURI(this.form.direction.profession.professionName)),
+              this.form.direction.profession.professionID).then(re => {
+              if (re.code === 200) {
+                this.form.direction.directionID = re.data
+              }
+            }).catch(e => {
+              if(e=='directionID not found'){
+                alert('专业方向不存在，请先添加！')
+                _this.$router.push('/education/subject/list')
+              }
+              this.formLoading = false
+            })
           }
           // 如果有id，则编辑题目
           else {
@@ -214,10 +218,12 @@ export default {
                   _this.$router.push('/exam/question/list')
                 })
               } else {
-                _this.$message.error(re.message)
                 this.formLoading = false
               }
             }).catch(e => {
+              if(e=='directionID not found'){
+                alert('专业方向不存在，请先添加！')
+              }
               this.formLoading = false
             })
           }

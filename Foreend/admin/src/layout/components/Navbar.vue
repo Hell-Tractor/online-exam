@@ -7,9 +7,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <span>{{username}}</span>
           <i class="el-icon-caret-bottom" />
-          <img src="/1.jpg" style="width: 30px;height: 30px;"/>
+          <el-avatar> A </el-avatar>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">

@@ -20,7 +20,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // 后端接口地址，和后端保持一致
+        target: 'http://localhost:8080', // 后端接口地址，和后端保持一致10.30.61.246
         changeOrigin: true
       }
     }
@@ -32,13 +32,13 @@ module.exports = {
       filename: 'index.html'
     }
   },
-  pwa:{
-    iconPaths:{
-      favicon32:'@/icons/favicon.ico',
-      favicon16:'@/icons/favicon.ico',
-      appleTouchIcon:'@/icons/favicon.ico',
-      maskIcon:'@/icons/favicon.ico',
-      msTileImage:'@/icons/favicon.ico',
+  pwa: {
+    iconPaths: {
+      favicon32: '@/icons/favicon.ico',
+      favicon16: '@/icons/favicon.ico',
+      appleTouchIcon: '@/icons/favicon.ico',
+      maskIcon: '@/icons/favicon.ico',
+      msTileImage: '@/icons/favicon.ico'
     }
   },
   chainWebpack (config) {

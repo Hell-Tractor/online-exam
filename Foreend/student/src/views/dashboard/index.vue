@@ -89,12 +89,36 @@
                   <el-input type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button @click="createPaper" type="primary" plain>生成试卷</el-button>
+                  <el-button @click="createBegin" type="primary" plain>生成试卷</el-button>
                 </el-form-item>
               </div>
               <div v-if="!isDisabled">
+                <el-form-item prop="single_choice_num">
+                  <span slot="label" style="font-size: 18px">
+                    单选题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="multiple_choice_num">
+                  <span slot="label" style="font-size: 18px">
+                    多选题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="true_false_num">
+                  <span slot="label" style="font-size: 18px">
+                  判断题数量
+                   </span>
+                  <el-input type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
+                </el-form-item>
+                <el-form-item prop="short_answer_num">
+                  <span slot="label" style="font-size: 18px">
+                  简答题数量
+                  </span>
+                  <el-input type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
+                </el-form-item>
                 <el-form-item>
-                  <el-button @click="createPaper" type="primary" plain>生成试卷</el-button>
+                  <el-button @click="createBegin" type="primary" plain>生成试卷</el-button>
                 </el-form-item>
               </div>
             </el-col>
@@ -131,7 +155,7 @@ export default {
       },
       professions: ['毛概'],
       directions: {
-        '毛概': ['经济', '民生', '党建', '生态']
+        '毛概': ['经济', '民生', '党建', '生态', '习思想']
       },
       options: [],
       isDisabled: true,
@@ -154,12 +178,27 @@ export default {
         short_answer_num: [
           { required: true, message: '请输入简答题数量', trigger: 'blur' }
         ]
-      }
+      },
+      get: []
     }
   },
   created () {
+    /*
+    let _this = this
     this.loading = true
+    indexApi.index().then(re => {
+      _this.fixedPaper = re.response.fixedPaper
+      _this.timeLimitPaper = re.response.timeLimitPaper
+      _this.pushPaper = re.response.pushPaper
+      _this.loading = false
+    })
+
     this.taskLoading = true
+    indexApi.task().then(re => {
+      _this.taskList = re.response
+      _this.taskLoading = false
+    })
+    */
   },
   methods: {
     statusTagFormatter (status) {
@@ -180,11 +219,11 @@ export default {
     changeDisable () {
       this.isDisabled = !this.isDisabled
     },
-    createPaper () {
+    createBegin () {
       let _this = this
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.$router.push({
+          /*
             name: 'ExamPaperBegin',
             params: {
               profession: this.form.profession,
@@ -193,18 +232,31 @@ export default {
               single_choice_num: this.form.single_choice_num,
               multiple_choice_num: this.form.multiple_choice_num,
               true_false_num: this.form.true_false_num,
-              short_answer_num: this.form.short_answer_num
+              short_answer_num: this.form.short_answer_num,
+              get: this.get
             }
-          })
-          /*
-         indexApi.create(this.form).then(data => {
+           */
+          indexApi.create(JSON.stringify(this.form)).then(data => {
             if (data.code === 200) {
               _this.$message.success(data.message)
+              this.get = data.data
+              this.$router.push({
+                path: '/begin',
+                query: {
+                  profession: this.form.profession,
+                  has_direction: this.form.has_direction,
+                  directions: this.form.directions,
+                  single_choice_num: this.form.single_choice_num,
+                  multiple_choice_num: this.form.multiple_choice_num,
+                  true_false_num: this.form.true_false_num,
+                  short_answer_num: this.form.short_answer_num,
+                  get: this.get
+                }
+              })
             } else {
               _this.$message.error(data.message)
             }
           })
-          */
         } else {
           return false
         }

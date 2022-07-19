@@ -18,7 +18,7 @@ public interface DirectionSingleRepository extends JpaRepository<DirectionSingle
     @Transactional
     @Modifying
     @Query(value = "update DirectionSingle d set d.directionName=?1, d.professionId=?2 where d.directionID=?3")
-    Optional<DirectionSingle> editDirection(String directionName, Integer professionId, Integer directionId);
+    void editDirection(String directionName, Integer professionId, Integer directionId);
 
     @Query(value = "select d from DirectionSingle d where d.professionId=?1")
     List<DirectionSingle> selectDirectionByProfessionId(Integer professionId);

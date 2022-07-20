@@ -1,0 +1,52 @@
+name: Backend Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  compile:
+    name: Running Java Compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - name: Dependies Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Compile with Maven
+        run: mvn compile
+      - name: Deploy the JAR file to the remote server
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - name: Generate the package
+        run: mvn -B package --file pom.xml -Dmaven.test.skip=true
+      - name: 将 JAR 包部署到服务器
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: target/exam-0.0.1-SNAPSHOT.jar
+          remote: spring-boot/exam-0.0.1-SNAPSHOT.jar
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+      - name: Run
+        if: always()
+        uses: fifsky/ssh-action@master
+        with:
+          command: | # 命令中的 & 表示在后台运行进程
+            cd spring-boot/ && java -jar exam-0.0.1-SNAPSHOT.jar &
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.SSH_USER }}
+          pass: ${{ secrets.SSH_PASSWORD }}
+          args: "-tt"
+

@@ -6,7 +6,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-  publicPath: './',
+  publicPath: '../output/',
   outputDir: 'student',
   assetsDir: 'static',
   lintOnSave: true,
@@ -14,13 +14,13 @@ module.exports = {
   // 开发环境主要修改这里
   devServer: {
     open: true,
-    host: 'localhost', // 后端接口的域名
+    host: '120.25.236.100', // 后端接口的域名
     port: 8001, // 前端启动的端口
     https: false,
     hotOnly: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // 后端接口地址，和后端保持一致
+        target: 'http://120.25.236.100:8088', // 后端接口地址，和后端保持一致
         changeOrigin: true
       }
     }

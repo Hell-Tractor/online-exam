@@ -23,6 +23,10 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Compile with Maven
         run: cd Backend && mvn compile
+  deploy:
+    name: Deploy the JAR file to the remote server
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy the JAR file to the remote server
         uses: actions/checkout@v2
       - name: Set up JDK 18

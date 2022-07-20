@@ -1,0 +1,44 @@
+name: Foreend Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Building Vue
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.0'
+      - run: cd Foreend && yarn install
+        name: installing dependencies
+      - run: cd Foreend && yarn build:prod
+        name: building
+      - name: tar dist directory
+        run: |
+          tar -zcvf foreend.tar.gz Foreend/dist
+    deploy:
+      name: Deploy foreend to remote server
+      - name: upload tar file
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: foreend.tar.gz
+          remote: spring-boot/foreend.tar.gz
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+      - name: unzip and run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          scripts: |
+            cd spring-boot
+            rm -rf dist
+            tar -zxvf foreend.tar.gz
+            rm -rf /var/www/html/vue
+            mv dist /var/www/html/vue

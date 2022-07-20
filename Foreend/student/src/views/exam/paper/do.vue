@@ -19,6 +19,9 @@
               {{o}}
             </el-button>
           </el-row>
+          <el-row>
+            <el-button class="el-button" round type="primary" @click="open">提交试卷</el-button>
+          </el-row>
         </el-card>
       </el-col>
       <el-col :span="10">
@@ -49,7 +52,7 @@
           <div class="clearfix" v-if="multiple_choice_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">多选题(共{{multiple_choice_num}}题)</span>
             <div v-for="(item,index) in multiple_choice_list.slice(0,multiple_choice_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index+1}}.{{item.body}}</p>
+              <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index}}.{{item.body}}</p>
               <el-row v-for="choice in item.choice" :key="choice">
                 <el-checkbox :label="choice"></el-checkbox>
               </el-row>
@@ -59,9 +62,9 @@
           <!-- 判断题 -->
           <div class="clearfix" v-if="true_false_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">判断题(共{{true_false_num}}题)</span>
-            <div v-for="index in true_false_num.slice(0,true_false_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index}}.{{true_false_list[index-1]}}</p>
-              <el-radio-group v-model="radio">
+            <div v-for="(item,index) in true_false_list.slice(0,true_false_index)" :key="index">
+              <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index+multiple_choice_index}}.{{item.body}}</p>
+              <el-radio-group v-model="item.radio">
                 <el-row>
                   <el-radio :label="5" class="el-radio">正确</el-radio>
                 </el-row>
@@ -76,7 +79,7 @@
           <div class="clearfix" v-if="short_answer_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">简答题(共{{short_answer_num}}题)</span>
             <div v-for="(item,index) in short_answer_list.slice(0,short_answer_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index+1}}.{{item}}</p>
+              <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index+multiple_choice_index+true_false_index}}.{{item}}</p>
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 4}"
@@ -127,11 +130,16 @@ export default {
         choice: []
       }],
       true_false_index: 0,
-      true_false_list: [],
+      true_false_list: [{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      }],
       short_answer_index: 0,
       short_answer_list: [],
-      textarea1: '',
-      radio: ''
+      textarea1: ''
     }
   },
 
@@ -159,7 +167,7 @@ export default {
       }
       else if(this.get[i].type === '3')
       {
-        this.true_false_list[this.true_false_index] = this.get[i].body
+        this.true_false_list[this.true_false_index].body = this.get[i].body
         this.true_false_index++
       }
       else if (this.get[i].type === '4')
@@ -182,7 +190,15 @@ export default {
           "top": el.offsetTop
         });
       });
-  }
+  },
+    open() {
+      const h = this.$createElement;
+      this.$message({
+        message: h('p', null, [
+          h('span', null, '提交成功！')
+        ])
+      });
+      this.$router.push('/index')
   },
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
@@ -190,6 +206,7 @@ export default {
       doCompletedTag: state => state.exam.question.answer.doCompletedTag
     })
   }
+}
 }
 </script>
 
@@ -228,6 +245,14 @@ export default {
   margin-left: 18px;
   margin-left: 10px;
   width: 60px;
+  text-align: center;
+}
+
+.el-button {
+  margin-top: 10px;
+  margin-left: 18px;
+  margin-left: 10px;
+  width: 100px;
   text-align: center;
 }
 

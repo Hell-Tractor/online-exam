@@ -16,3 +16,5 @@ spring:
 jwt:
   ttl: 120
   secret: examSecret
+server:
+  port: 8888

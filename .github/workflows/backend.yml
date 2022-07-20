@@ -3,6 +3,8 @@ name: Backend Deploy
 on:
   push:
     branches: [ master ]
+    path:
+      - 'Backend/**'
 
 jobs:
   compile:

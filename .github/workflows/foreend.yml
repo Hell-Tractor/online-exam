@@ -3,6 +3,8 @@ name: Foreend Deploy
 on:
   push:
     branches: [ master ]
+    path:
+      - 'Foreend/**'
 
 jobs:
   admin:

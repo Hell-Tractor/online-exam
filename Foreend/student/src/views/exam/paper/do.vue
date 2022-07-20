@@ -1,7 +1,12 @@
 <template>
   <div>
     <h1 style="text-align: center">{{profession}}考试</h1>
-    <h3 style="text-align: center">{{directions[0]}}&{{directions[1]}}</h3>
+    <div v-if="directions.length==0">
+      <h3 style="text-align: center">全部</h3>
+    </div>
+    <div v-if="directions.length>0">
+      <h3 style="text-align: center">{{directions[0]}}&{{directions[1]}}</h3>
+    </div>
     <h4 style="text-align: center">考试时间：120分钟</h4>
     <el-row :gutter="10">
       <el-col :span="6" :offset="1">
@@ -56,12 +61,14 @@
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">判断题(共{{true_false_num}}题)</span>
             <div v-for="index in true_false_num.slice(0,true_false_index)" :key="index">
               <p class="p-style" :class="`classabc${index+1}`">{{index}}.{{true_false_list[index-1]}}</p>
-              <el-row>
-                <el-radio :label="1" class="el-radio">正确</el-radio>
-              </el-row>
-              <el-row>
-                <el-radio :label="2" class="el-radio">错误</el-radio>
-              </el-row>
+              <el-radio-group v-model="radio">
+                <el-row>
+                  <el-radio :label="5" class="el-radio">正确</el-radio>
+                </el-row>
+                <el-row>
+                  <el-radio :label="6" class="el-radio">错误</el-radio>
+                </el-row>
+              </el-radio-group>
             </div>
             <el-divider></el-divider>
           </div>
@@ -123,7 +130,8 @@ export default {
       true_false_list: [],
       short_answer_index: 0,
       short_answer_list: [],
-      textarea1: ''
+      textarea1: '',
+      radio: ''
     }
   },
 

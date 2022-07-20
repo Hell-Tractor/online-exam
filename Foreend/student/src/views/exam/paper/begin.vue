@@ -20,7 +20,10 @@
     <el-row class="app-item-contain">
       <el-col :offset="4">
         <el-card class="box-card">
-          <div slot="header" class="clearfix" style="font-size: 18px">
+          <div v-if="directions.length==0" slot="header" class="clearfix" style="font-size: 18px">
+            <span>全部</span>
+          </div>
+          <div v-if="directions.length>0" slot="header" class="clearfix" style="font-size: 18px">
             <span>{{directions[0]}}&{{directions[1]}}</span>
           </div>
           <p class="p">单选题(共{{single_choice_num}}题)</p>

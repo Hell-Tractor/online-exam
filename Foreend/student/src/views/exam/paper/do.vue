@@ -15,7 +15,7 @@
             <span class="index-title-h3" style="border-left: solid 5px #6767cb;">答题卡</span>
           </div>
           <el-row>
-            <el-button class="button_style" v-for="o in get.length" :key="o" @click="Submit(o+1)">
+            <el-button class="button_style" v-for="o in get.length" :key="o" @click="Submit(o)">
               {{o}}
             </el-button>
           </el-row>
@@ -29,8 +29,8 @@
           <!-- 单选题 -->
           <div class="clearfix" v-if="single_choice_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">单选题(共{{single_choice_num}}题)</span>
-            <div v-for="(item,index) in single_choice_list.slice(0,single_choice_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index+1}}.{{item.body}}</p>
+            <div v-for="(item,index) in single_choice_list.slice(0,single_choice_index)" :key="index" :class="`t${index+1}`">
+              <p class="p-style">{{index+1}}.{{item.body}}</p>
               <el-radio-group v-model="item.radio">
                 <el-row>
                   <el-radio :label="1" class="el-radio">{{item.choice[0]}}</el-radio>
@@ -51,7 +51,7 @@
           <!-- 多选题 -->
           <div class="clearfix" v-if="multiple_choice_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">多选题(共{{multiple_choice_num}}题)</span>
-            <div v-for="(item,index) in multiple_choice_list.slice(0,multiple_choice_index)" :key="index">
+            <div v-for="(item,index) in multiple_choice_list.slice(0,multiple_choice_index)" :key="index" :class="`t${index+1+single_choice_index}`">
               <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index}}.{{item.body}}</p>
               <el-row v-for="choice in item.choice" :key="choice">
                 <el-checkbox :label="choice"></el-checkbox>
@@ -62,8 +62,8 @@
           <!-- 判断题 -->
           <div class="clearfix" v-if="true_false_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">判断题(共{{true_false_num}}题)</span>
-            <div v-for="(item,index) in true_false_list.slice(0,true_false_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index+multiple_choice_index}}.{{item.body}}</p>
+            <div v-for="(item,index) in true_false_list.slice(0,true_false_index)" :key="index" :class="`t${index+1+single_choice_index+multiple_choice_index}`">
+              <p class="p-style">{{index+1+single_choice_index+multiple_choice_index}}.{{item.body}}</p>
               <el-radio-group v-model="item.radio">
                 <el-row>
                   <el-radio :label="5" class="el-radio">正确</el-radio>
@@ -78,8 +78,8 @@
           <!-- 简答题 -->
           <div class="clearfix" v-if="short_answer_num>0">
             <span class="index-title-h3" style="border-left: solid 5px #8c939d;">简答题(共{{short_answer_num}}题)</span>
-            <div v-for="(item,index) in short_answer_list.slice(0,short_answer_index)" :key="index">
-              <p class="p-style" :class="`classabc${index+1}`">{{index+1+single_choice_index+multiple_choice_index+true_false_index}}.{{item}}</p>
+            <div v-for="(item,index) in short_answer_list.slice(0,short_answer_index)" :key="index" :class="`t${index+1+single_choice_index+multiple_choice_index+true_false_index}`">
+              <p class="p-style">{{index+1+single_choice_index+multiple_choice_index+true_false_index}}.{{item}}</p>
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 4}"
@@ -181,8 +181,8 @@ export default {
   },
   methods: {
     Submit(i) {
-      var wei = "classabc" + i
-      var el = document.getElementsByClassName(wei)[0];
+      // var wei = "t" + i
+      var el = document.getElementsByClassName(`t${i}`)[0];
       console.log(el.offsetTop);
       this.$nextTick(function() {
         window.scrollTo({

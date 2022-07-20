@@ -22,7 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Compile with Maven
-        run: cd backend && mvn compile
+        run: cd Backend && mvn compile
       - name: Deploy the JAR file to the remote server
         uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -30,7 +30,7 @@ jobs:
         with:
           java-version: '17'
       - name: Generate the package
-        run: cd backend && mvn -B package --file pom.xml -Dmaven.test.skip=true
+        run: cd Backend && mvn -B package --file pom.xml -Dmaven.test.skip=true
       - name: 将 JAR 包部署到服务器
         uses: garygrossgarten/github-action-scp@release
         with:

@@ -31,9 +31,9 @@ export default {
       let _this = this
       userApi.updateUser(this.userInfo).then(re => {
         if (re.code === 200) {
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     }

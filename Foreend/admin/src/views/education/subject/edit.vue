@@ -48,10 +48,12 @@ export default {
   created () {
     let id = this.$route.query.id
     let _this = this
-    if (id && parseInt(id) !== 0) {
+    if (id) {
       _this.formLoading = true
       subjectApi.select(id).then(re => {
-        _this.form = re.response
+        this.form.directionName=re.data.directionName
+        this.form.directionID=re.data.directionID
+        this.form.profession.professionID=re.data.professionId
         _this.formLoading = false
       })
     }
@@ -63,12 +65,12 @@ export default {
       this.form.profession.professionName = this.enumFormat(this.levelEnum, this.form.profession.professionID)
       subjectApi.edit(this.form).then(data => {
         if (data.code === 200) {
-          _this.$message.success(data.message)
+          _this.$message.success(data.data)
           _this.delCurrentView(_this).then(() => {
             _this.$router.push('/education/subject/list')
           })
         } else {
-          _this.$message.error(data.message)
+          _this.$message.error(data.data)
           _this.formLoading = false
         }
       }).catch(e => {

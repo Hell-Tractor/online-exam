@@ -85,9 +85,9 @@ export default {
       userApi.changeStatus(row.id).then(re => {
         if (re.code === 200) {
           row.status = re.response
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },
@@ -97,9 +97,9 @@ export default {
       userApi.deleteUser(row.username).then(re => {
         if (re.code === 200) {
           _this.search()
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },

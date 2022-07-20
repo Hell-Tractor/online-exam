@@ -17,7 +17,7 @@ const state = {
       editUrlEnum: [{ key: 1, value: '/exam/question/edit/singleChoice', name: '单选题' },
         { key: 2, value: '/exam/question/edit/multipleChoice', name: '多选题' },
         { key: 3, value: '/exam/question/edit/trueFalse', name: '判断题' },
-        { key: 5, value: '/exam/question/edit/shortAnswer', name: '简答题' }]
+        { key: 4, value: '/exam/question/edit/shortAnswer', name: '简答题' }]
     }
   }
 }

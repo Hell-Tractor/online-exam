@@ -7,7 +7,7 @@
       <div class="lowin-box lowin-register">
         <div class="lowin-box-inner">
           <el-form ref="loginForm" :model="loginForm">
-            <p>考试系统</p>
+            <p>注册</p>
             <div class="lowin-group">
               <label>用户名 </label>
               <el-input ref="username" v-model="loginForm.username" class="lowin-input" placeholder="用户名"

@@ -38,8 +38,8 @@ const request = function (loadtip, query) {
         loading.close()
       }
       // $ 是在 Vue 所有实例中都可用的 property 的一个简单约定
-      vue.prototype.$message.error(e.message)
-      return Promise.reject(e.message)
+      vue.prototype.$message.error(e.data)
+      return Promise.reject(e.data)
     })
 }
 

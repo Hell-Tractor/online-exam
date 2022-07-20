@@ -81,12 +81,6 @@ const constantRoutes = [
       requireAuth:true, //需要认证
     },
     children: [
-      // {
-      //   path: 'paper/list',
-      //   component: () => import('@/views/exam/paper/list'),
-      //   name: 'ExamPaperPageList',
-      //   meta: { title: '试卷列表', noCache: true }
-      // },
       {
         path: 'paper/edit',
         component: () => import('@/views/exam/paper/edit'),

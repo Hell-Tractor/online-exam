@@ -88,12 +88,12 @@ export default {
           this.formLoading = true
           userApi.createUser(this.form).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
               _this.delCurrentView(_this).then(() => {
                 _this.$router.push('/user/student/list')
               })
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
               _this.formLoading = false
             }
           }).catch(e => {

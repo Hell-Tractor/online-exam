@@ -26,11 +26,9 @@
           <router-link :to="{path:'/exam/question/edit/multipleChoice'}" class="link-left">
             <el-button type="primary" plain>添加多选</el-button>
           </router-link>
-
-          <router-link :to="{path:'/exam/question/edit/trueFalse'}" class="link-left">
+         <router-link :to="{path:'/exam/question/edit/trueFalse'}" class="link-left">
             <el-button type="primary" plain>添加判断</el-button>
           </router-link>
-
           <router-link :to="{path:'/exam/question/edit/shortAnswer'}" class="link-left">
             <el-button type="primary" plain>添加简答</el-button>
           </router-link>
@@ -51,9 +49,6 @@
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
                 @pagination="search"/>
-    <el-dialog :visible.sync="questionShow.dialog" style="width: 100%;height: 100%">
-      <QuestionShow :qType="questionShow.qType" :question="questionShow.question" :qLoading="questionShow.loading"/>
-    </el-dialog>
   </div>
 </template>
 
@@ -96,7 +91,7 @@ export default {
   methods: {
     submitForm () {
       this.queryParam.id=parseInt(this.queryParam.id)
-      this.queryParam.pageIndex = 1
+      // this.queryParam.pageIndex = 1
       this.search()
     },
     search () {
@@ -105,8 +100,8 @@ export default {
       questionApi.selectQuestionByCondition(this.queryParam).then(data => {
         if(data.data &&　data.data!==[]){
           this.tableData = data.data
-          this.total = 10
-          this.queryParam.pageIndex = 1
+          this.total = data.data.length
+          // this.queryParam.pageIndex = 1
           this.listLoading = false
         }
         else {
@@ -119,21 +114,7 @@ export default {
       this.queryParam.direction = null
       this.subjectFilter = this.subjects.filter(data => data.profession === this.queryParam.profession)
     },
-    addQuestion () {
-      this.$router.push('/exam/question/edit/singleChoice')
-    },
-    showQuestion (row) {
-      let _this = this
-      this.questionShow.dialog = true
-      this.questionShow.loading = true
-      questionApi.select(row.id).then(re => {
-        _this.questionShow.qType = re.response.type
-        _this.questionShow.question = re.response
-        _this.questionShow.loading = false
-      })
-    },
     editQuestion (row) {
-      let temp=['singleChoice','multipleChoice','trueFalse','shortAnswer']
       let url = this.enumFormat(this.editUrlEnum, parseInt(row.type))
       this.$router.push({ path: url, query: { id: row.questionID } })
     },
@@ -142,9 +123,9 @@ export default {
       questionApi.deleteQuestion(row.questionID).then(re => {
         if (re.code === 200) {
           _this.search()
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },

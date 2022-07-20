@@ -20,8 +20,10 @@ jobs:
       - name: tar dist directory
         run: |
           tar -zcvf foreend.tar.gz Foreend/dist
-    deploy:
-      name: Deploy foreend to remote server
+  deploy:
+    name: Deploy foreend to remote server
+    runs-on: ubuntu-latest
+    steps:
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:

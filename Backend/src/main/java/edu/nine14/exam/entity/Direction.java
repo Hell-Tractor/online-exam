@@ -17,13 +17,6 @@ public class Direction {
     @ManyToOne(cascade=CascadeType.ALL)
     private Profession profession;
 
-    /*@OneToMany(mappedBy="direction_id")
-    private List<Question> questions;*/
-
-    /*@ManyToOne
-    @JoinColumn(name = "profession_id", referencedColumnName = "id")
-    private Profession profession;*/
-
     public Integer getDirectionID() {
         return directionID;
     }
@@ -47,20 +40,4 @@ public class Direction {
     public void setProfession(Profession profession) {
         this.profession = profession;
     }
-
-    /*public Profession getProfession() {
-        return profession;
-    }
-
-    public void setProfessionID(Profession profession) {
-        this.profession = profession;
-    }*/
-
-    /*public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }*/
 }

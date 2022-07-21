@@ -51,10 +51,10 @@
             <el-tab-pane label="密码修改" name="password" >
               <el-form :model="passwordEdit" ref="passwordEdit" label-width="100px" v-loading="formLoading" :rules="rules">
                 <el-form-item label="旧密码：" required>
-                  <el-input v-model="oldPasswordRaw"></el-input>
+                  <el-input v-model="oldPasswordRaw" show-password></el-input>
                 </el-form-item>
                 <el-form-item label="新密码："required >
-                  <el-input v-model="newPasswordRaw"></el-input>
+                  <el-input v-model="newPasswordRaw" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitPassword">更新</el-button>
@@ -126,9 +126,9 @@ export default {
           this.formLoading = true
           userApi.changePassword(this.passwordEdit).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
             }
             _this.formLoading = false
           }).catch(e => {
@@ -146,9 +146,9 @@ export default {
           this.formLoading = true
           userApi.update(this.form).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
             }
             _this.formLoading = false
           }).catch(e => {

@@ -15,7 +15,7 @@
         <el-menu-item index="/user/index">个人中心</el-menu-item>
       </el-menu>
       <div>
-        <a href="/"><img src="@/assets/logo.png" height="56"/></a>
+        <a><img src="@/assets/logo.png" height="56"/></a>
       </div>
     </el-header>
     <el-main class="student-main">

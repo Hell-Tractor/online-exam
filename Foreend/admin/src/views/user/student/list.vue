@@ -80,17 +80,6 @@ export default {
         this.listLoading = false
       })
     },
-    changeStatus (row) {
-      let _this = this
-      userApi.changeStatus(row.id).then(re => {
-        if (re.code === 200) {
-          row.status = re.response
-          _this.$message.success(re.data)
-        } else {
-          _this.$message.error(re.data)
-        }
-      })
-    },
     // 删除用户
     deleteUser (row) {
       let _this = this

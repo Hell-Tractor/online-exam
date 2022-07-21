@@ -22,7 +22,7 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          cd Foreend/output/admin
+          cd Foreend/admin
           tar -zcvf admin.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
@@ -58,7 +58,7 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          cd Foreend/output/student
+          cd Foreend/student
           tar -zcvf student.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release

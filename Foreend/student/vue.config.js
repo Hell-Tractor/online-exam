@@ -6,8 +6,8 @@ function resolve (dir) {
 }
 
 module.exports = {
-  publicPath: '../output/',
-  outputDir: 'student',
+  publicPath: './',
+  outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: true,
   productionSourceMap: false,
@@ -15,12 +15,12 @@ module.exports = {
   devServer: {
     open: true,
     host: '120.25.236.100', // 后端接口的域名
-    port: 8001, // 前端启动的端口
+    port: 80, // 前端启动的端口
     https: false,
     hotOnly: false,
     proxy: {
       '/api': {
-        target: 'http://120.25.236.100:8088', // 后端接口地址，和后端保持一致
+        target: 'http://120.25.236.100:8888', // 后端接口地址，和后端保持一致
         changeOrigin: true
       }
     }

@@ -79,7 +79,13 @@ export default {
     },
     submitForm () {
       this.queryParam.pageIndex = 1
-      this.search()
+      if(this.queryParam.professionID){
+        this.search()
+      }
+      else{
+        this.searchAll()
+      }
+
     }
   },
   computed: {

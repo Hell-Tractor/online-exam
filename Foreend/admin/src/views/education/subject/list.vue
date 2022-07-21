@@ -26,8 +26,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
-                @pagination="search"/>
+<!--    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"-->
+<!--                @pagination="search"/>-->
   </div>
 </template>
 
@@ -54,6 +54,9 @@ export default {
   created () {
     this.searchAll()
   },
+  activated() {
+    this.searchAll()
+  },
   methods: {
     searchAll(){
       subjectApi.list().then(data => {
@@ -76,7 +79,13 @@ export default {
     },
     submitForm () {
       this.queryParam.pageIndex = 1
-      this.search()
+      if(this.queryParam.professionID){
+        this.search()
+      }
+      else{
+        this.searchAll()
+      }
+
     }
   },
   computed: {

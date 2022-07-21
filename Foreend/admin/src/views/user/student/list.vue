@@ -66,7 +66,7 @@ export default {
           this.listLoading = false
         }
         else{
-          alert('用户不存在！')
+          this.$message.error('用户不存在！')
           this.search()
         }
       })

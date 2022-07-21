@@ -82,9 +82,7 @@ export default {
       subjectApi.edit(this.form).then(data => {
         if (data.code === 200) {
           _this.$message.success(data.data)
-          _this.delCurrentView(_this).then(() => {
-            _this.$router.push('/education/subject/list')
-          })
+          _this.$router.push('/education/subject/list')
         } else {
           _this.$message.error(data.data)
           _this.formLoading = false

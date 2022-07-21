@@ -150,7 +150,7 @@ export default {
         }
       }).catch(e => {
         if(e=='directionID not found'){
-          alert('专业方向不存在，请先添加！')
+          this.$message.error('专业方向不存在，请先添加！')
           _this.$router.push('/education/subject/list')
         }
         this.formLoading = false
@@ -174,15 +174,16 @@ export default {
             if (!this.form.questionID || this.form.questionID === null) {
               questionApi.addOne(this.form).then(re => {
                 if (re.code === 200) {
-                  this.$message.success(re.data)
+                  this.$message.success(re.message)
                   this.delCurrentView(this).then(() => {
                     this.$router.push('/exam/question/list')
                   })
                 } else {
-                  this.$message.error(re.data)
+                  this.$message.error(re.message)
                   this.formLoading = false
                 }
               }).catch(e => {
+                this.$message.error(e)
                 this.formLoading = false
               })
             }
@@ -199,7 +200,7 @@ export default {
                 }
               }).catch(e => {
                 if(e=='directionID not found'){
-                  alert('专业方向不存在，请先添加！')
+                  this.$message.error('专业方向不存在，请先添加！')
                   this.$router.push('/education/subject/list')
                 }
                 this.formLoading = false
@@ -207,7 +208,7 @@ export default {
             }
           }
           else{
-            alert('请先检查专业方向！')
+            this.$message.error('专业方向不正确！')
             return false
           }
         }

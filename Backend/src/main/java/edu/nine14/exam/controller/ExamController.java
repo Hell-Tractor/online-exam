@@ -43,6 +43,12 @@ public class ExamController {
         List<Object> true_false_question = new ArrayList<>();
         List<Object> short_answer_question = new ArrayList<>();
 
+        if(single_choice_num==0&&multiple_choice_num==0&&true_false_num==0&&short_answer_num==0)
+            return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR,"各题型题目数量不能均为0");
+
+        if(single_choice_num<0||multiple_choice_num<0||true_false_num<0||short_answer_num<0)
+            return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR,"题目数量不能为负");
+
         if (!has_direction) {
             if (single_choice_num >= 0) {
                 List<Object> questionList = (List<Object>)questionDirectionService.questionForProfession((Integer) professionID, "1");

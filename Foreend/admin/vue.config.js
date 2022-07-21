@@ -6,15 +6,15 @@ function resolve (dir) {
 }
 
 module.exports = {
-  publicPath: '../output/',
-  outputDir: 'admin',
+  publicPath: './',
+  outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: true,
   productionSourceMap: false,
   devServer: { // 开发环境主要修改这里
     open: true,
     host: '120.25.236.100', // 后端接口的域名
-    port: 8002, // 前端启动的端口
+    port: 80, // 前端启动的端口
     https: false,
     hotOnly: false,
     proxy: {

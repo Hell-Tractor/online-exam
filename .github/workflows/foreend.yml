@@ -22,12 +22,12 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          cd Foreend/output/admin
+          cd Foreend/admin
           tar -zcvf admin.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: admin.tar.gz
+          local: Foreend/admin/admin.tar.gz
           remote: spring-boot/admin/admin.tar.gz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          scripts: |
+          script: |
             cd spring-boot/admin
             rm -rf dist
             tar -zxvf admin.tar.gz
@@ -58,12 +58,12 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          cd Foreend/output/student
+          cd Foreend/student
           tar -zcvf student.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: student.tar.gz
+          local: Foreend/student/student.tar.gz
           remote: spring-boot/student/student.tar.gz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -74,7 +74,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          scripts: |
+          script: |
             cd spring-boot/student
             rm -rf dist
             tar -zxvf student.tar.gz

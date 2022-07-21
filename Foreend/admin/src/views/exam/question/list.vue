@@ -102,7 +102,7 @@ export default {
         this.queryParam.pageIndex--
         this.search()
       }else{
-        alert('没有上一页了！')
+        this.$message.error('没有上一页了！')
         location.reload()
       }
     },
@@ -119,7 +119,7 @@ export default {
         }
         else {
           this.queryParam.pageIndex--
-          alert('没有下一面了！')
+          this.$message.error('没有下一面了！')
           location.reload()
         }
       })
@@ -135,7 +135,7 @@ export default {
           this.listLoading = false
         }
         else {
-          alert('题目不存在！')
+          this.$message.error('题目不存在！')
           location.reload()
         }
       })

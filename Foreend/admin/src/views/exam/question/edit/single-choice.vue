@@ -172,7 +172,7 @@ export default {
         }
       }).catch(e => {
         if(e=='directionID not found'){
-          alert('专业方向不存在，请先添加！')
+          this.$message.error('专业方向不存在，请先添加！')
           _this.$router.push('/education/subject/list')
         }
         this.formLoading = false
@@ -221,14 +221,14 @@ export default {
                 }
               }).catch(e => {
                 if(e=='directionID not found'){
-                  alert('专业方向不存在，请先添加！')
+                  this.$message.error('专业方向不存在，请先添加！')
                 }
                 this.formLoading = false
               })
             }
           }
           else{
-            alert('请先检查专业方向！')
+            this.$message.error('专业方向不正确！')
             return false
           }
         }

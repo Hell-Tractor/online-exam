@@ -54,6 +54,9 @@ export default {
   created () {
     this.searchAll()
   },
+  activated() {
+    this.searchAll()
+  },
   methods: {
     searchAll(){
       subjectApi.list().then(data => {

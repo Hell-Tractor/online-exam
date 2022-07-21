@@ -13,7 +13,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: { // 开发环境主要修改这里
     open: true,
-    host: '120.25.236.100', // 后端接口的域名
+    host: 'localhost', // 后端接口的域名
     port: 80, // 前端启动的端口
     https: false,
     hotOnly: false,

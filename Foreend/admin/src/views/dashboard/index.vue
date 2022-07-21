@@ -8,7 +8,7 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              计算机网络
+              毛概
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              JAVA程序
+              军理
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              数据结构
+              马原
             </div>
           </div>
         </div>
@@ -44,17 +44,15 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              算法设计
+              思修
             </div>
           </div>
         </div>
       </el-col>
     </el-row>
     <el-row class="echarts-line">
-      <div id="echarts-moth-user" style="width: 100%;height:400px;"/>
-    </el-row>
-    <el-row class="echarts-line">
-      <div id="echarts-moth-question" style="width: 100%;height:400px;"/>
+      <el-calendar v-model="timeValue">
+      </el-calendar>
     </el-row>
   </div>
 </template>
@@ -68,6 +66,7 @@ export default {
   },
   data () {
     return {
+      timeValue: new Date(),
       examPaperCount: 0,
       questionCount: 0,
       doExamPaperCount: 0,

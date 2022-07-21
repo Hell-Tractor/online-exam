@@ -60,7 +60,7 @@ const constantRoutes = [
         path: 'student/list',
         component: () => import('@/views/user/student/list'),
         name: 'UserStudentPageList',
-        meta: { title: '学生列表', noCache: true }
+        meta: { title: '用户列表', noCache: true }
       },
       {
         path: 'student/edit',
@@ -81,12 +81,6 @@ const constantRoutes = [
       requireAuth:true, //需要认证
     },
     children: [
-      // {
-      //   path: 'paper/list',
-      //   component: () => import('@/views/exam/paper/list'),
-      //   name: 'ExamPaperPageList',
-      //   meta: { title: '试卷列表', noCache: true }
-      // },
       {
         path: 'paper/edit',
         component: () => import('@/views/exam/paper/edit'),

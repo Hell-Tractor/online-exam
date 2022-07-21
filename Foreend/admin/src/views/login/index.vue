@@ -161,7 +161,7 @@ export default {
             } else { // 如果是无效的
               _this.loading = false
               _this.$message({
-                message: result.message, // result的消息
+                message: result.data, // result的消息
                 type: 'error' // 表示错误
               })
             }

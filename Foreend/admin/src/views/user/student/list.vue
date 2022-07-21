@@ -57,12 +57,18 @@ export default {
     searchByName(){
       this.listLoading = true
       userApi.getUserByName(this.username).then(data => {
-        let temp=[]
-        temp.push(data.data)
-        this.tableData=temp
-        this.total = 1
-        this.queryParam.page = 1
-        this.listLoading = false
+        if(data.data){
+          let temp=[]
+          temp.push(data.data)
+          this.tableData=temp
+          this.total = 1
+          this.queryParam.page = 1
+          this.listLoading = false
+        }
+        else{
+          alert('用户不存在！')
+          this.search()
+        }
       })
     },
     search () {
@@ -79,9 +85,9 @@ export default {
       userApi.changeStatus(row.id).then(re => {
         if (re.code === 200) {
           row.status = re.response
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },
@@ -91,9 +97,9 @@ export default {
       userApi.deleteUser(row.username).then(re => {
         if (re.code === 200) {
           _this.search()
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },

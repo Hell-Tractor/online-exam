@@ -2,19 +2,16 @@
   <div class="app-container">
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="题目ID：">
-        <el-input v-model="queryParam.id" clearable></el-input>
+        <el-input v-model="queryParam.id" clearable  placeholder="请输入数字"></el-input>
       </el-form-item>
       <el-form-item label="专业分类：">
-        <el-select v-model="queryParam.profession" placeholder="专业分类"  @change="levelChange" clearable>
+        <el-select v-model="queryParam.profession" placeholder="专业分类"
+                   @change="levelChange" clearable >
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="专业方向：">
-<!--        <el-select v-model="queryParam.direction" clearable>-->
-<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"-->
-<!--                     :label="item.name"></el-option>-->
-<!--        </el-select>-->
-        <el-input v-model="queryParam.direction" clearable></el-input>
+        <el-input v-model="queryParam.direction" clearable placeholder="请输入专业分类"></el-input>
       </el-form-item>
       <el-form-item label="题型：">
         <el-select v-model="queryParam.type" clearable>
@@ -29,11 +26,9 @@
           <router-link :to="{path:'/exam/question/edit/multipleChoice'}" class="link-left">
             <el-button type="primary" plain>添加多选</el-button>
           </router-link>
-
-          <router-link :to="{path:'/exam/question/edit/trueFalse'}" class="link-left">
+         <router-link :to="{path:'/exam/question/edit/trueFalse'}" class="link-left">
             <el-button type="primary" plain>添加判断</el-button>
           </router-link>
-
           <router-link :to="{path:'/exam/question/edit/shortAnswer'}" class="link-left">
             <el-button type="primary" plain>添加简答</el-button>
           </router-link>
@@ -54,9 +49,6 @@
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
                 @pagination="search"/>
-    <el-dialog :visible.sync="questionShow.dialog" style="width: 100%;height: 100%">
-      <QuestionShow :qType="questionShow.qType" :question="questionShow.question" :qLoading="questionShow.loading"/>
-    </el-dialog>
   </div>
 </template>
 
@@ -99,38 +91,30 @@ export default {
   methods: {
     submitForm () {
       this.queryParam.id=parseInt(this.queryParam.id)
-      this.queryParam.pageIndex = 1
+      // this.queryParam.pageIndex = 1
       this.search()
     },
     search () {
       this.listLoading = true
       this.initSubject()
       questionApi.selectQuestionByCondition(this.queryParam).then(data => {
-        this.tableData = data.data
-        this.total = 10
-        this.queryParam.pageIndex = 1
-        this.listLoading = false
+        if(data.data &&　data.data!==[]){
+          this.tableData = data.data
+          this.total = data.data.length
+          // this.queryParam.pageIndex = 1
+          this.listLoading = false
+        }
+        else {
+          alert('题目不存在！')
+          location.reload();
+        }
       })
     },
     levelChange () { // 专业分类改变
       this.queryParam.direction = null
       this.subjectFilter = this.subjects.filter(data => data.profession === this.queryParam.profession)
     },
-    addQuestion () {
-      this.$router.push('/exam/question/edit/singleChoice')
-    },
-    showQuestion (row) {
-      let _this = this
-      this.questionShow.dialog = true
-      this.questionShow.loading = true
-      questionApi.select(row.id).then(re => {
-        _this.questionShow.qType = re.response.type
-        _this.questionShow.question = re.response
-        _this.questionShow.loading = false
-      })
-    },
     editQuestion (row) {
-      let temp=['singleChoice','multipleChoice','trueFalse','shortAnswer']
       let url = this.enumFormat(this.editUrlEnum, parseInt(row.type))
       this.$router.push({ path: url, query: { id: row.questionID } })
     },
@@ -139,9 +123,9 @@ export default {
       questionApi.deleteQuestion(row.questionID).then(re => {
         if (re.code === 200) {
           _this.search()
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },

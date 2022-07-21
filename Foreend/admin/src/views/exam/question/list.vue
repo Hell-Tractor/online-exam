@@ -47,10 +47,10 @@
         </template>
       </el-table-column>
     </el-table>
-<!--    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"-->
-<!--                @pagination="search"/>-->
-    <el-button size="middle"  @click="prePage" style="margin-top: 20px">上一页</el-button>
-    <el-button size="middle"  type="danger" @click="nextPage" class="link-left">下一页</el-button>
+    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
+                @pagination="search"/>
+<!--    <el-button size="middle"  @click="prePage" style="margin-top: 20px">上一页</el-button>-->
+<!--    <el-button size="middle"  type="danger" @click="nextPage" class="link-left">下一页</el-button>-->
   </div>
 </template>
 
@@ -97,41 +97,41 @@ export default {
       // this.queryParam.pageIndex = 1
       this.search()
     },
-    prePage(){
-      if(this.queryParam.pageIndex>1){
-        this.queryParam.pageIndex--
-        this.search()
-      }else{
-        this.$message.error('没有上一页了！')
-        location.reload()
-      }
-    },
-    nextPage(){
-      this.queryParam.pageIndex++
-      this.listLoading = true
-      this.initSubject()
-      questionApi.selectQuestionByCondition(this.queryParam).then(data => {
-        if(data.data &&　data.data!==[] && data.data.length!=0){
-          this.tableData = data.data
-          this.total = data.data.length
-          // this.queryParam.pageIndex = 1
-          this.listLoading = false
-        }
-        else {
-          this.queryParam.pageIndex--
-          this.$message.error('没有下一面了！')
-          location.reload()
-        }
-      })
-    },
+    // prePage(){
+    //   if(this.queryParam.pageIndex>1){
+    //     this.queryParam.pageIndex--
+    //     this.search()
+    //   }else{
+    //     this.$message.error('没有上一页了！')
+    //     location.reload()
+    //   }
+    // },
+    // nextPage(){
+    //   this.queryParam.pageIndex++
+    //   this.listLoading = true
+    //   this.initSubject()
+    //   questionApi.selectQuestionByCondition(this.queryParam).then(data => {
+    //     if(data.data &&　data.data!==[] && data.data.length!=0){
+    //       this.tableData = data.data
+    //       this.total = data.data.length
+    //       // this.queryParam.pageIndex = 1
+    //       this.listLoading = false
+    //     }
+    //     else {
+    //       this.queryParam.pageIndex--
+    //       this.$message.error('没有下一面了！')
+    //       location.reload()
+    //     }
+    //   })
+    // },
     search () {
       this.listLoading = true
       this.initSubject()
-      this.queryParam.pageIndex = 1
+      // this.queryParam.pageIndex = 1
       questionApi.selectQuestionByCondition(this.queryParam).then(data => {
         if(data.data &&　data.data!==[]){
-          this.tableData = data.data
-          this.total = data.data.length
+          this.tableData = data.data.questions
+          this.total = data.data.total
           this.listLoading = false
         }
         else {

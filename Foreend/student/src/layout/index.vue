@@ -77,6 +77,8 @@ export default {
     },
     logout () {
       let _this = this
+      localStorage.clear()
+      this.create()
       _this.clearLogin()
       _this.$router.push({ path: '/login' })
     },

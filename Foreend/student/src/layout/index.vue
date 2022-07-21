@@ -77,10 +77,10 @@ export default {
     },
     logout () {
       let _this = this
+      // _this.clearLogin()
+      _this.$router.push({ path: '/login' })
       localStorage.clear()
       this.create()
-      _this.clearLogin()
-      _this.$router.push({ path: '/login' })
     },
     ...mapActions('user', ['getUserMessageInfo']),
     ...mapMutations('user', ['clearLogin'])

@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          scripts: |
+          script: |
             cd spring-boot/admin
             rm -rf dist
             tar -zxvf admin.tar.gz
@@ -74,7 +74,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          scripts: |
+          script: |
             cd spring-boot/student
             rm -rf dist
             tar -zxvf student.tar.gz

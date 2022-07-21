@@ -32,7 +32,14 @@ public class DirectionService {
 
     public void editDirection(Direction direction){
         try {
-            directionSingleRepository.editDirection(direction.getDirectionName(),direction.getProfession().getProfessionID()
+            if(direction.getDirectionID()==null){
+                DirectionSingle directionSingle = new DirectionSingle();
+                directionSingle.setDirectionID((int) directionSingleRepository.count());
+                directionSingle.setDirectionName(direction.getDirectionName());
+                directionSingle.setProfessionId(direction.getProfession().getProfessionID());
+                directionSingleRepository.save(directionSingle);
+            }
+            else directionSingleRepository.editDirection(direction.getDirectionName(),direction.getProfession().getProfessionID()
                     ,direction.getDirectionID());
         }catch (Exception e){
             throw e;

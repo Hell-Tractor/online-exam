@@ -122,6 +122,78 @@ export default {
         body: '',
         choice: [],
         radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
+      },{
+        body: '',
+        choice: [],
+        radio: ''
       }],
       multiple_choice_index: 0,
       multiple_choice_list: [{
@@ -130,9 +202,189 @@ export default {
       },{
         body: '',
         choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
+      },{
+        body: '',
+        choice: []
       }],
       true_false_index: 0,
       true_false_list: [{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
+        radio: '',
+        body: ''
+      },{
         radio: '',
         body: ''
       },{

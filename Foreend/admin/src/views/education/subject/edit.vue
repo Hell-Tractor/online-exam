@@ -13,8 +13,16 @@
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
+        <el-button  type="danger" @click="deleteFormConfirm">清空</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog title="清空" :visible.sync="deleteVisible" width="30%">
+      <span>确定清空吗？</span>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="deleteVisible = false">取消</el-button>
+      <el-button type="primary" @click="deleteForm">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -42,10 +50,11 @@ export default {
           professionName: '' // 分类名称
         }
       },
-      formLoading: false
+      formLoading: false,
+      deleteVisible:false
     }
   },
-  created () {
+  activated() {
     let id = this.$route.query.id
     let _this = this
     if (id) {
@@ -56,9 +65,16 @@ export default {
         this.form.profession.professionID=re.data.professionId
         _this.formLoading = false
       })
+    } else{
+      this.deleteForm()
     }
   },
+  created () {
+  },
   methods: {
+    deleteFormConfirm(){
+      this.deleteVisible=true
+    },
     submitForm () {
       let _this = this
       this.formLoading = true
@@ -66,9 +82,7 @@ export default {
       subjectApi.edit(this.form).then(data => {
         if (data.code === 200) {
           _this.$message.success(data.data)
-          _this.delCurrentView(_this).then(() => {
-            _this.$router.push('/education/subject/list')
-          })
+          _this.$router.push('/education/subject/list')
         } else {
           _this.$message.error(data.data)
           _this.formLoading = false
@@ -77,7 +91,12 @@ export default {
         _this.formLoading = false
       })
     },
-    resetForm () {
+    //重置
+    resetForm(){
+      location.reload()
+    },
+    // 清空
+    deleteForm () {
       let lastId = this.form.directionID
       this.$refs['form'].resetFields()
       this.form = {
@@ -89,6 +108,7 @@ export default {
         }
       }
       this.form.directionID = lastId
+      this.deleteVisible=false
     },
   },
   computed: {

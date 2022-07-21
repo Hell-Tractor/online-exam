@@ -61,12 +61,12 @@ export default {
           let temp=[]
           temp.push(data.data)
           this.tableData=temp
-          this.total = 1
-          this.queryParam.page = 1
+          this.total = data.data.total
+          // this.queryParam.page = 1
           this.listLoading = false
         }
         else{
-          alert('用户不存在！')
+          this.$message.error('用户不存在！')
           this.search()
         }
       })
@@ -74,21 +74,10 @@ export default {
     search () {
       this.listLoading = true
       userApi.getUserPageList(Qs.stringify(this.queryParam)).then(data => {
-        this.tableData = data.data
-        this.total = data.data.length
-        this.queryParam.page = 1
+        this.tableData = data.data.users
+        this.total = data.data.total
+        // this.queryParam.page = 1
         this.listLoading = false
-      })
-    },
-    changeStatus (row) {
-      let _this = this
-      userApi.changeStatus(row.id).then(re => {
-        if (re.code === 200) {
-          row.status = re.response
-          _this.$message.success(re.data)
-        } else {
-          _this.$message.error(re.data)
-        }
       })
     },
     // 删除用户

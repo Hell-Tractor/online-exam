@@ -26,8 +26,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
-                @pagination="search"/>
+<!--    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"-->
+<!--                @pagination="search"/>-->
   </div>
 </template>
 
@@ -52,6 +52,9 @@ export default {
     }
   },
   created () {
+    this.searchAll()
+  },
+  activated() {
     this.searchAll()
   },
   methods: {

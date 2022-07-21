@@ -13,10 +13,6 @@
             <label>{{form.username}}</label>
           </el-row>
           <el-divider/>
-          <el-row class="user-info-fullInfo">
-            <label>姓名：{{form.name}}</label><br/>
-            <label>年级：{{form.grade}}级</label><br/>
-          </el-row>
         </el-card>
       </el-col>
 
@@ -48,22 +44,23 @@
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
             <el-tab-pane label="密码修改" name="password" >
-              <el-form :model="passwordEdit" ref="passwordEdit" label-width="100px" v-loading="formLoading" :rules="rules">
-                <el-form-item label="旧密码：" required>
-                  <el-input v-model="oldPasswordRaw"></el-input>
+              <el-form  label-width="100px" v-loading="formLoading" :rules="rules"
+              :model="ruleForm" ref="ruleForm">
+                <el-form-item label="旧密码：" required prop="oldPasswordRaw">
+                  <el-input type="password" v-model="ruleForm.oldPasswordRaw" show-password></el-input>
                 </el-form-item>
-                <el-form-item label="新密码："required >
-                  <el-input v-model="newPasswordRaw"></el-input>
+                <el-form-item label="新密码："required prop="newPasswordRaw">
+                  <el-input type="password" v-model="ruleForm.newPasswordRaw" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="checkPass">
+                  <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="submitPassword">更新</el-button>
+                  <el-button type="primary"  @click="submitPassword('ruleForm')">更新</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
-
           </el-tabs>
         </el-card>
       </el-col>
@@ -78,8 +75,27 @@ import md5 from "md5";
 
 export default {
   data () {
+    let validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.ruleForm.newPasswordRaw) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       event: [],
+      ruleForm: {
+        checkPass: '',
+        newPasswordRaw:'',
+        oldPasswordRaw:'',
+      },
+      rules: {
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+      },
       passwordEdit:{
         oldPassword: "",
         newPassword: "",
@@ -93,17 +109,7 @@ export default {
         grade: null,
         userType: 'U'
       },
-      newPasswordRaw:'',
-      oldPasswordRaw:'',
       formLoading: false,
-      rules: {
-        name: [
-          { required: true, message: '请输入真实姓名', trigger: 'blur' }
-        ],
-        grade: [
-          { required: true, message: '请选择年级', trigger: 'change' }
-        ]
-      }
     }
   },
   created () {
@@ -120,27 +126,34 @@ export default {
         this.$message.error(re.message)
       }
     },
-    submitPassword(){
-      let _this = this
-      this.passwordEdit.newPassword=md5(this.newPasswordRaw)
-      this.passwordEdit.oldPassword=md5(this.oldPasswordRaw)
-      this.$refs.form.validate((valid) => {
+    submitPassword(formName){
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.formLoading = true
-          userApi.changePassword(this.passwordEdit).then(data => {
-            if (data.code === 200) {
-              _this.$message.success(data.message)
+          let _this = this
+          this.passwordEdit.newPassword=md5(this.ruleForm.newPasswordRaw)
+          this.passwordEdit.oldPassword=md5(this.ruleForm.oldPasswordRaw)
+          this.$refs.form.validate((valid) => {
+            if (valid) {
+              this.formLoading = true
+              userApi.changePassword(this.passwordEdit).then(data => {
+                if (data.code === 200) {
+                  _this.$message.success(data.data)
+                } else {
+                  _this.$message.error(data.data)
+                }
+                _this.formLoading = false
+              }).catch(e => {
+                _this.formLoading = false
+              })
             } else {
-              _this.$message.error(data.message)
+              return false
             }
-            _this.formLoading = false
-          }).catch(e => {
-            _this.formLoading = false
           })
         } else {
-          return false
+          console.log('error submit!!');
+          return false;
         }
-      })
+      });
     },
     submitForm () {
       let _this = this
@@ -149,9 +162,9 @@ export default {
           this.formLoading = true
           userApi.update(this.form).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
             }
             _this.formLoading = false
           }).catch(e => {

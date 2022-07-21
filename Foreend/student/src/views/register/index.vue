@@ -6,20 +6,28 @@
     <div class="lowin-wrapper">
       <div class="lowin-box lowin-register">
         <div class="lowin-box-inner">
-          <el-form ref="loginForm" :model="loginForm">
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules">
             <p>注册</p>
             <div class="lowin-group">
-              <label>用户名 </label>
-              <el-input ref="username" v-model="loginForm.username" class="lowin-input" placeholder="用户名"
-                        name="username" type="text" tabindex="1" auto-complete="on"/>
+              <el-form-item label="用户名" prop="usernameRaw">
+                <el-input  v-model="ruleForm.usernameRaw" class="lowin-input" placeholder="用户名"
+                          name="usernameRaw" type="text" tabindex="1" auto-complete="false"/>
+              </el-form-item>
             </div>
             <div class="lowin-group password-group">
-              <label>密码</label>
-              <el-input class="lowin-input" ref="passwordRaw" v-model="passwordRaw"
-                        placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on"
-                        @keyup.enter.native="handleLogin"/>
+              <el-form-item label="密码" prop="passwordRaw">
+                <el-input class="lowin-input" v-model="ruleForm.passwordRaw" show-password
+                          placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="false"/>
+              </el-form-item>
             </div>
-            <el-button type="text" class="lowin-btn login-btn" @click.native.prevent="handleRegister">注册</el-button>
+            <div class="lowin-group password-group">
+              <el-form-item label="重复密码" prop="repeatPassword">
+              <el-input class="lowin-input"  v-model="ruleForm.repeatPassword" show-password
+                        placeholder="重复密码" name="repeatPassword" tabindex="3" auto-complete="false"/>
+              </el-form-item>
+            </div>
+            <el-button type="text" class="lowin-btn login-btn"
+                       @click.native.prevent="handleRegister('ruleForm')">注册</el-button>
             <div class="text-foot">
               已有账号?
               <router-link to="/login" class="login-link">
@@ -37,28 +45,55 @@
 import { mapMutations, mapState } from 'vuex'
 import registerApi from '@/api/register'
 import md5 from "md5";
+import userApi from "@/api/user";
 
 export default {
   name: 'Login',
   data () {
+    let validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.ruleForm.passwordRaw) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
+      ruleForm: {
+        repeatPassword: '',
+        usernameRaw:'',
+        passwordRaw:'',
+      },
       loginForm: {
         username: '',
         password: ''
       },
-      passwordRaw: '', // 没加密的密码
+      rules: {
+        repeatPassword: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+      },
     }
   },
   methods: {
-    handleRegister () {
-      // md5加密
-      this.loginForm.password=md5(this.passwordRaw)
+    handleRegister(formName) {
       let _this = this
-      registerApi.register(this.loginForm).then(function (result) {
-        if (result && result.code === 200) {
-          _this.$router.push({ path: '/login' })
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // md5加密
+          this.loginForm.username=this.ruleForm.usernameRaw
+          this.loginForm.password=md5(this.ruleForm.passwordRaw)
+          registerApi.register(this.loginForm).then(function (result) {
+            if (result && result.code === 200) {
+              _this.$message.success(result.data)
+              _this.$router.push({ path: '/login' })
+            } else {
+              _this.$message.error(result.message)
+            }
+          })
         } else {
-          _this.$message.error(result.message)
+          return false
         }
       })
     },
@@ -80,7 +115,6 @@ export default {
     }
   }
 </style>
-
 <style scoped>
 
   .lowin {

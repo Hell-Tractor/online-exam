@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-main>
     <h1 style="text-align: center">{{profession}}考试</h1>
     <div v-if="directions.length==0">
       <h3 style="text-align: center">全部</h3>
@@ -91,6 +92,7 @@
         </el-card>
       </el-col>
     </el-row>
+    </el-main>
   </div>
 </template>
 

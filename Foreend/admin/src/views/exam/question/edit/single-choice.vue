@@ -14,10 +14,11 @@
         <el-input v-model="form.body"  class="question-item-content-input" placeholder="请输入题干"/>
       </el-form-item>
       <el-form-item label="选项：" required>
-        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.selection"  label-width="50px" class="question-item-label">
+        <el-form-item  :key="item.prefix"  v-for="(item,index) in form.selection"  class="question-item-label">
           <el-input v-model="item.content"   class="question-item-content-input" placeholder="请输入选项"/>
            <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
+        <el-button type="success" icon="el-icon-plus" circle @click="questionItemAdd"></el-button>
       </el-form-item>
       <el-form-item label="正确答案：" prop="answer" required>
         <el-input v-model="form.answer" class="question-item-content-input" placeholder="请输入正确答案"/>
@@ -25,6 +26,7 @@
       <el-form-item>
         <el-button type="primary" @click="firstSubmit">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
+        <el-button  type="danger" @click="deleteFormConfirm">清空</el-button>
       </el-form-item>
     </el-form>
     <el-dialog title="提交" :visible.sync="dialogVisible" width="30%">
@@ -32,6 +34,13 @@
       <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取消</el-button>
       <el-button type="primary" @click="submitForm">确定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="清空" :visible.sync="deleteVisible" width="30%">
+      <span>确定清空吗？</span>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="deleteVisible = false">取消</el-button>
+      <el-button type="primary" @click="deleteForm">确定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -109,19 +118,25 @@ export default {
           { required: true, message: '请选择正确答案', trigger: 'change' }
         ]
       },
-      dialogVisible:false
+      dialogVisible:false,
+      deleteVisible:false
+    }
+  },
+  activated(){
+    if(this.$route.query.id){
+      let id = this.$route.query.id
+      this.formLoading = true
+      questionApi.select(id).then(re => {
+        this.form = re.data
+        this.formLoading = false
+      })
+    }
+    else{
+      this.deleteForm()
     }
   },
   created () {
     let _this = this
-    if(this.$route.query.id){
-      let id = this.$route.query.id
-      _this.formLoading = true
-      questionApi.select(id).then(re => {
-        _this.form = re.data
-        _this.formLoading = false
-      })
-    }
     this.initSubject(function () {
       _this.subjectFilter = _this.subjects
     })
@@ -142,6 +157,9 @@ export default {
       }
       selection.push({ id: null, prefix: newLastPrefix, content: '' })
     },
+    deleteFormConfirm(){
+      this.deleteVisible=true
+    },
     firstSubmit(){
       this.dialogVisible=true
       let _this = this
@@ -154,7 +172,7 @@ export default {
         }
       }).catch(e => {
         if(e=='directionID not found'){
-          alert('专业方向不存在，请先添加！')
+          this.$message.error('专业方向不存在，请先添加！')
           _this.$router.push('/education/subject/list')
         }
         this.formLoading = false
@@ -203,14 +221,14 @@ export default {
                 }
               }).catch(e => {
                 if(e=='directionID not found'){
-                  alert('专业方向不存在，请先添加！')
+                  this.$message.error('专业方向不存在，请先添加！')
                 }
                 this.formLoading = false
               })
             }
           }
           else{
-            alert('请先检查专业方向！')
+            this.$message.error('专业方向不正确！')
             return false
           }
         }
@@ -219,7 +237,11 @@ export default {
         }
       })
     },
-    resetForm () {
+    //重置
+    resetForm(){
+      location.reload()
+    },
+    deleteForm () {
       let lastId = this.form.questionID
       this.$refs['form'].resetFields()
       this.form = {
@@ -244,6 +266,7 @@ export default {
       }
       this.form.questionID = lastId
       this.dialogVisible=false
+      this.deleteVisible=false
     },
     ...mapActions('exam', { initSubject: 'initSubject' }),
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })

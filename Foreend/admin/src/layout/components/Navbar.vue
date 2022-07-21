@@ -44,6 +44,8 @@ export default {
       let _this = this
       _this.clearLogin()
       _this.$router.push({ path: '/login' })
+      localStorage.clear()
+      this.create()
     },
     ...mapMutations('user', ['clearLogin'])
   }

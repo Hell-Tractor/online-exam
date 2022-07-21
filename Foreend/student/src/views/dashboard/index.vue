@@ -4,22 +4,6 @@
       <el-col :span="6" :offset="4">
       <h3 class="index-title-h3" style="border-left: solid 10px cornflowerblue;">试卷列表</h3>
       </el-col>
-<!--      xp:最开始的版本-->
-<!--      <div style="padding-left: 15px">-->
-<!--        <el-col :span="4" v-for="(item, index) in fixedPaper" :key="index" :offset="index > 0 ? 1 : 0">-->
-<!--          <el-card :body-style="{ padding: '0px' }" v-loading="loading">-->
-<!--            <img src="@/assets/exam-paper/show1.png" class="image">-->
-<!--            <div style="padding: 14px;">-->
-<!--              <span>{{item.name}}</span>-->
-<!--              <div class="bottom clearfix">-->
-<!--                <router-link target="_blank" :to="{path:'/do',query:{id:item.id}}">-->
-<!--                  <el-button type="text" class="button">开始做题</el-button>-->
-<!--                </router-link>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </el-card>-->
-<!--        </el-col>-->
-<!--      </div>-->
     </el-row>
     <el-row class="app-item-contain">
       <el-col :span="15" :offset="4">
@@ -68,25 +52,25 @@
                   <span slot="label" style="font-size: 18px">
                     单选题数量
                   </span>
-                  <el-input type="number" v-model.number="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="multiple_choice_num">
                   <span slot="label" style="font-size: 18px">
                     多选题数量
                   </span>
-                  <el-input type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="true_false_num">
                   <span slot="label" style="font-size: 18px">
                   判断题数量
                    </span>
-                  <el-input type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="short_answer_num">
                   <span slot="label" style="font-size: 18px">
                   简答题数量
                   </span>
-                  <el-input type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button @click="createBegin" type="primary" plain>生成试卷</el-button>
@@ -97,25 +81,25 @@
                   <span slot="label" style="font-size: 18px">
                     单选题数量
                   </span>
-                  <el-input type="number" v-model.number="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.single_choice_num" placeholder="请输入单选题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="multiple_choice_num">
                   <span slot="label" style="font-size: 18px">
                     多选题数量
                   </span>
-                  <el-input type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.multiple_choice_num" placeholder="请输入多选题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="true_false_num">
                   <span slot="label" style="font-size: 18px">
                   判断题数量
                    </span>
-                  <el-input type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.true_false_num" placeholder="请输入判断题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item prop="short_answer_num">
                   <span slot="label" style="font-size: 18px">
                   简答题数量
                   </span>
-                  <el-input type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
+                  <el-input min="0" onkeyup="value=value.replace(/[^\d]+/g,'')" type="number" v-model.number="form.short_answer_num" placeholder="请输入简答题数量" style="width: 500px"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button @click="createBegin" type="primary" plain>生成试卷</el-button>
@@ -223,19 +207,6 @@ export default {
       let _this = this
       this.$refs.form.validate((valid) => {
         if (valid) {
-          /*
-            name: 'ExamPaperBegin',
-            params: {
-              profession: this.form.profession,
-              has_direction: this.form.has_direction,
-              directions: this.form.directions,
-              single_choice_num: this.form.single_choice_num,
-              multiple_choice_num: this.form.multiple_choice_num,
-              true_false_num: this.form.true_false_num,
-              short_answer_num: this.form.short_answer_num,
-              get: this.get
-            }
-           */
           indexApi.create(JSON.stringify(this.form)).then(data => {
             if (data.code === 200) {
               _this.$message.success(data.message)
@@ -261,6 +232,14 @@ export default {
           return false
         }
       })
+    },
+    changeInput () {
+      var pattern = /^[1-9][0-9]*|(0)$/ // 正整数的正则表达式
+      // 不符合正整数时
+      if (!pattern.test(this.num)) {
+        // input 框绑定的内容为空
+        this.num = ''
+      }
     }
   },
   computed: {

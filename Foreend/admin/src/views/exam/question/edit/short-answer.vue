@@ -18,6 +18,7 @@
       <el-form-item>
         <el-button type="primary" @click="firstSubmit">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
+        <el-button  type="danger" @click="deleteFormConfirm">清空</el-button>
       </el-form-item>
     </el-form>
     <el-dialog title="提交" :visible.sync="dialogVisible" width="30%">
@@ -25,6 +26,13 @@
       <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取消</el-button>
       <el-button type="primary" @click="submitForm">确定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="清空" :visible.sync="deleteVisible" width="30%">
+      <span>确定清空吗？</span>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="deleteVisible = false">取消</el-button>
+      <el-button type="primary" @click="deleteForm">确定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -94,25 +102,34 @@ export default {
           { required: true, message: '请输入答案', trigger: 'blur' }
         ],
       },
-      dialogVisible:false
+      dialogVisible:false,
+      deleteVisible:false
+    }
+  },
+  activated(){
+    if(this.$route.query.id){
+      let id = this.$route.query.id
+      this.formLoading = true
+      questionApi.select(id).then(re => {
+        this.form = re.data
+        this.formLoading = false
+      })
+    }
+    else{
+      this.deleteForm()
     }
   },
   created () {
     let _this = this
-    if(this.$route.query.id){
-      let id = this.$route.query.id
-      _this.formLoading = true
-      questionApi.select(id).then(re => {
-        _this.form = re.data
-        _this.formLoading = false
-      })
-    }
     this.initSubject(function () {
       _this.subjectFilter = _this.subjects
     })
     _this.formLoading = false
   },
   methods: {
+    deleteFormConfirm(){
+      this.deleteVisible=true
+    },
     firstSubmit(){
       this.dialogVisible=true
       let _this = this
@@ -125,7 +142,7 @@ export default {
         }
       }).catch(e => {
         if(e=='directionID not found'){
-          alert('专业方向不存在，请先添加！')
+          this.$message.error('专业方向不存在，请先添加！')
           _this.$router.push('/education/subject/list')
         }
         this.formLoading = false
@@ -174,7 +191,7 @@ export default {
                 }
               }).catch(e => {
                 if(e=='directionID not found'){
-                  alert('专业方向不存在，请先添加！')
+                  this.$message.error('专业方向不存在，请先添加！')
                   this.$router.push('/education/subject/list')
                 }
                 this.formLoading = false
@@ -182,7 +199,7 @@ export default {
             }
           }
           else{
-            alert('请先检查专业方向！')
+            this.$message.error('专业方向不正确！')
             return false
           }
         }
@@ -191,7 +208,12 @@ export default {
         }
       })
     },
-    resetForm () {
+    //重置
+    resetForm(){
+      location.reload()
+    },
+    //清空
+    deleteForm () {
       let lastId = this.form.questionID
       this.$refs['form'].resetFields()
       this.form = {
@@ -211,6 +233,7 @@ export default {
       }
       this.form.questionID = lastId
       this.dialogVisible=false
+      this.deleteVisible=false
     },
     ...mapActions('exam', { initSubject: 'initSubject' }),
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })

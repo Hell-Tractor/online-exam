@@ -80,9 +80,16 @@ public class UserService {
         userRepository.delete(user.get());
     }
 
-    public List<User> getUserList(int pageNum, int pageSize) {
+    public Map<String, Object> getUserList(int pageNum, int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("userType", "username"));
-        return userRepository.findAll(pageable).getContent();
+        List<User> users = userRepository.findAll(pageable).getContent();
+        for (User user : users) {
+            user.setPassword("");
+        }
+        Map<String, Object> result = new java.util.HashMap<>(2);
+        result.put("users", users);
+        result.put("total", userRepository.count());
+        return result;
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {

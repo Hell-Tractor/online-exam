@@ -17,6 +17,7 @@ module.exports = {
     port: 8888, // 前端启动的端口
     https: false,
     hotOnly: false,
+    // 接口名前面要有api
     proxy: {
       '/api': {
         target: 'http://120.25.236.100:8888', // 后端接口地址，和后端保持一致

@@ -62,34 +62,11 @@ let md5 = require("md5")
 export default {
   name: 'Login',
   data () {
-    // 表单验证中的rule
-    const validateusername = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('用户名不能少于5个字符'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能少于5个字符'))
-      } else {
-        callback()
-      }
-    }
-
     return {
       // 登陆表单
       loginForm: {
         username: '',
         password: '', // 加密后的password
-      },
-      // 表单验证
-      // elements 的Form组件提供的表单验证的功能，通过 rules 属性传入约定的验证规则
-      // blur:失去焦点时进行验证
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateusername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
       passwordRaw:'', //最原始的password
@@ -161,7 +138,7 @@ export default {
             } else { // 如果是无效的
               _this.loading = false
               _this.$message({
-                message: result.data, // result的消息
+                message: result.message, // result的消息
                 type: 'error' // 表示错误
               })
             }

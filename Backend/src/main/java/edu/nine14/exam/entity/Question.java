@@ -18,8 +18,6 @@ public class Question {
     @Column(name = "direction_id", columnDefinition = "int")
     private Integer direction;
 
-
-
     @Column(name = "body",columnDefinition = "text")
     private String body;
 
@@ -79,23 +77,4 @@ public class Question {
     public void setDirection(Integer direction) {
         this.direction = direction;
     }
-
-    /*public Question(String body, String[] option){
-        this.body=body;
-        this.option=option;
-    }*/
-
-    /*@Override
-    public boolean equals(Object obj){
-        if(this==obj){
-            return true;
-        }
-        if(obj instanceof Question){
-            Question anotherQue=(Question)obj;
-            if(this.body.equals(anotherQue.body)){
-                return true;
-            }
-        }
-        return false;
-    }*/
 }

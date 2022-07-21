@@ -13,9 +13,6 @@ public class Profession {
     @Column(name = "name", columnDefinition = "char")
     private String professionName;
 
-    /*@OneToMany(mappedBy="profession_id")
-    private List<Direction> directions;*/
-
     public Integer getProfessionID() {
         return professionID;
     }
@@ -31,12 +28,4 @@ public class Profession {
     public void setProfessionName(String professionName) {
         this.professionName = professionName;
     }
-
-   /* public List<Direction> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(List<Direction> directions) {
-        this.directions = directions;
-    }*/
 }

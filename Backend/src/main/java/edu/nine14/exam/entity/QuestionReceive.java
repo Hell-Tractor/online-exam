@@ -61,7 +61,6 @@ public class QuestionReceive {
 
     @Override
     public String toString(){
-        //System.out.println(selection);
         return questionID + " " + direction + " " + body + " " + answer + " " + type ;
     }
 }

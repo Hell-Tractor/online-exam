@@ -110,7 +110,10 @@ public class User {
             }
             try {
                 Method method = this.getClass().getMethod("get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1));
-                userInformation.put(field.getName(), method.invoke(this).toString());
+                Object value = method.invoke(this);
+                if (value == null)
+                    value = "";
+                userInformation.put(field.getName(), value.toString());
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

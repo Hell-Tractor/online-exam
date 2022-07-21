@@ -34,15 +34,24 @@ public class QuestionDirectionService {
     }
 
     /**
-     * 根据专业方向返回题目列表
+     * 返回该专业题目列表
      * @param professionID 专业ID
      * @param type 题目类型
      * @return
      */
     public Object questionForProfession(Integer professionID,String type){
+        //System.out.println(questionDirectionRepository.questionForProfession(professionID,type));
         return questionDirectionRepository.questionForProfession(professionID,type);
     }
 
+    /**
+     * 根据专业方向返回题目列表
+     * @param directionID
+     * @param type
+     * @param direction1
+     * @param direction2
+     * @return
+     */
     public Object questionForDirection(Integer directionID,String type,String direction1,String direction2){
         return questionDirectionRepository.questionForDirection(directionID,type,direction1,direction2);
     }

@@ -103,22 +103,4 @@ public class QuestionDirection {
         questionReceive.setType(type);
         return questionReceive;
     }
-    /*public Question(String body, String[] option){
-        this.body=body;
-        this.option=option;
-    }*/
-
-    /*@Override
-    public boolean equals(Object obj){
-        if(this==obj){
-            return true;
-        }
-        if(obj instanceof Question){
-            Question anotherQue=(Question)obj;
-            if(this.body.equals(anotherQue.body)){
-                return true;
-            }
-        }
-        return false;
-    }*/
 }

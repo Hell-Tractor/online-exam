@@ -39,7 +39,6 @@ public class UserController {
         }
     }
 
-
     /**
      * 更新当前用户的密码
      * @param username 从token中解析出的用户名
@@ -146,7 +145,7 @@ public class UserController {
      * @param username 用户名
      * @return 用户信息
      */
-    @RequestMapping(path = "api/getUserInfoAdmin")
+    @RequestMapping(path = "/api/getUserInfoAdmin")
     @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object getUserInfoAdmin(@RequestParam("username") String username) {
         try {

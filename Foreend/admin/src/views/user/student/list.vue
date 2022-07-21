@@ -74,8 +74,8 @@ export default {
     search () {
       this.listLoading = true
       userApi.getUserPageList(Qs.stringify(this.queryParam)).then(data => {
-        this.tableData = data.data
-        this.total = data.data.length
+        this.tableData = data.data.users
+        this.total = data.data.total
         this.queryParam.page = 1
         this.listLoading = false
       })

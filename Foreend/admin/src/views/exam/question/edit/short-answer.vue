@@ -6,7 +6,7 @@
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="专业方向：" prop="direction" required>
+      <el-form-item label="专业方向：" prop="direction.directionName" required>
         <el-input v-model="form.direction.directionName" placeholder="请输入专业方向" />
       </el-form-item>
       <el-form-item label="题干：" prop="body" required>
@@ -166,12 +166,12 @@ export default {
             if (!this.form.questionID || this.form.questionID === null) {
               questionApi.addOne(this.form).then(re => {
                 if (re.code === 200) {
-                  this.$message.success(re.data)
+                  this.$message.success('添加成功！')
                   this.delCurrentView(this).then(() => {
                     this.$router.push('/exam/question/list')
                   })
                 } else {
-                  this.$message.error(re.data)
+                  this.$message.error(re.message)
                   this.formLoading = false
                 }
               }).catch(e => {
@@ -182,7 +182,7 @@ export default {
             else {
               questionApi.editQuestion(this.form).then(re => {
                 if (re.code === 200) {
-                  this.$message.success(re.data)
+                  this.$message.success('编辑成功！')
                   this.delCurrentView(this).then(() => {
                     this.$router.push('/exam/question/list')
                   })

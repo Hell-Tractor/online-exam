@@ -47,7 +47,7 @@ public class UserController {
      *  newPassword:新密码
      * @return 是否更新成功
      */
-    @RequestMapping(path = "/api/student/user/update", method = { RequestMethod.POST })
+    @RequestMapping(path = "/api/student/user/updatePassword", method = { RequestMethod.POST })
     @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object updatePassword(@CurrentUser String username,
                                  @RequestBody Map<String, String> map) {

@@ -34,7 +34,7 @@ const request = function (loadtip, query) {
       //登陆成功
       else {
         // 设置token
-        let token = res.headers['authorization']
+        let token = res.headers['token']
         if (token && token !== '') {
           localStorage.setItem('token', token)
         }

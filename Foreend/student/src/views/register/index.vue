@@ -15,7 +15,7 @@
             </div>
             <div class="lowin-group password-group">
               <label>密码</label>
-              <el-input class="lowin-input" ref="passwordRaw" v-model="passwordRaw"
+              <el-input class="lowin-input" ref="passwordRaw" v-model="passwordRaw" show-password
                         placeholder="密码" name="passwordRaw" tabindex="2" auto-complete="on"
                         @keyup.enter.native="handleLogin"/>
             </div>

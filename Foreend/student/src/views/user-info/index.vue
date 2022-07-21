@@ -48,22 +48,22 @@
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
             <el-tab-pane label="密码修改" name="password" >
               <el-form :model="passwordEdit" ref="passwordEdit" label-width="100px" v-loading="formLoading" :rules="rules">
                 <el-form-item label="旧密码：" required>
-                  <el-input v-model="oldPasswordRaw"></el-input>
+                  <el-input v-model="oldPasswordRaw" show-password></el-input>
                 </el-form-item>
                 <el-form-item label="新密码："required >
-                  <el-input v-model="newPasswordRaw"></el-input>
+                  <el-input v-model="newPasswordRaw" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="重复密码："required >
+                  <el-input v-model="newPasswordRawConfirm" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitPassword">更新</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
-
           </el-tabs>
         </el-card>
       </el-col>
@@ -78,6 +78,15 @@ import md5 from "md5";
 
 export default {
   data () {
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.newPasswordRaw) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    }
     return {
       event: [],
       passwordEdit:{
@@ -95,6 +104,7 @@ export default {
       },
       newPasswordRaw:'',
       oldPasswordRaw:'',
+      newPasswordRawConfirm:'',
       formLoading: false,
       rules: {
         name: [
@@ -102,7 +112,11 @@ export default {
         ],
         grade: [
           { required: true, message: '请选择年级', trigger: 'change' }
-        ]
+        ],
+        newPasswordRawConfirm:[
+          {required: true, message: "请输入密码", trigger: "blur"},
+          { validator: validatePass, trigger: "blur", required: true}
+        ],
       }
     }
   },
@@ -129,12 +143,13 @@ export default {
           this.formLoading = true
           userApi.changePassword(this.passwordEdit).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
             }
             _this.formLoading = false
           }).catch(e => {
+            _this.$message.error(e)
             _this.formLoading = false
           })
         } else {
@@ -149,9 +164,9 @@ export default {
           this.formLoading = true
           userApi.update(this.form).then(data => {
             if (data.code === 200) {
-              _this.$message.success(data.message)
+              _this.$message.success(data.data)
             } else {
-              _this.$message.error(data.message)
+              _this.$message.error(data.data)
             }
             _this.formLoading = false
           }).catch(e => {

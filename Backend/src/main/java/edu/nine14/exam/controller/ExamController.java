@@ -1,5 +1,7 @@
 package edu.nine14.exam.controller;
 
+import edu.nine14.annotation.AuthenticationLevel;
+import edu.nine14.annotation.AuthenticationLevelType;
 import edu.nine14.common.ApiResult;
 import edu.nine14.common.HttpCode;
 import edu.nine14.exam.choiceEntity.ExamChoice;
@@ -25,8 +27,7 @@ public class ExamController {
      * @return
      */
     @RequestMapping(path = "/api/student/dashboard/createPaper", method = {RequestMethod.POST})
-    //@ResponseBody
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object createPaper(@RequestBody ExamChoice examChoice) {
         String profession=examChoice.getProfession();
         boolean has_direction=examChoice.isHas_direction();

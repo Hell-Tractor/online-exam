@@ -91,7 +91,7 @@ public class UserService {
         }
         Map<String, Object> result = new java.util.HashMap<>(2);
         result.put("users", users);
-        result.put("total", userRepository.count());
+        result.put("total", userRepository.count((root, criteriaQuery, criteriaBuilder) -> criteriaQuery.where(criteriaBuilder.equal(root.get("userType"), "U")).getRestriction()));
         return result;
     }
 

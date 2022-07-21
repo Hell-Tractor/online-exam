@@ -129,7 +129,7 @@ public class UserController {
      * @return 用户列表
      */
     @RequestMapping(path = "/api/admin/user/page/list")
-//    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object getUserList(@RequestParam("page") int page,
                               @RequestParam("size") int size) {
         try {

@@ -47,12 +47,15 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
-                @pagination="search"/>
+<!--    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"-->
+<!--                @pagination="search"/>-->
+    <el-button size="middle"  @click="prePage" style="margin-top: 20px">上一页</el-button>
+    <el-button size="middle"  type="danger" @click="nextPage" class="link-left">下一页</el-button>
   </div>
 </template>
 
 <script>
+/* eslint-disable*/
 import { mapGetters, mapState, mapActions } from 'vuex'
 import Pagination from '@/components/Pagination'
 import QuestionShow from './components/Show'
@@ -94,6 +97,33 @@ export default {
       // this.queryParam.pageIndex = 1
       this.search()
     },
+    prePage(){
+      if(this.queryParam.pageIndex>1){
+        this.queryParam.pageIndex--
+        this.search()
+      }else{
+        alert('没有上一页了！')
+        location.reload()
+      }
+    },
+    nextPage(){
+      this.queryParam.pageIndex++
+      this.listLoading = true
+      this.initSubject()
+      questionApi.selectQuestionByCondition(this.queryParam).then(data => {
+        if(data.data &&　data.data!==[] && data.data.length!=0){
+          this.tableData = data.data
+          this.total = data.data.length
+          // this.queryParam.pageIndex = 1
+          this.listLoading = false
+        }
+        else {
+          this.queryParam.pageIndex--
+          alert('没有下一面了！')
+          location.reload()
+        }
+      })
+    },
     search () {
       this.listLoading = true
       this.initSubject()
@@ -106,7 +136,7 @@ export default {
         }
         else {
           alert('题目不存在！')
-          location.reload();
+          location.reload()
         }
       })
     },

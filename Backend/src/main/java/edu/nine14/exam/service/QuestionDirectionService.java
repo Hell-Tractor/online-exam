@@ -119,4 +119,31 @@ public class QuestionDirectionService {
         },pageable);
     }
 
+    /**
+     * 查询符合查询条件的题目总数
+     * @param direction 专业方向
+     * @param id 问题id
+     * @param profession 专业
+     * @param type 题目类型
+     * @return 返回查询到的题目的总数（long）
+     */
+    public Long totalNumberByCondition(String direction, Integer profession,Integer id, String type){
+        return questionDirectionRepository.count((root, criteriaQuery, criteriaBuilder)->{
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            if(direction!=null){
+                predicates.add(criteriaBuilder.equal(root.get("direction").get("directionName"),direction));
+            }
+            if(id!=null){
+                predicates.add(criteriaBuilder.equal(root.get("questionID"),id));
+            }
+            if(profession!=null){
+                predicates.add(criteriaBuilder.equal(root.get("direction").get("profession").get("professionID"),profession));
+            }
+            if(type!=null){
+                predicates.add(criteriaBuilder.equal(root.get("type"),type));
+            }
+            return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+        });
+    }
+
 }

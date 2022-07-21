@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -65,7 +66,12 @@ public class QuestionController {
             for(QuestionDirection qd:listQD){
                 listQR.add(qd.toQuestionReceive());
             }
-            return ApiResult.ok(listQR);
+            Long total = questionDirectionService.totalNumberByCondition(questionChoice.getDirection(), questionChoice.getProfession(),
+                    questionChoice.getId(), questionChoice.getType());
+            Map<String, Object> result = new java.util.HashMap<>(2);
+            result.put("questions",listQR);
+            result.put("total",total);
+            return ApiResult.ok(result);
         } catch (Exception e) {
             return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }

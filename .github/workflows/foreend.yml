@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'Foreend/**'
+  workflow_dispatch:
 
 jobs:
   admin:
@@ -21,7 +22,8 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          tar -zcvf admin.tar.gz Foreend/admin/dist
+          cd Foreend/output/admin
+          tar -zcvf admin.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:
@@ -56,7 +58,8 @@ jobs:
         name: building
       - name: tar dist directory
         run: |
-          tar -zcvf student.tar.gz Foreend/student/dist
+          cd Foreend/output/student
+          tar -zcvf student.tar.gz dist
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:

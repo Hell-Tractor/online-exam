@@ -61,8 +61,8 @@ export default {
           let temp=[]
           temp.push(data.data)
           this.tableData=temp
-          this.total = 1
-          this.queryParam.page = 1
+          this.total = data.data.total
+          // this.queryParam.page = 1
           this.listLoading = false
         }
         else{
@@ -76,7 +76,7 @@ export default {
       userApi.getUserPageList(Qs.stringify(this.queryParam)).then(data => {
         this.tableData = data.data.users
         this.total = data.data.total
-        this.queryParam.page = 1
+        // this.queryParam.page = 1
         this.listLoading = false
       })
     },

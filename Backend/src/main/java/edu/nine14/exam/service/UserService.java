@@ -82,7 +82,11 @@ public class UserService {
 
     public List<User> getUserList(int pageNum, int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("userType", "username"));
-        return userRepository.findAll(pageable).getContent();
+        List<User> result = userRepository.findAll(pageable).getContent();
+        for (User user : result) {
+            user.setPassword("");
+        }
+        return result;
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {

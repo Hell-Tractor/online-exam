@@ -35,7 +35,7 @@ public class QuestionController {
      * @return 返回所有题目信息
      */
     @RequestMapping(path = "/api/admin/question/page/selectAll")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectAllQuestion(){
         try {
             List<QuestionDirection> listQD = (List<QuestionDirection>) questionDirectionService.getAllQuestion();
@@ -56,7 +56,7 @@ public class QuestionController {
      * @return 返回符合条件的题目list
      */
     @RequestMapping(path = "/api/admin/question/page",method = { RequestMethod.POST })
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectQuestionByCondition(@RequestBody QuestionChoice questionChoice){
         try {
             List<QuestionDirection> listQD = questionDirectionService.findByCondition(questionChoice.getPageIndex(), questionChoice.getPageSize(),
@@ -77,7 +77,7 @@ public class QuestionController {
      * @return 返回符合要求的题目类型
      */
     @RequestMapping(path = "/api/admin/question/page/{type}",method = { RequestMethod.POST })
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectByType(@PathVariable("type") String type){
         try {
             List<QuestionDirection> listQD = (List<QuestionDirection>) questionService.selectByType(type);
@@ -98,7 +98,7 @@ public class QuestionController {
      * @return 删除题目成功还是失败
      */
     @RequestMapping(path = "/api/admin/question/delete/{id}")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object deleteQuestionById(@PathVariable("id") Integer id){
         try {
             questionService.deleteQuestion(id);
@@ -114,7 +114,7 @@ public class QuestionController {
      * @return 返回对应Id的题目
      */
     @RequestMapping(path = "/api/admin/question/select/{id}")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object selectQuestionById(@PathVariable("id") Integer id){
         try {
             QuestionDirection questionDirection = (QuestionDirection)questionDirectionService.selectById(id);
@@ -129,7 +129,7 @@ public class QuestionController {
      * @return 返回成功或是失败信息
      */
     @RequestMapping("/api/admin/question/edit")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object editQuestion(@RequestBody QuestionReceive question){
         try {
             questionService.editQuestion(question);
@@ -145,7 +145,7 @@ public class QuestionController {
      * @return 成功或失败信息
      */
     @RequestMapping(path = "/api/admin/question/add")
-    //@AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
     public Object addQuestion(@RequestBody QuestionReceive question){
         try {
             questionService.addQuestion(question);

@@ -8,6 +8,6 @@ export default {
   selectAll: query => post('/api/admin/question/page/selectAll' ),
   addOne: query => post('/api/admin/question/add',query),
   // 根据方向名称得到方向ID
-  getDirectionIDByNAME: (directionName,professionID) =>post(
-    '/api/admin/question/searchID/?directionName='+directionName+'&professionID='+professionID)
+  getDirectionIDByNAME: query =>post(
+    '/api/admin/question/searchID',query)
 }

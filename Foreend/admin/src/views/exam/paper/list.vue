@@ -84,9 +84,9 @@ export default {
       examPaperApi.deletePaper(row.id).then(re => {
         if (re.code === 200) {
           _this.search()
-          _this.$message.success(re.message)
+          _this.$message.success(re.data)
         } else {
-          _this.$message.error(re.message)
+          _this.$message.error(re.data)
         }
       })
     },

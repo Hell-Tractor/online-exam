@@ -21,7 +21,7 @@
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
           <router-link :to="{path:'/exam/question/edit/singleChoice'}" class="link-left">
-            <el-button type="primary" plain>添加单选</el-button>
+            <el-button type="primary" plain >添加单选</el-button>
           </router-link>
           <router-link :to="{path:'/exam/question/edit/multipleChoice'}" class="link-left">
             <el-button type="primary" plain>添加多选</el-button>
@@ -127,11 +127,11 @@ export default {
     search () {
       this.listLoading = true
       this.initSubject()
+      this.queryParam.pageIndex = 1
       questionApi.selectQuestionByCondition(this.queryParam).then(data => {
         if(data.data &&　data.data!==[]){
           this.tableData = data.data
           this.total = data.data.length
-          // this.queryParam.pageIndex = 1
           this.listLoading = false
         }
         else {

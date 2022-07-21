@@ -56,6 +56,9 @@
                 <el-form-item label="新密码："required >
                   <el-input v-model="newPasswordRaw" show-password></el-input>
                 </el-form-item>
+                <el-form-item label="重复密码："required >
+                  <el-input v-model="newPasswordRawConfirm" show-password></el-input>
+                </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitPassword">更新</el-button>
                 </el-form-item>
@@ -75,6 +78,15 @@ import md5 from "md5";
 
 export default {
   data () {
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.newPasswordRaw) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    }
     return {
       event: [],
       passwordEdit:{
@@ -92,6 +104,7 @@ export default {
       },
       newPasswordRaw:'',
       oldPasswordRaw:'',
+      newPasswordRawConfirm:'',
       formLoading: false,
       rules: {
         name: [
@@ -99,7 +112,11 @@ export default {
         ],
         grade: [
           { required: true, message: '请选择年级', trigger: 'change' }
-        ]
+        ],
+        newPasswordRawConfirm:[
+          {required: true, message: "请输入密码", trigger: "blur"},
+          { validator: validatePass, trigger: "blur", required: true}
+        ],
       }
     }
   },
@@ -132,6 +149,7 @@ export default {
             }
             _this.formLoading = false
           }).catch(e => {
+            _this.$message.error(e)
             _this.formLoading = false
           })
         } else {

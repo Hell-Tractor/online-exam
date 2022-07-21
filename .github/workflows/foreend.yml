@@ -27,7 +27,7 @@ jobs:
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: admin.tar.gz
+          local: Foreend/admin/admin.tar.gz
           remote: spring-boot/admin/admin.tar.gz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -63,7 +63,7 @@ jobs:
       - name: upload tar file
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: student.tar.gz
+          local: Foreend/student/student.tar.gz
           remote: spring-boot/student/student.tar.gz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}

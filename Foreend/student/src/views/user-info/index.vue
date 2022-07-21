@@ -48,7 +48,6 @@
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
             <el-tab-pane label="密码修改" name="password" >
               <el-form :model="passwordEdit" ref="passwordEdit" label-width="100px" v-loading="formLoading" :rules="rules">
                 <el-form-item label="旧密码：" required>
@@ -62,8 +61,6 @@
                 </el-form-item>
               </el-form>
             </el-tab-pane>
-
-
           </el-tabs>
         </el-card>
       </el-col>

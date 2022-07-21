@@ -8,6 +8,5 @@ export default {
   // 更新用户信息
   update: query => post('/api/student/user/update', query),
   // 更改密码
-  changePassword: query => post('/api/student/user/update', query)
-
+  changePassword: query => post('/api/student/user/updatePassword', query)
 }

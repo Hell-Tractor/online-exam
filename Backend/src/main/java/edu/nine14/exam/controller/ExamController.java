@@ -27,7 +27,7 @@ public class ExamController {
      * @return
      */
     @RequestMapping(path = "/api/student/dashboard/createPaper", method = {RequestMethod.POST})
-    @AuthenticationLevel(AuthenticationLevelType.ADMIN)
+    @AuthenticationLevel(AuthenticationLevelType.USER)
     public Object createPaper(@RequestBody ExamChoice examChoice) {
         String profession=examChoice.getProfession();
         boolean has_direction=examChoice.isHas_direction();

@@ -82,7 +82,10 @@ public class UserService {
 
     public Map<String, Object> getUserList(int pageNum, int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("userType", "username"));
-        List<User> users = userRepository.findAll(pageable).getContent();
+        List<User> users = userRepository.findAll(
+                (root, criteriaQuery, criteriaBuilder) -> criteriaQuery.where(criteriaBuilder.equal(root.get("userType"), "U")).getRestriction(),
+                pageable
+        ).getContent();
         for (User user : users) {
             user.setPassword("");
         }

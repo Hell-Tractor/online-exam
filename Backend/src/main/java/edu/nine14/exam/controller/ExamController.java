@@ -113,8 +113,20 @@ public class ExamController {
         } else {
             ArrayList<String> direction=examChoice.getDirections();
 
-            String direction1 = direction.get(0);
-            String direction2 = direction.get(1);
+            String direction1,direction2;
+            try {
+                if (direction.isEmpty())
+                    throw new Exception("选择的专业方向不能为空");
+                else if (direction.size() == 1)
+                    throw new Exception("选择的专业方向数量少于二");
+                else {
+                    direction1 = direction.get(0);
+                    direction2 = direction.get(1);
+                }
+            }catch(Exception e){
+                return ApiResult.failed(HttpCode.INTERNAL_SERVER_ERROR, e.getMessage());
+            }
+
 
             if (single_choice_num >= 0) {
                 List<Object> questionList = (List<Object>)questionDirectionService.questionForDirection((Integer) professionID, "1", direction1, direction2);
